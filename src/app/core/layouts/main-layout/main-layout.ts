@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-main-layout',
   imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  templateUrl: './main-layout.html',
+  styleUrl: './main-layout.css'
 })
-export class App {
-  protected title = 'Planet Wars';
+export class MainLayout {
+
 }
