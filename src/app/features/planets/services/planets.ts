@@ -10,7 +10,7 @@ export class Planets {
   private readonly apiUrl = 'https://www.swapi.tech/api';
   private readonly httpClient = inject(HttpClient);
 
-  getPlanets(currentApiUrl?: string): Observable<Pick<PlanetListResponse, 'results' | 'next'>> {
+  getPlanets(currentApiUrl?: string | null): Observable<Pick<PlanetListResponse, 'results' | 'next'>> {
     const planetsUrl = currentApiUrl || `${this.apiUrl}/planets`;
 
     return this.httpClient.get<PlanetListResponse>(planetsUrl).pipe(

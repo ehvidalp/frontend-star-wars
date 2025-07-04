@@ -17,8 +17,8 @@ export class PlanetsStore {
   readonly selectedPlanet = computed(() => this.planetsStore().selectedPlanet);
 
 
-  loadPlanets(planetsUrl?: string): void {
-    const shouldLoad = !!planetsUrl || this.planets().length === 0;
+  loadPlanets(): void {
+    const shouldLoad = (!!this.planetsStore().nextPageUrl && this.planets().length === 0) || this.planets().length === 0;
 
     if (!shouldLoad) return;
 
@@ -28,7 +28,7 @@ export class PlanetsStore {
       error: null
     }));
 
-    const currentApiUrl = (planetsUrl || this.planetsStore().nextPageUrl) as string;
+    const currentApiUrl = this.planetsStore().nextPageUrl || null;
 
     this.planetService.getPlanets(currentApiUrl).pipe(
       takeUntilDestroyed(this.destroyRef),
