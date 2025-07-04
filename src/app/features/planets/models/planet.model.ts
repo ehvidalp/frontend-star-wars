@@ -1,3 +1,4 @@
+
 export interface PlanetDetail {
   created: string;
   edited: string;
@@ -20,6 +21,12 @@ export interface PlanetSummary {
 }
 
 export type Planet = PlanetDetail | PlanetSummary;
+
+export interface IPlanetsStore {
+    planets: Planet[];
+    selectedPlanet: Planet | null;
+    nextPageUrl: string | null;
+}
 
 export interface PlanetListResponse {
   message: string;
@@ -44,3 +51,9 @@ export interface PlanetDetailResponse {
   apiVersion: string;
   timestamp: string;
 }
+
+export const EMPTY_PLANET_STORE: IPlanetsStore = {
+  planets: [],
+  selectedPlanet: null,
+  nextPageUrl: null,
+};
