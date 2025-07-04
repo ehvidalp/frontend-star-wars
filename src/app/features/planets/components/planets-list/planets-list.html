@@ -1,7 +1,28 @@
 
-@for (item of planetsStore.planets(); track $index) {
-  <div class="bg-red-400 p-4 m-2 rounded-lg shadow-lg">
-    <h3>{{ item.name }}</h3>
-    
+    <ul class="planets-grid">
+      <li *ngFor="let planet of planetsStore.planets()">
+        <div class="planet-card">
+          <h2>{{ planet.name }}</h2>
+        </div>
+      </li>
+    </ul>
+
+    <div 
+      appInfinityScroll
+      (scrolledToEnd)="loadMorePlanets()"
+      [isLoading]="planetsStore.isLoading()"
+      [rootMargin]="'100px'">
+    </div>
+
+    <!-- Indicador de carga -->
+    <div *ngIf="planetsStore.isLoading()" class="loading-indicator">
+      <p>Cargando más planetas...</p>
+    </div>
+  <!-- </div> -->
+
+  <!-- Mensaje final si no hay más páginas -->
+  <div *ngIf="planetsStore.isLastPage()">
+    <p>Has llegado al final de la galaxia.</p>
   </div>
-}
+
+    

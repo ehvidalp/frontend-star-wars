@@ -17,12 +17,26 @@ export class PlanetsStore {
   readonly selectedPlanet = computed(() => this.planetsStore().selectedPlanet);
   readonly nextPageUrl = computed(() => this.planetsStore().nextPageUrl);
   readonly isLoading = computed(() => this.planetsStore().isLoading);
+  readonly isLastPage = computed(() => !this.planetsStore().nextPageUrl);
 
 
   loadPlanets(url?: string | null): void {
-    const shouldLoad = (!!this.planetsStore().nextPageUrl && this.planets().length === 0) || this.planets().length === 0;
+    console.log('Loading planets...', url);
+    
+    // Permitir carga inicial O cuando hay URL específica (para paginación)
+    const isInitialLoad = this.planets().length === 0;
+    const hasNextPageToLoad = !!url && !!this.planetsStore().nextPageUrl;
+    const shouldLoad = isInitialLoad || hasNextPageToLoad || (url && !this.planetsStore().isLoading);
 
-    if (!shouldLoad) return;
+    if (!shouldLoad) {
+      console.log('Should not load. Current state:', {
+        planetsCount: this.planets().length,
+        isLoading: this.planetsStore().isLoading,
+        url,
+        nextPageUrl: this.planetsStore().nextPageUrl
+      });
+      return;
+    }
 
     this.planetsStore.update(store => ({
       ...store,

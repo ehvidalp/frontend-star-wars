@@ -1,10 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Planets } from '../../services/planets';
 import { PlanetsStore } from '../../store/planets.store';
+import { InfinityScrollDirective } from '../../../../shared/directives/infinity-scroll';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-planets-list',
-  imports: [],
+  imports: [InfinityScrollDirective, CommonModule],
   templateUrl: './planets-list.html',
   styleUrl: './planets-list.css'
 })
@@ -15,4 +17,11 @@ export class PlanetsList implements OnInit {
     this.planetsStore.loadPlanets();
   }
 
+  loadMorePlanets(): void {
+    const nextUrl = this.planetsStore.nextPageUrl();
+    if (nextUrl && !this.planetsStore.isLoading()) {
+      console.log('Loading more planets with URL:', nextUrl);
+      this.planetsStore.loadPlanets(nextUrl);
+    }
+  }
 }
