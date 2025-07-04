@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, catchError, throwError } from 'rxjs';
 import { Planet, PlanetDetail, PlanetDetailResponse, PlanetListResponse } from '../models/planet.model';
 
 @Injectable({
@@ -17,18 +17,31 @@ export class Planets {
       map(({results, next}) => ({
         results: results,
         next: next
-      }))
+      })),
+      catchError(this.handleError)
     );
   }
 
   getPlanetByUrl(planetUrl: string): Observable<PlanetDetail> {
+    if (!planetUrl?.trim()) {
+      return throwError(() => new Error('URL del planeta es requerida'));
+    }
 
     if (!planetUrl.startsWith(this.apiUrl)) {
-      throw new Error('Invalid planet URL');
+      return throwError(() => new Error('URL del planeta no es válida'));
     }
 
     return this.httpClient.get<PlanetDetailResponse>(planetUrl).pipe(
-      map(response => response.result.properties)
+      map(response => response.result.properties),
+      catchError(this.handleError)
     );
+  }
+
+  private handleError = (error: HttpErrorResponse): Observable<never> => {    
+    const errorMessage = error.error instanceof ErrorEvent 
+      ? `Error of network: ${error.error.message}`
+      : error.error?.message || error.message || 'Error in planets service';
+
+    return throwError(() => new Error(errorMessage));
   }
 }

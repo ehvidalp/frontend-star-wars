@@ -26,6 +26,8 @@ export interface IPlanetsStore {
     planets: Planet[];
     selectedPlanet: Planet | null;
     nextPageUrl: string | null;
+    isLoading: boolean;
+    error: string | null;
 }
 
 export interface PlanetListResponse {
@@ -56,4 +58,6 @@ export const EMPTY_PLANET_STORE: IPlanetsStore = {
   planets: [],
   selectedPlanet: null,
   nextPageUrl: null,
+  isLoading: false,
+  error: null,
 };
