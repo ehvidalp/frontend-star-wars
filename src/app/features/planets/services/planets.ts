@@ -10,27 +10,21 @@ export class Planets {
   private readonly apiUrl = 'https://www.swapi.tech/api';
   private readonly httpClient = inject(HttpClient);
 
-  getPlanets(currentApiUrl?: string | null): Observable<Pick<PlanetListResponse, 'results' | 'next'>> {
+  getPlanets(currentApiUrl?: string | null): Observable<PlanetListResponse> {
     const planetsUrl = currentApiUrl || `${this.apiUrl}/planets`;
 
     return this.httpClient.get<PlanetListResponse>(planetsUrl).pipe(
-      map(({results, next}) => ({
-        results: results,
-        next: next
-      })),
+
       catchError(this.handleError)
     );
   }
 
   getPlanetByUrl(planetUrl: string): Observable<PlanetDetail> {
-    if (!planetUrl?.trim()) {
-      return throwError(() => new Error('URL del planeta es requerida'));
-    }
+    if (!planetUrl?.trim()) return throwError(() => new Error('URL del planeta es requerida'));
+    
 
-    if (!planetUrl.startsWith(this.apiUrl)) {
-      return throwError(() => new Error('URL del planeta no es válida'));
-    }
-
+    if (!planetUrl.startsWith(this.apiUrl)) return throwError(() => new Error('URL del planeta no es válida'));
+    
     return this.httpClient.get<PlanetDetailResponse>(planetUrl).pipe(
       map(response => response.result.properties),
       catchError(this.handleError)

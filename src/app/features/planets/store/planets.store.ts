@@ -15,9 +15,11 @@ export class PlanetsStore {
 
   readonly planets = computed(() => this.planetsStore().planets);
   readonly selectedPlanet = computed(() => this.planetsStore().selectedPlanet);
+  readonly nextPageUrl = computed(() => this.planetsStore().nextPageUrl);
+  readonly isLoading = computed(() => this.planetsStore().isLoading);
 
 
-  loadPlanets(): void {
+  loadPlanets(url?: string | null): void {
     const shouldLoad = (!!this.planetsStore().nextPageUrl && this.planets().length === 0) || this.planets().length === 0;
 
     if (!shouldLoad) return;
@@ -28,11 +30,10 @@ export class PlanetsStore {
       error: null
     }));
 
-    const currentApiUrl = this.planetsStore().nextPageUrl || null;
-
-    this.planetService.getPlanets(currentApiUrl).pipe(
+    const apiUrl = url || this.planetsStore().nextPageUrl || null;
+    this.planetService.getPlanets(apiUrl).pipe(
       takeUntilDestroyed(this.destroyRef),
-      tap((data: Pick<PlanetListResponse, 'results' | 'next'>) => {
+      tap(data => {
         if (!data || !data.results.length) {
           this.planetsStore.update(store => ({
             ...store,
@@ -41,9 +42,7 @@ export class PlanetsStore {
           }));
           return;
         }
-
         const newPlanets = [...this.planets(), ...data.results];
-
         this.planetsStore.update(store => ({
           ...store,
           planets: newPlanets,
