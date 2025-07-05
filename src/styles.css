@@ -1,2 +1,9 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'StarWars';
+  src: url('/assets/fonts/starwars.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
