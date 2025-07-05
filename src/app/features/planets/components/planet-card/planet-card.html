@@ -1,48 +1,50 @@
-<article 
+<button 
   class="planet-card relative w-full h-full min-h-[20rem] max-w-sm mx-auto bg-gradient-to-br from-slate-900/60 via-blue-950/40 to-slate-800/50 backdrop-blur-sm border border-transparent bg-clip-padding rounded-lg overflow-hidden cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-xl hover:shadow-cyan-400/30 hover:bg-transparent hover:backdrop-blur-none focus-visible:outline-2 focus-visible:outline-cyan-400/60 focus-visible:outline-offset-2 will-change-transform group before:content-[''] before:absolute before:inset-0 before:p-[1px] before:bg-gradient-to-r before:from-cyan-400/50 before:via-blue-500/60 before:to-purple-600/50 before:rounded-lg before:-z-10 before:transition-all before:duration-700 before:opacity-40 hover:before:opacity-70"
-  role="article"
-  [attr.aria-label]="'Planet information card for ' + planet().name"
-  tabindex="0"
+  type="button"
+  [attr.aria-label]="'View details for planet ' + planet().name"
+  [attr.aria-describedby]="'planet-info-' + planet().name"
   [attr.data-planet-name]="planet().name"
   [style.view-transition-name]="cardTransitionName()"
-  (click)="onCardClick()"
-  (keydown.enter)="onCardClick()"
-  (keydown.space)="onCardClick()">
+  (click)="onCardClick()">
   
-  <!-- Subtle holographic corners -->
-  <div class="absolute top-3 left-3 w-2 h-2 border-l border-t border-cyan-400/30 transition-all duration-500 group-hover:border-cyan-400/60 group-hover:w-3 group-hover:h-3"></div>
-  <div class="absolute top-3 right-3 w-2 h-2 border-r border-t border-cyan-400/30 transition-all duration-500 group-hover:border-cyan-400/60 group-hover:w-3 group-hover:h-3"></div>
-  <div class="absolute bottom-3 left-3 w-2 h-2 border-l border-b border-cyan-400/30 transition-all duration-500 group-hover:border-cyan-400/60 group-hover:w-3 group-hover:h-3"></div>
-  <div class="absolute bottom-3 right-3 w-2 h-2 border-r border-b border-cyan-400/30 transition-all duration-500 group-hover:border-cyan-400/60 group-hover:w-3 group-hover:h-3"></div>
+  <!-- Decorative elements - hidden from screen readers -->
+  <div class="absolute top-3 left-3 w-2 h-2 border-l border-t border-cyan-400/30 transition-all duration-500 group-hover:border-cyan-400/60 group-hover:w-3 group-hover:h-3" aria-hidden="true"></div>
+  <div class="absolute top-3 right-3 w-2 h-2 border-r border-t border-cyan-400/30 transition-all duration-500 group-hover:border-cyan-400/60 group-hover:w-3 group-hover:h-3" aria-hidden="true"></div>
+  <div class="absolute bottom-3 left-3 w-2 h-2 border-l border-b border-cyan-400/30 transition-all duration-500 group-hover:border-cyan-400/60 group-hover:w-3 group-hover:h-3" aria-hidden="true"></div>
+  <div class="absolute bottom-3 right-3 w-2 h-2 border-r border-b border-cyan-400/30 transition-all duration-500 group-hover:border-cyan-400/60 group-hover:w-3 group-hover:h-3" aria-hidden="true"></div>
   
-  <!-- Minimal scanning effect -->
-  <div class="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none">
+  <!-- Decorative scanning effect -->
+  <div class="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none" aria-hidden="true">
     <div class="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent"></div>
   </div>
   
-  <div class="bg-gradient-to-b from-transparent via-slate-900/10 to-transparent relative z-20 flex flex-col justify-center items-center h-full p-6 group-hover:bg-transparent transition-all duration-500">
+  <!-- Main content area -->
+  <main class="bg-gradient-to-b from-transparent via-slate-900/10 to-transparent relative z-20 flex flex-col justify-center items-center h-full p-6 group-hover:bg-transparent transition-all duration-500">
     
-    <div class="mb-4 sm:mb-6 lg:mb-8">
+    <!-- Planet visualization -->
+    <figure class="mb-4 sm:mb-6 lg:mb-8" [attr.aria-label]="'Visual representation of ' + planet().name">
       <app-planet-sphere 
         [planet]="planet()" 
         size="medium">
       </app-planet-sphere>
-    </div>
+    </figure>
     
-    <header class="text-center relative"
-            [style.view-transition-name]="titleTransitionName()">
+    <!-- Planet information -->
+    <section class="text-center relative" [style.view-transition-name]="titleTransitionName()">
       
       <h3 class="font-orbitron text-lg sm:text-xl lg:text-2xl font-bold text-cyan-400 uppercase tracking-widest relative drop-shadow-lg transition-all duration-500 before:content-[''] before:absolute before:bottom-[-0.5rem] before:left-1/2 before:w-16 before:h-0.5 before:bg-gradient-to-r before:from-transparent before:via-cyan-400 before:to-transparent before:transform before:-translate-x-1/2 before:opacity-0 before:shadow-sm before:shadow-cyan-400/50 before:transition-all before:duration-700 before:ease-in-out group-hover:before:animate-pulse group-hover:before:scale-x-125 group-hover:before:opacity-100 group-hover:before:via-cyan-300 group-hover:text-cyan-300"
+          [attr.id]="'planet-info-' + planet().name"
           style="text-shadow: 0 0 10px rgb(34 211 238 / 0.8), 0 0 20px rgb(34 211 238 / 0.4), 0 0 30px rgb(34 211 238 / 0.4), 0 2px 4px rgb(0 0 0 / 0.5); filter: brightness(1.2);">
         {{ planet().name }}
       </h3>
       
-    </header>
+    </section>
     
-  </div>
+  </main>
   
-  <div class="sr-only">
-    <span>{{ planet().name }} planet card. Press Enter or Space to interact.</span>
-  </div>
+  <!-- Screen reader only instructions -->
+  <span class="sr-only">
+    Press Enter or Space to view detailed information about {{ planet().name }}
+  </span>
   
-</article>
+</button>
