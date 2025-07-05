@@ -2,10 +2,11 @@ import { Component, input, inject, computed, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlanetsStore } from '../../store/planets.store';
 import { Planet, PlanetSummary } from '../../models/planet.model';
+import { PlanetSphere } from '../../components/planet-sphere/planet-sphere';
 
 @Component({
   selector: 'app-planet-details',
-  imports: [],
+  imports: [PlanetSphere],
   templateUrl: './planet-details.html',
   styleUrl: './planet-details.css'
 })

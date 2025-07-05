@@ -8,6 +8,9 @@ const PLANETS_ROUTES: Routes = [
   {
     path: ':planetId',
     loadComponent: () => import('./pages/planet-details/planet-details').then(m => m.PlanetDetails),
+    data: { 
+      prerender: false  // Disable prerendering for dynamic routes
+    }
   },
 ];
 
