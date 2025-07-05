@@ -1,5 +1,39 @@
 @import "tailwindcss";
 
+/* Design System - Star Wars Theme Variables */
+:root {
+  /* Color Palette */
+  --color-star-gold: #facc15;
+  --color-star-blue: #3b82f6;
+  --color-star-blue-glow: rgb(59 130 246 / 0.3);
+  --color-star-blue-ring: rgb(147 197 253 / 0.8);
+  --color-star-yellow-glow: rgb(250 204 21 / 0.8);
+  --color-star-yellow-light: rgb(250 204 21 / 0.4);
+  --color-star-yellow-border: rgb(250 204 21 / 0.6);
+  
+  /* Spacing & Sizing */
+  --planet-card-width: 20rem;
+  --planet-card-height: 24rem;
+  --planet-size: 8rem;
+  --planet-ring-width: 10rem;
+  --planet-ring-height: 3rem;
+  
+  /* Animation Durations */
+  --duration-star-twinkle: 3s;
+  --duration-planet-float: 6s;
+  --duration-planet-glow: 4s;
+  --duration-ring-rotate: 12s;
+  --duration-lightsaber-pulse: 2s;
+  
+  /* Border Radius */
+  --radius-card: 0.75rem;
+  --radius-planet: 50%;
+  
+  /* Shadows */
+  --shadow-planet: 0 0 30px rgba(59, 130, 246, 0.5);
+  --shadow-card: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
 @font-face {
   font-family: 'StarWars';
   src: url('/assets/fonts/starwars.woff2') format('woff2');
@@ -8,6 +42,15 @@
   font-display: swap;
 }
 
-@theme {
-  --font-star-wars: 'StarWars', sans-serif;
+/* Semantic Font Utilities */
+.font-star-wars {
+  font-family: 'StarWars', sans-serif;
+}
+
+.font-orbitron {
+  font-family: 'Orbitron', monospace;
+}
+
+.font-audiowide {
+  font-family: 'Audiowide', cursive;
 }

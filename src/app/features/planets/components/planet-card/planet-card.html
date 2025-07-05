@@ -1,46 +1,52 @@
-  <div class="planet-card relative w-80 h-96 mx-auto">
-      <!-- Card Container -->
-      <div class="card-container relative w-full h-full rounded-lg overflow-hidden bg-gray-900 border border-yellow-500/30 shadow-2xl hover:shadow-yellow-500/20 transition-all duration-300 hover:scale-105">
-        
-        <!-- Stars Background -->
-        <div class="absolute inset-0 bg-black">
-          <div class="stars"></div>
-          <div class="stars2"></div>
-          <div class="stars3"></div>
-        </div>
-        
-        <!-- Glow Effect -->
-        <div class="absolute inset-0 bg-gradient-to-t from-yellow-500/10 via-transparent to-blue-500/10"></div>
-        
-        <!-- Planet Image Container -->
-        <div class="relative z-10 flex flex-col items-center justify-center h-full p-6">
-          <!-- Planet -->
-          <div class="planet-container relative mb-8">
-            <div class="planet-glow absolute -inset-4 bg-blue-500/20 rounded-full blur-xl"></div>
-            <!-- <img 
-              [src]="'https://via.placeholder.com/200'" 
-              [alt]="planet().name"
-              class="planet-image relative z-10 w-48 h-48 rounded-full object-cover border-2 border-blue-400/50 shadow-2xl"
-            > -->
-            <!-- Planet Ring (optional) -->
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="planet-ring"></div>
-            </div>
-          </div>
-          
-          <!-- Planet Name -->
-          <div class="text-center">
-            <h2 class="planet-name text-3xl font-bold text-yellow-400 tracking-widest uppercase mb-2">
-              {{ planet().name }} 
-            </h2>
-            <div class="lightsaber-line w-32 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent mx-auto"></div>
-          </div>
-        </div>
-        
-        <!-- Corner Decorations -->
-        <div class="absolute top-2 left-2 w-8 h-8 border-t-2 border-l-2 border-yellow-500/50"></div>
-        <div class="absolute top-2 right-2 w-8 h-8 border-t-2 border-r-2 border-yellow-500/50"></div>
-        <div class="absolute bottom-2 left-2 w-8 h-8 border-b-2 border-l-2 border-yellow-500/50"></div>
-        <div class="absolute bottom-2 right-2 w-8 h-8 border-b-2 border-r-2 border-yellow-500/50"></div>
+  <!--
+  Planet Card Component
+  Semantic HTML5 structure with proper ARIA attributes
+  Following web accessibility guidelines (WCAG 2.1)
+-->
+<article 
+  class="planet-card relative w-80 h-96 mx-auto rounded-xl bg-gray-900/20 backdrop-blur-sm border border-yellow-400/30 shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-yellow-400/20 hover:border-yellow-400 focus-visible:outline-2 focus-visible:outline-yellow-400 focus-visible:outline-offset-2"
+  role="article"
+  [attr.aria-label]="'Planet information card for ' + planet().name"
+  tabindex="0"
+  [attr.data-planet-name]="planet().name">
+  
+  <!-- Main Content Container -->
+  <div class="card-content relative z-20 flex flex-col justify-center items-center h-full p-6">
+    
+    <!-- Planet Visual Representation -->
+    <figure class="planet-visual relative w-32 h-32 mb-8 flex items-center justify-center" 
+            aria-hidden="true" 
+            role="img"
+            [attr.aria-label]="'Visual representation of ' + planet().name">
+      
+      <!-- Planet Sphere with Atmospheric Effects -->
+      <div class="planet-sphere w-full h-full bg-gradient-to-br from-blue-400/90 via-blue-500/70 to-yellow-400/40 rounded-full relative shadow-2xl"
+           data-planet-type="terrestrial">
       </div>
-    </div>
+      
+    </figure>
+    
+    <!-- Planet Information Section -->
+    <header class="planet-info text-center relative">
+      
+      <!-- Primary Planet Name -->
+      <h3 class="planet-name font-orbitron text-2xl font-bold text-yellow-400 uppercase tracking-widest relative drop-shadow-lg">
+        {{ planet().name }}
+      </h3>
+      
+      <!-- Planet Type Label -->
+      <!-- <p class="font-star-wars text-xs text-yellow-300/70 mt-1 tracking-wider"
+         aria-label="Planet classification">
+        PLANET
+      </p> -->
+      
+    </header>
+    
+  </div>
+  
+  <!-- Screen Reader Content -->
+  <div class="sr-only">
+    <span>{{ planet().name }} planet card. Press Enter or Space to interact.</span>
+  </div>
+  
+</article>
