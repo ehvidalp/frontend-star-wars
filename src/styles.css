@@ -21,11 +21,4 @@
 /* === UTILITIES === */
 @import "./styles/utilities/_starfield.css";
 
-/* === ACCESSIBILITY === */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+/* Note: Accessibility styles are handled in /styles/base/_accessibility.css */

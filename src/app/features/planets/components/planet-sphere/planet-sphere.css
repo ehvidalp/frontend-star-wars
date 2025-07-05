@@ -3,13 +3,7 @@
  * Specialized styles that cannot be handled by Tailwind utilities
  */
 
-/* Accessibility - Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  .planet-sphere,
-  .planet-sphere::before,
-  .planet-sphere::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+/* 
+ * Note: Accessibility styles (reduced motion) are handled globally in 
+ * /src/styles/base/_accessibility.css - no need to duplicate them here
+ */
