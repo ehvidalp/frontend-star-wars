@@ -3,10 +3,11 @@ import { Planets } from '../../services/planets';
 import { PlanetsStore } from '../../store/planets.store';
 import { InfinityScrollDirective } from '../../../../shared/directives/infinity-scroll';
 import { CommonModule } from '@angular/common';
+import { PlanetCard } from '../planet-card/planet-card';
 
 @Component({
   selector: 'app-planets-list',
-  imports: [InfinityScrollDirective, CommonModule],
+  imports: [InfinityScrollDirective, CommonModule, PlanetCard],
   templateUrl: './planets-list.html',
   styleUrl: './planets-list.css'
 })

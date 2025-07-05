@@ -1,0 +1,46 @@
+  <div class="planet-card relative w-80 h-96 mx-auto">
+      <!-- Card Container -->
+      <div class="card-container relative w-full h-full rounded-lg overflow-hidden bg-gray-900 border border-yellow-500/30 shadow-2xl hover:shadow-yellow-500/20 transition-all duration-300 hover:scale-105">
+        
+        <!-- Stars Background -->
+        <div class="absolute inset-0 bg-black">
+          <div class="stars"></div>
+          <div class="stars2"></div>
+          <div class="stars3"></div>
+        </div>
+        
+        <!-- Glow Effect -->
+        <div class="absolute inset-0 bg-gradient-to-t from-yellow-500/10 via-transparent to-blue-500/10"></div>
+        
+        <!-- Planet Image Container -->
+        <div class="relative z-10 flex flex-col items-center justify-center h-full p-6">
+          <!-- Planet -->
+          <div class="planet-container relative mb-8">
+            <div class="planet-glow absolute -inset-4 bg-blue-500/20 rounded-full blur-xl"></div>
+            <!-- <img 
+              [src]="'https://via.placeholder.com/200'" 
+              [alt]="planet().name"
+              class="planet-image relative z-10 w-48 h-48 rounded-full object-cover border-2 border-blue-400/50 shadow-2xl"
+            > -->
+            <!-- Planet Ring (optional) -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="planet-ring"></div>
+            </div>
+          </div>
+          
+          <!-- Planet Name -->
+          <div class="text-center">
+            <h2 class="planet-name text-3xl font-bold text-yellow-400 tracking-widest uppercase mb-2">
+              {{ planet().name }} 
+            </h2>
+            <div class="lightsaber-line w-32 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent mx-auto"></div>
+          </div>
+        </div>
+        
+        <!-- Corner Decorations -->
+        <div class="absolute top-2 left-2 w-8 h-8 border-t-2 border-l-2 border-yellow-500/50"></div>
+        <div class="absolute top-2 right-2 w-8 h-8 border-t-2 border-r-2 border-yellow-500/50"></div>
+        <div class="absolute bottom-2 left-2 w-8 h-8 border-b-2 border-l-2 border-yellow-500/50"></div>
+        <div class="absolute bottom-2 right-2 w-8 h-8 border-b-2 border-r-2 border-yellow-500/50"></div>
+      </div>
+    </div>
