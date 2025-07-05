@@ -1,10 +1,11 @@
 import { Component, input, inject, computed } from '@angular/core';
 import { Router } from '@angular/router';
 import { Planet, PlanetSummary } from '../../models/planet.model';
+import { PlanetSphereComponent } from '../planet-sphere';
 
 @Component({
   selector: 'app-planet-card',
-  imports: [],
+  imports: [PlanetSphereComponent],
   templateUrl: './planet-card.html',
   styleUrl: './planet-card.css'
 })

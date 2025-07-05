@@ -105,6 +105,25 @@
   }
 }
 
+/* Star Wars Planet Animations */
+@keyframes planet-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes planet-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+.planet-orbit {
+  animation: planet-orbit 20s linear infinite;
+}
+
+.planet-float {
+  animation: planet-float 6s ease-in-out infinite;
+}
+
 /* View Transitions - Global Styles */
 @view-transition {
   navigation: auto;

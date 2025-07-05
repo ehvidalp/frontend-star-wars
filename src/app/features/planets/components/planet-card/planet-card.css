@@ -125,6 +125,25 @@
   animation: ring-rotate 12s linear infinite;
 }
 
+/* Planet Animation Styles */
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 15s linear infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
 @media (max-width: 640px) {
   .planet-sphere::after {
     width: 6rem;
@@ -158,6 +177,11 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  
+  .animate-spin-slow,
+  .animate-spin-reverse {
+    animation: none !important;
   }
 }
 
