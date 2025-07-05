@@ -9,7 +9,8 @@ src/styles/
 │   └── _utilities.css      # Animation utility classes
 ├── base/
 │   ├── _variables.css      # CSS custom properties & fonts
-│   └── _view-transitions.css # View transition configurations
+│   ├── _view-transitions.css # View transition configurations
+│   └── _accessibility.css  # Global accessibility styles
 ├── components/
 │   └── _planet.css         # Planet component styles
 ├── utilities/
@@ -118,9 +119,25 @@ Global view transition configurations for:
 
 ## ♿ Accessibility
 
+Global accessibility styles in `base/_accessibility.css`:
 - `prefers-reduced-motion` support throughout
-- Fallbacks for unsupported view transitions
-- High contrast media query support
+- `prefers-contrast` media queries for high contrast
+- Focus indicators and accessible status elements
+- Print styles for better printing experience
+
+## 🧹 Component CSS Cleanup
+
+### Analyzed Components
+- **planet-card.css**: Removed redundant corner decorations (now using Tailwind utilities)
+- **planets-list.css**: Moved global accessibility rules to base layer
+- **planet-sphere.css**: Already optimized (minimal component-specific styles)
+- **planet-details.css**: Already optimized (minimal component-specific styles)
+
+### Cleanup Principles
+1. **Remove duplicate styles** - If it can be done with Tailwind, use Tailwind
+2. **Centralize global styles** - Accessibility and animations go to base/global layers
+3. **Keep component CSS minimal** - Only styles that can't be handled by utilities
+4. **Maintain semantic structure** - Clear separation of concerns
 
 ## 🛠️ Usage Examples
 

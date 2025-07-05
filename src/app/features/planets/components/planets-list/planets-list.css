@@ -1,15 +1,8 @@
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+/**
+ * Planets List Component Styles
+ * This component uses Tailwind utilities for all styling.
+ * Global accessibility styles have been moved to /styles/base/_accessibility.css
+ * This file is kept for potential future component-specific styles.
+ */
 
-@media (prefers-contrast: high) {
-  [role="status"] {
-    border: 1px solid currentColor;
-    padding: 1rem;
-    border-radius: 0.5rem;
-  }
-}
+/* File intentionally left minimal - all styles are handled by Tailwind utilities */
