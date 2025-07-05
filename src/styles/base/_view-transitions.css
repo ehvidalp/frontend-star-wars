@@ -1,0 +1,67 @@
+/**
+ * View Transitions
+ * Global view transition configurations and animations
+ */
+
+/* === VIEW TRANSITION CONFIG === */
+@view-transition {
+  navigation: auto;
+}
+
+/* === GLOBAL TRANSITIONS === */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* === PLANET CARD TRANSITIONS === */
+::view-transition-old(planet-card-*),
+::view-transition-new(planet-card-*) {
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+}
+
+/* === PLANET SPHERE TRANSITIONS === */
+::view-transition-old(planet-sphere-*),
+::view-transition-new(planet-sphere-*) {
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+}
+
+/* === PLANET TITLE TRANSITIONS === */
+::view-transition-old(planet-title-*),
+::view-transition-new(planet-title-*) {
+  animation-duration: 0.9s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === CUSTOM TRANSITION EFFECTS === */
+::view-transition-old(planet-card-*) {
+  animation-name: fadeOutScale;
+}
+
+::view-transition-new(planet-card-*) {
+  animation-name: fadeInScale;
+}
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01s !important;
+  }
+}
+
+/* === FALLBACK FOR UNSUPPORTED BROWSERS === */
+@supports not (view-transition-name: none) {
+  .planet-card {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .planet-card:hover {
+    transform: scale(1.05);
+  }
+}

@@ -1,0 +1,91 @@
+/**
+ * Animation Utilities
+ * Tailwind-compatible animation classes using our centralized keyframes
+ */
+
+@layer utilities {
+  /* === STAR FIELD === */
+  .animate-zoom {
+    animation: zoom 17s alternate infinite ease-in-out;
+  }
+  
+  /* === PLANET ANIMATIONS === */
+  .animate-planet-orbit {
+    animation: planet-orbit 20s linear infinite;
+  }
+  
+  .animate-planet-float {
+    animation: planet-float 6s ease-in-out infinite;
+  }
+  
+  .animate-planet-glow {
+    animation: planet-glow 4s ease-in-out infinite;
+  }
+  
+  /* === RING ANIMATIONS === */
+  .animate-ring-rotate {
+    animation: ring-rotate 12s linear infinite;
+  }
+  
+  .animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
+  }
+  
+  .animate-spin-reverse {
+    animation: spin-reverse 15s linear infinite;
+  }
+  
+  /* === CARD ANIMATIONS === */
+  .animate-card-hover-glow {
+    animation: card-hover-glow 3s ease-in-out infinite;
+  }
+  
+  /* === PULSE ANIMATIONS === */
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  .animate-lightsaber-pulse {
+    animation: lightsaber-pulse 2s ease-in-out infinite;
+  }
+  
+  /* === SCANNING ANIMATIONS === */
+  .animate-scan-line {
+    animation: scan-line 3s ease-in-out infinite;
+  }
+  
+  /* === HOLOGRAPHIC ANIMATIONS === */
+  .animate-holographic-flicker {
+    animation: holographic-flicker 0.15s infinite linear;
+  }
+  
+  /* === ENERGY ANIMATIONS === */
+  .animate-energy-flow {
+    animation: energy-flow 2s ease-in-out infinite;
+  }
+  
+  /* === HOVER STATES === */
+  .hover\:animate-planet-float:hover {
+    animation: planet-float 6s ease-in-out infinite;
+  }
+  
+  .hover\:animate-planet-glow:hover {
+    animation: planet-glow 4s ease-in-out infinite;
+  }
+  
+  .hover\:animate-ring-rotate:hover {
+    animation: ring-rotate 12s linear infinite;
+  }
+  
+  .group:hover .group-hover\:animate-planet-float {
+    animation: planet-float 6s ease-in-out infinite;
+  }
+  
+  .group:hover .group-hover\:animate-planet-glow {
+    animation: planet-glow 4s ease-in-out infinite;
+  }
+  
+  .group:hover .group-hover\:animate-ring-rotate {
+    animation: ring-rotate 12s linear infinite;
+  }
+}

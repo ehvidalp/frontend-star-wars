@@ -54,20 +54,20 @@ export class PlanetSphere {
   planetClasses = computed(() => {
     const type = this.planetType();
     
-    // Mapa completo de estilos por tipo de planeta
+    // Mapa de clases Tailwind para cada tipo de planeta
     const classMap: Record<string, string> = {
-      'desert': 'bg-gradient-to-br from-yellow-300/80 via-orange-400/70 to-amber-600/60',
-      'ice': 'bg-gradient-to-br from-blue-100/80 via-cyan-200/70 to-blue-300/60',
-      'ocean': 'bg-gradient-to-br from-blue-300/80 via-blue-500/70 to-blue-700/60',
-      'forest': 'bg-gradient-to-br from-green-300/80 via-green-500/70 to-green-700/60',
-      'urban': 'bg-gradient-to-br from-gray-300/80 via-slate-400/70 to-gray-600/60',
-      'gas-giant': 'bg-gradient-to-br from-purple-300/80 via-pink-400/70 to-purple-600/60',
-      'volcanic': 'bg-gradient-to-br from-red-400/80 via-orange-500/70 to-red-700/60',
-      'crystal': 'bg-gradient-to-br from-pink-200/80 via-purple-300/70 to-indigo-400/60',
-      'toxic': 'bg-gradient-to-br from-lime-300/80 via-green-400/70 to-emerald-600/60',
-      'swamp': 'bg-gradient-to-br from-green-500/80 via-amber-600/70 to-green-800/60',
-      'rocky': 'bg-gradient-to-br from-stone-300/80 via-gray-500/70 to-stone-700/60',
-      'terrestrial': 'bg-gradient-to-br from-cyan-300/80 via-blue-400/70 to-purple-500/60'
+      'desert': 'planet-desert',
+      'ice': 'planet-ice',
+      'ocean': 'planet-ocean',
+      'forest': 'planet-forest',
+      'urban': 'planet-urban',
+      'gas-giant': 'planet-gas-giant',
+      'volcanic': 'planet-volcanic',
+      'crystal': 'planet-crystal',
+      'toxic': 'planet-toxic',
+      'swamp': 'planet-swamp',
+      'rocky': 'planet-rocky',
+      'terrestrial': 'planet-terrestrial'
     };
     
     return classMap[type] || classMap['terrestrial'];

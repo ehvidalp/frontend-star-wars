@@ -1,0 +1,158 @@
+/**
+ * Star Wars Theme Keyframes & Animations
+ * Centralized animation definitions for the entire application
+ */
+
+/* === STAR FIELD ANIMATIONS === */
+@keyframes zoom {
+  0% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1.5);
+    opacity: 0.8;
+  }
+}
+
+/* === PLANET ANIMATIONS === */
+@keyframes planet-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes planet-float {
+  0%, 100% { 
+    transform: translateY(0); 
+  }
+  50% { 
+    transform: translateY(-0.5rem); 
+  }
+}
+
+@keyframes planet-glow {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 0.3; 
+  }
+  50% { 
+    transform: scale(1.1); 
+    opacity: 0.5; 
+  }
+}
+
+/* === RING ANIMATIONS === */
+@keyframes ring-rotate {
+  0% { 
+    transform: translate(-50%, -50%) rotateX(75deg) rotateY(0deg); 
+  }
+  100% { 
+    transform: translate(-50%, -50%) rotateX(75deg) rotateY(360deg); 
+  }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* === VIEW TRANSITION ANIMATIONS === */
+@keyframes fadeOutScale {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* === CARD ANIMATIONS === */
+@keyframes card-hover-glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(147, 197, 253, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(147, 197, 253, 0.5);
+  }
+}
+
+/* === PULSE ANIMATIONS === */
+@keyframes pulse-glow {
+  0%, 100% { 
+    opacity: 0.8;
+  }
+  50% { 
+    opacity: 1;
+  }
+}
+
+/* === LIGHTSABER ANIMATIONS === */
+@keyframes lightsaber-pulse {
+  0%, 100% { 
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+/* === SCANNING ANIMATIONS === */
+@keyframes scan-line {
+  0% { 
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% { 
+    opacity: 1;
+  }
+  100% { 
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* === HOLOGRAPHIC ANIMATIONS === */
+@keyframes holographic-flicker {
+  0%, 95%, 100% { 
+    opacity: 1;
+  }
+  96%, 97% { 
+    opacity: 0.8;
+  }
+  98%, 99% { 
+    opacity: 0.9;
+  }
+}
+
+/* === ENERGY ANIMATIONS === */
+@keyframes energy-flow {
+  0% { 
+    transform: translateX(-100%) scaleX(0);
+  }
+  50% { 
+    transform: translateX(0) scaleX(1);
+  }
+  100% { 
+    transform: translateX(100%) scaleX(0);
+  }
+}
