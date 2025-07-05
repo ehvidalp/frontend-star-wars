@@ -1,1 +1,1 @@
-export { PlanetSphereComponent } from './planet-sphere.component';
+export { PlanetSphere } from './planet-sphere';

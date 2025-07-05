@@ -6,21 +6,7 @@ import { Planet } from '../../models/planet.model';
   selector: 'app-planet-sphere',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <!-- Planeta con anillos orbitales -->
-    <div 
-      class="planet-sphere w-full h-full rounded-full relative transition-all duration-500 ease-in-out group-hover:scale-105 before:content-[''] before:absolute before:inset-2 before:rounded-full before:bg-gradient-to-tr before:from-transparent before:via-white/5 before:to-transparent before:transition-all before:duration-500 group-hover:before:via-white/10"
-      [class]="planetClasses()"
-      [attr.data-planet-type]="planetType()">
-      
-      <!-- Anillos orbitales -->
-      <div class="absolute inset-0 rounded-full border-2 border-cyan-400/20 animate-spin-slow"></div>
-      <div class="absolute inset-4 rounded-full border border-cyan-400/10 animate-spin-reverse"></div>
-      
-      <!-- Brillo superior del planeta -->
-      <div class="absolute top-2 left-4 w-6 h-3 bg-white/20 rounded-full blur-sm"></div>
-    </div>
-  `,
+  templateUrl: './planet-sphere.component.html',
   styles: [`
     :host {
       display: block;

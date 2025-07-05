@@ -18,6 +18,9 @@ export class PlanetsStore {
   readonly nextPageUrl = computed(() => this.planetsStore().nextPageUrl);
   readonly isLoading = computed(() => this.planetsStore().isLoading);
   readonly isLastPage = computed(() => !this.planetsStore().nextPageUrl);
+  readonly error = computed(() => this.planetsStore().error);
+  readonly hasError = computed(() => !!this.planetsStore().error);
+  readonly hasPlanets = computed(() => this.planetsStore().planets.length > 0);
 
 
   loadPlanets(url?: string | null): void {

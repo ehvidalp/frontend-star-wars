@@ -1,58 +1,87 @@
 
-<section class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" role="region" aria-label="Planets list">
+<main 
+  class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" 
+  role="main" 
+  aria-label="Lista de planetas de Star Wars">
   
-  <ul class="grid gap-4 sm:gap-6 relative lg:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 auto-rows-fr place-items-center items-stretch" 
-      role="list" 
-      aria-live="polite"
-      aria-label="List of planets">
-    
-    <li *ngFor="let planet of planetsStore.planets(); trackBy: trackByPlanet" 
-        class="w-full max-w-sm flex flex-col"
-        role="listitem">
-      <app-planet-card [planet]="planet" class="w-full h-full flex-1"></app-planet-card>
-    </li>
-    
-  </ul>
+  <!-- Status announcement for screen readers -->
+  <aside id="planets-status" class="sr-only" aria-live="polite" aria-atomic="true">
+    @if (planetsStore.isLoading() && !planetsStore.hasPlanets()) {
+      Cargando planetas...
+    } @else if (planetsStore.hasError()) {
+      Error al cargar planetas: {{ planetsStore.error() }}
+    } @else if (planetsStore.hasPlanets()) {
+      {{ planetsStore.planets().length }} planetas cargados
+    }
+  </aside>
+
+  <!-- Error State -->
+  @if (showError()) {
+    <app-error-state 
+      [message]="planetsStore.error() || 'Error desconocido'"
+      [retryLabel]="'Reintentar cargar planetas'"
+      (retry)="retryLoading()">
+    </app-error-state>
+  }
+
+  <!-- Planets Grid -->
+  @if (showPlanets()) {
+    <section aria-labelledby="planets-heading">
+      <h2 id="planets-heading" class="sr-only">Planetas disponibles</h2>
+      <ul 
+        class="grid gap-4 sm:gap-6 relative lg:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 auto-rows-fr place-items-center items-stretch" 
+        role="list">
+        
+        @for (planet of planetsStore.planets(); track trackByPlanet($index, planet)) {
+          <li class="w-full max-w-sm flex flex-col" role="listitem">
+            <app-planet-card 
+              [planet]="planet" 
+              class="w-full h-full flex-1"
+              [attr.aria-label]="'Tarjeta del planeta ' + planet.name">
+            </app-planet-card>
+          </li>
+        }
+        
+      </ul>
+    </section>
+  }
+
+  <!-- Infinity Scroll Trigger -->
+  @if (showInfinityScroll()) {
+    <div 
+      appInfinityScroll
+      (scrolledToEnd)="loadMorePlanets()"
+      [isLoading]="planetsStore.isLoading()"
+      [rootMargin]="'100px'"
+      class="w-full h-4 mt-8"
+      aria-hidden="true">
+    </div>
+  }
+
+  <!-- Loading States -->
+  @switch (loadingState()) {
+    @case ('initial') {
+      <app-loading-state 
+        size="large" 
+        ariaLabel="Cargando planetas">
+        Explorando la galaxia...
+      </app-loading-state>
+    }
+    @case ('more') {
+      <app-loading-state 
+        size="medium" 
+        ariaLabel="Cargando más planetas">
+        Cargando más planetas...
+      </app-loading-state>
+    }
+  }
+
+  <!-- End of List -->
+  @if (showEndState()) {
+    <app-end-state 
+      message="Has llegado al final de la galaxia."
+      ariaLabel="Fin de la lista de planetas">
+    </app-end-state>
+  }
   
-  <div 
-    appInfinityScroll
-    (scrolledToEnd)="loadMorePlanets()"
-    [isLoading]="planetsStore.isLoading()"
-    [rootMargin]="'100px'"
-    class="w-full h-4 mt-8"
-    aria-hidden="true">
-  </div>
-
-  <div *ngIf="planetsStore.isLoading() && planetsStore.planets().length === 0" 
-       class="flex items-center justify-center py-16 sm:py-24"
-       role="status" 
-       aria-live="polite">
-    <div class="flex items-center space-x-3">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400"></div>
-      <p class="text-yellow-400 font-orbitron text-lg">Explorando la galaxia...</p>
-    </div>
-  </div>
-
-  <div *ngIf="planetsStore.isLoading() && planetsStore.planets().length > 0" 
-       class="flex items-center justify-center py-8 sm:py-12"
-       role="status" 
-       aria-live="polite">
-    <div class="flex items-center space-x-3">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-400"></div>
-      <p class="text-yellow-400 font-orbitron text-sm sm:text-base">Cargando más planetas...</p>
-    </div>
-  </div>
-
-  <div *ngIf="planetsStore.isLastPage()" 
-       class="text-center py-8 sm:py-12"
-       role="status" 
-       aria-live="polite">
-    <div class="inline-flex items-center space-x-2 text-yellow-400/80">
-      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-      </svg>
-      <p class="font-orbitron text-sm sm:text-base">Has llegado al final de la galaxia.</p>
-    </div>
-  </div>
-  
-</section>
+</main>

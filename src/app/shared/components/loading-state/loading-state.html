@@ -1,0 +1,15 @@
+<section 
+  [class]="containerClasses()"
+  role="status" 
+  aria-live="polite"
+  [attr.aria-label]="ariaLabel()">
+  <figure class="flex items-center space-x-3">
+    <div 
+      [class]="spinnerClasses()"
+      aria-hidden="true">
+    </div>
+    <figcaption [class]="textClasses()">
+      <ng-content></ng-content>
+    </figcaption>
+  </figure>
+</section>
