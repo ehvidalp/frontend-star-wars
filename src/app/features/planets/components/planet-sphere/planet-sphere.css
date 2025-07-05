@@ -17,36 +17,127 @@
   }
 }
 
+@keyframes planet-float {
+  0%, 100% { 
+    transform: translateY(0); 
+  }
+  50% { 
+    transform: translateY(-0.5rem); 
+  }
+}
+
+@keyframes planet-glow {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 0.3; 
+  }
+  50% { 
+    transform: scale(1.1); 
+    opacity: 0.5; 
+  }
+}
+
+@keyframes ring-rotate {
+  0% { 
+    transform: translate(-50%, -50%) rotateX(75deg) rotateY(0deg); 
+  }
+  100% { 
+    transform: translate(-50%, -50%) rotateX(75deg) rotateY(360deg); 
+  }
+}
+
 .animate-spin-slow {
-  animation: spin-slow 8s linear infinite;
+  animation: spin-slow 20s linear infinite;
 }
 
 .animate-spin-reverse {
-  animation: spin-reverse 12s linear infinite;
+  animation: spin-reverse 15s linear infinite;
 }
 
-/* Efectos adicionales para el planeta */
+/* Efectos del planeta */
 .planet-sphere {
   position: relative;
   z-index: 1;
 }
 
-.planet-sphere::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 2;
-}
-
+/* Anillo orbital 3D principal */
 .planet-sphere::after {
   content: '';
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  width: 160%; /* Relativo al tamaño del contenedor */
+  height: 48%; /* Relativo al tamaño del contenedor */
+  border: 2px solid rgba(147, 197, 253, 0.8);
   border-radius: 50%;
-  background: radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.2) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 3;
+  transform: translate(-50%, -50%) rotateX(75deg);
+  z-index: 2;
+  opacity: 0.9;
+  box-shadow: 
+    0 0 20px rgba(147, 197, 253, 0.6),
+    inset 0 0 20px rgba(147, 197, 253, 0.3),
+    0 0 40px rgba(147, 197, 253, 0.2);
+  filter: brightness(1.2);
+  
+  background: linear-gradient(
+    0deg,
+    rgba(147, 197, 253, 0.8) 0%,
+    rgba(147, 197, 253, 0.6) 25%,
+    rgba(147, 197, 253, 0.2) 50%,
+    rgba(147, 197, 253, 0.1) 75%,
+    transparent 100%
+  );
+  
+  mask: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.8) 25%,
+    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.1) 75%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.8) 25%,
+    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.1) 75%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* Glow effect */
+.planet-sphere::before {
+  content: '';
+  position: absolute;
+  inset: -25%; /* Relativo al tamaño del contenedor */
+  background: rgba(147, 197, 253, 0.3);
+  border-radius: 50%;
+  filter: blur(1rem);
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* Animaciones hover - tanto directo como desde el grupo parent */
+.planet-sphere:hover,
+.group:hover .planet-sphere {
+  animation: planet-float 6s ease-in-out infinite;
+}
+
+.planet-sphere:hover::before,
+.group:hover .planet-sphere::before {
+  animation: planet-glow 4s ease-in-out infinite;
+}
+
+.planet-sphere:hover::after,
+.group:hover .planet-sphere::after {
+  animation: ring-rotate 12s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
