@@ -23,11 +23,11 @@ export interface PlanetSummary {
 export type Planet = PlanetDetail | PlanetSummary;
 
 export interface IPlanetsStore {
-    planets: Planet[];
-    selectedPlanet: Planet | null;
-    nextPageUrl: string | null;
-    isLoading: boolean;
-    error: string | null;
+  planets: Planet[];
+  selectedPlanet: Planet | null;
+  nextPageUrl: string | null;
+  isLoading: boolean;
+  error: string | null;
 }
 
 export interface PlanetListResponse {

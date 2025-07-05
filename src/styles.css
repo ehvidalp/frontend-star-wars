@@ -104,3 +104,88 @@
       28vw 2vh 0px 0px #fff;
   }
 }
+
+/* View Transitions - Global Styles */
+@view-transition {
+  navigation: auto;
+}
+
+/* Configuración global para todas las view transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Transiciones específicas para planet cards */
+::view-transition-old(planet-card-*),
+::view-transition-new(planet-card-*) {
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+}
+
+/* Transiciones para planet spheres */
+::view-transition-old(planet-sphere-*),
+::view-transition-new(planet-sphere-*) {
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+}
+
+/* Transiciones para planet titles */
+::view-transition-old(planet-title-*),
+::view-transition-new(planet-title-*) {
+  animation-duration: 0.9s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efectos personalizados para la expansión */
+::view-transition-old(planet-card-*) {
+  animation-name: fadeOutScale;
+}
+
+::view-transition-new(planet-card-*) {
+  animation-name: fadeInScale;
+}
+
+@keyframes fadeOutScale {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Mejoras de accesibilidad para view transitions */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01s !important;
+  }
+}
+
+/* Fallback para navegadores sin soporte */
+@supports not (view-transition-name: none) {
+  .planet-card {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .planet-card:hover {
+    transform: scale(1.05);
+  }
+}

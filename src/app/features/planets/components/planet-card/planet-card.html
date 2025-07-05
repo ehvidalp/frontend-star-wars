@@ -3,14 +3,19 @@
   role="article"
   [attr.aria-label]="'Planet information card for ' + planet().name"
   tabindex="0"
-  [attr.data-planet-name]="planet().name">
+  [attr.data-planet-name]="planet().name"
+  [style.view-transition-name]="cardTransitionName()"
+  (click)="onCardClick()"
+  (keydown.enter)="onCardClick()"
+  (keydown.space)="onCardClick()">
   
   <div class="relative z-20 flex flex-col justify-center items-center h-full p-6">
     
     <figure class="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 mb-4 sm:mb-6 lg:mb-8 flex items-center justify-center" 
             aria-hidden="true" 
             role="img"
-            [attr.aria-label]="'Visual representation of ' + planet().name">
+            [attr.aria-label]="'Visual representation of ' + planet().name"
+            [style.view-transition-name]="sphereTransitionName()">
       
       <div class="planet-sphere w-full h-full bg-gradient-to-br from-blue-400/90 via-blue-500/70 to-yellow-400/40 rounded-full relative shadow-lg shadow-blue-400/30 transition-all duration-300 ease-in-out group-hover:scale-110"
            data-planet-type="terrestrial">
@@ -18,7 +23,8 @@
       
     </figure>
     
-    <header class="text-center relative">
+    <header class="text-center relative"
+            [style.view-transition-name]="titleTransitionName()">
       
       <h3 class="font-orbitron text-lg sm:text-xl lg:text-2xl font-bold text-yellow-400 uppercase tracking-widest relative drop-shadow-lg transition-all duration-300 before:content-[''] before:absolute before:bottom-[-0.5rem] before:left-1/2 before:w-16 before:h-0.5 before:bg-gradient-to-r before:from-transparent before:via-yellow-400 before:to-transparent before:transform before:-translate-x-1/2 before:opacity-50 before:shadow-sm before:shadow-yellow-400/50 before:transition-all before:duration-[2000ms] before:ease-in-out group-hover:before:animate-pulse group-hover:before:scale-x-125 group-hover:before:opacity-100"
           style="text-shadow: 0 0 10px rgb(250 204 21 / 0.8), 0 0 20px rgb(250 204 21 / 0.4), 0 0 30px rgb(250 204 21 / 0.4), 0 2px 4px rgb(0 0 0 / 0.5); filter: brightness(1.2);">

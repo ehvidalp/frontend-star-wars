@@ -8,6 +8,10 @@ export const routes: Routes = [
             {
                 path: '',
                 loadChildren: () => import('./features/home/home.routes'),
+            },
+            {
+                path: 'planets',
+                loadChildren: () => import('./features/planets/planets.route'),
             }
         ]   
     }
