@@ -1,13 +1,16 @@
-<header role="heading">
+<!-- <header role="heading">
     <nav>
-        <!-- <ul>
-            <li><a routerLink="/home">Home</a></li>
-            <li><a routerLink="/about">About</a></li>
-            <li><a routerLink="/contact">Contact</a></li>
-        </ul> -->
+     
     </nav>
 </header>
 
 <main role="main">
     <router-outlet></router-outlet>
+</main> -->
+
+<main class="relative min-h-screen bg-black overflow-hidden">
+
+  <div class="absolute top-1/2 left-1/2 h-px w-px rounded-full bg-white animate-zoom space-background"></div>
+
+  <router-outlet></router-outlet>
 </main>
