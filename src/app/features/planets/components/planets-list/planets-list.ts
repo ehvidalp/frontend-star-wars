@@ -1,15 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Planets } from '../../services/planets';
 import { PlanetsStore } from '../../store/planets.store';
 
 import { CommonModule } from '@angular/common';
 import { PlanetCard } from '../planet-card/planet-card';
+import { InfinityScrollDirective } from '../../../../shared/directives/infinity-scroll';
 
 @Component({
   selector: 'app-planets-list',
-  imports: [ CommonModule, PlanetCard],
+  imports: [ CommonModule, PlanetCard, InfinityScrollDirective],
   templateUrl: './planets-list.html',
-  styleUrl: './planets-list.css'
+  styleUrl: './planets-list.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlanetsList implements OnInit {
   readonly planetsStore = inject(PlanetsStore);
@@ -27,10 +29,15 @@ export class PlanetsList implements OnInit {
   }
 
   /**
-   * Track by function for ngFor to improve performance
-   * Uses planet name as unique identifier
+   * Track by function optimizado para ngFor
+   * Usa uid si está disponible (PlanetSummary), sino el name
    */
   trackByPlanet(index: number, planet: any): string {
-    return planet.name || index.toString();
+    // Para PlanetSummary usar uid que es único
+    if (planet.uid) {
+      return planet.uid;
+    }
+    // Para otros casos usar name + index para evitar duplicados
+    return `${planet.name || 'unknown'}-${index}`;
   }
 }
