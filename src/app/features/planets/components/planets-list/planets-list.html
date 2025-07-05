@@ -23,8 +23,18 @@
     aria-hidden="true">
   </div>
 
-  <div *ngIf="planetsStore.isLoading()" 
-       class="flex items-center justify-center py-8 sm:py-12 opacity-0 animate-in fade-in duration-300"
+  <div *ngIf="planetsStore.isLoading() && planetsStore.planets().length === 0" 
+       class="flex items-center justify-center py-16 sm:py-24"
+       role="status" 
+       aria-live="polite">
+    <div class="flex items-center space-x-3">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400"></div>
+      <p class="text-yellow-400 font-orbitron text-lg">Explorando la galaxia...</p>
+    </div>
+  </div>
+
+  <div *ngIf="planetsStore.isLoading() && planetsStore.planets().length > 0" 
+       class="flex items-center justify-center py-8 sm:py-12"
        role="status" 
        aria-live="polite">
     <div class="flex items-center space-x-3">
@@ -34,7 +44,7 @@
   </div>
 
   <div *ngIf="planetsStore.isLastPage()" 
-       class="text-center py-8 sm:py-12 opacity-0 animate-in slide-in-from-bottom-4 duration-500"
+       class="text-center py-8 sm:py-12"
        role="status" 
        aria-live="polite">
     <div class="inline-flex items-center space-x-2 text-yellow-400/80">

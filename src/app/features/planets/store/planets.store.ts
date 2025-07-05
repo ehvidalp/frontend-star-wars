@@ -17,7 +17,13 @@ export class PlanetsStore {
   readonly selectedPlanet = computed(() => this.planetsStore().selectedPlanet);
   readonly nextPageUrl = computed(() => this.planetsStore().nextPageUrl);
   readonly isLoading = computed(() => this.planetsStore().isLoading);
-  readonly isLastPage = computed(() => !this.planetsStore().nextPageUrl);
+  readonly isLastPage = computed(() => {
+    const nextUrl = this.planetsStore().nextPageUrl;
+    const planets = this.planets();
+    const isLoading = this.planetsStore().isLoading;
+    
+    return planets.length > 0 && !isLoading && !nextUrl;
+  });
 
 
   loadPlanets(url?: string | null): void {
