@@ -1,51 +1,34 @@
-  <!--
-  Planet Card Component
-  Semantic HTML5 structure with proper ARIA attributes
-  Following web accessibility guidelines (WCAG 2.1)
--->
 <article 
-  class="planet-card relative w-80 h-96 mx-auto rounded-xl bg-gray-900/20 backdrop-blur-sm border border-yellow-400/30 shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-yellow-400/20 hover:border-yellow-400 focus-visible:outline-2 focus-visible:outline-yellow-400 focus-visible:outline-offset-2 "
+  class="planet-card relative w-full h-full min-h-[20rem] max-w-sm mx-auto rounded-xl bg-gray-900/20 backdrop-blur-sm border border-yellow-400/30 shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:shadow-yellow-400/20 hover:border-yellow-400 focus-visible:outline-2 focus-visible:outline-yellow-400 focus-visible:outline-offset-2 will-change-transform group"
   role="article"
   [attr.aria-label]="'Planet information card for ' + planet().name"
   tabindex="0"
   [attr.data-planet-name]="planet().name">
   
-  <div class="absolute top-1/2 left-1/2 h-px w-px rounded-full bg-white animate-zoom space-background"></div>
-  <!-- Main Content Container -->
-  <div class="card-content relative z-20 flex flex-col justify-center items-center h-full p-6">
+  <div class="relative z-20 flex flex-col justify-center items-center h-full p-6">
     
-    <!-- Planet Visual Representation -->
-    <figure class="planet-visual relative w-32 h-32 mb-8 flex items-center justify-center" 
+    <figure class="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 mb-4 sm:mb-6 lg:mb-8 flex items-center justify-center" 
             aria-hidden="true" 
             role="img"
             [attr.aria-label]="'Visual representation of ' + planet().name">
       
-      <!-- Planet Sphere with Atmospheric Effects -->
-      <div class="planet-sphere w-full h-full bg-gradient-to-br from-blue-400/90 via-blue-500/70 to-yellow-400/40 rounded-full relative shadow-2xl"
+      <div class="planet-sphere w-full h-full bg-gradient-to-br from-blue-400/90 via-blue-500/70 to-yellow-400/40 rounded-full relative shadow-lg shadow-blue-400/30 transition-all duration-300 ease-in-out group-hover:scale-110"
            data-planet-type="terrestrial">
       </div>
       
     </figure>
     
-    <!-- Planet Information Section -->
-    <header class="planet-info text-center relative">
+    <header class="text-center relative">
       
-      <!-- Primary Planet Name -->
-      <h3 class="planet-name font-orbitron text-2xl font-bold text-yellow-400 uppercase tracking-widest relative drop-shadow-lg">
+      <h3 class="font-orbitron text-lg sm:text-xl lg:text-2xl font-bold text-yellow-400 uppercase tracking-widest relative drop-shadow-lg transition-all duration-300 before:content-[''] before:absolute before:bottom-[-0.5rem] before:left-1/2 before:w-16 before:h-0.5 before:bg-gradient-to-r before:from-transparent before:via-yellow-400 before:to-transparent before:transform before:-translate-x-1/2 before:opacity-50 before:shadow-sm before:shadow-yellow-400/50 before:transition-all before:duration-[2000ms] before:ease-in-out group-hover:before:animate-pulse group-hover:before:scale-x-125 group-hover:before:opacity-100"
+          style="text-shadow: 0 0 10px rgb(250 204 21 / 0.8), 0 0 20px rgb(250 204 21 / 0.4), 0 0 30px rgb(250 204 21 / 0.4), 0 2px 4px rgb(0 0 0 / 0.5); filter: brightness(1.2);">
         {{ planet().name }}
       </h3>
-      
-      <!-- Planet Type Label -->
-      <!-- <p class="font-star-wars text-xs text-yellow-300/70 mt-1 tracking-wider"
-         aria-label="Planet classification">
-        PLANET
-      </p> -->
       
     </header>
     
   </div>
   
-  <!-- Screen Reader Content -->
   <div class="sr-only">
     <span>{{ planet().name }} planet card. Press Enter or Space to interact.</span>
   </div>

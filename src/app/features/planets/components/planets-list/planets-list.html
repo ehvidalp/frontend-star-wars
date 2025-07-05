@@ -1,26 +1,48 @@
 
-    <ul class="planets-grid">
-      <li *ngFor="let planet of planetsStore.planets()">
-        <app-planet-card [planet]="planet"></app-planet-card>
-      </li>
-    </ul>
-
-    <div 
-      appInfinityScroll
-      (scrolledToEnd)="loadMorePlanets()"
-      [isLoading]="planetsStore.isLoading()"
-      [rootMargin]="'100px'">
-    </div>
-
-    <!-- Indicador de carga -->
-    <div *ngIf="planetsStore.isLoading()" class="loading-indicator">
-      <p>Cargando más planetas...</p>
-    </div>
-  <!-- </div> -->
-
-  <!-- Mensaje final si no hay más páginas -->
-  <div *ngIf="planetsStore.isLastPage()">
-    <p>Has llegado al final de la galaxia.</p>
+<section class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" role="region" aria-label="Planets list">
+  
+  <ul class="grid gap-4 sm:gap-6 relative lg:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 auto-rows-fr place-items-center items-stretch" 
+      role="list" 
+      aria-live="polite"
+      aria-label="List of planets">
+    
+    <li *ngFor="let planet of planetsStore.planets(); trackBy: trackByPlanet" 
+        class="w-full max-w-sm flex flex-col"
+        role="listitem">
+      <app-planet-card [planet]="planet" class="w-full h-full flex-1"></app-planet-card>
+    </li>
+    
+  </ul>
+  
+  <div 
+    appInfinityScroll
+    (scrolledToEnd)="loadMorePlanets()"
+    [isLoading]="planetsStore.isLoading()"
+    [rootMargin]="'100px'"
+    class="w-full h-4 mt-8"
+    aria-hidden="true">
   </div>
 
-    
+  <div *ngIf="planetsStore.isLoading()" 
+       class="flex items-center justify-center py-8 sm:py-12 opacity-0 animate-in fade-in duration-300"
+       role="status" 
+       aria-live="polite">
+    <div class="flex items-center space-x-3">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-400"></div>
+      <p class="text-yellow-400 font-orbitron text-sm sm:text-base">Cargando más planetas...</p>
+    </div>
+  </div>
+
+  <div *ngIf="planetsStore.isLastPage()" 
+       class="text-center py-8 sm:py-12 opacity-0 animate-in slide-in-from-bottom-4 duration-500"
+       role="status" 
+       aria-live="polite">
+    <div class="inline-flex items-center space-x-2 text-yellow-400/80">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+      </svg>
+      <p class="font-orbitron text-sm sm:text-base">Has llegado al final de la galaxia.</p>
+    </div>
+  </div>
+  
+</section>

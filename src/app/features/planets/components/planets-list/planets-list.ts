@@ -25,4 +25,12 @@ export class PlanetsList implements OnInit {
       this.planetsStore.loadPlanets(nextUrl);
     }
   }
+
+  /**
+   * Track by function for ngFor to improve performance
+   * Uses planet name as unique identifier
+   */
+  trackByPlanet(index: number, planet: any): string {
+    return planet.name || index.toString();
+  }
 }
