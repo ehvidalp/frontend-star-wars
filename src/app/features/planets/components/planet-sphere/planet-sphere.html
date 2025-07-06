@@ -2,7 +2,7 @@
   [class]="'relative flex items-center justify-center planet-sphere ' + sizeClasses()" 
   aria-hidden="true" 
   role="img"
-  [attr.aria-label]="'Visual representation of ' + planet().name"
+  [attr.aria-label]="'Visual representation of ' + (planet().name || 'unknown planet')"
   [style.view-transition-name]="sphereTransitionName()">
   <div 
     class="w-full h-full rounded-full relative shadow-lg shadow-cyan-400/20 transition-all duration-500 ease-in-out hover:scale-105"

@@ -26,11 +26,13 @@
         role="list">
         @for (planet of planetsStore.planets(); track trackByPlanet($index, planet)) {
           <li class="w-full max-w-sm flex flex-col" role="listitem">
-            <app-planet-card 
+            <article 
+              appPlanetCard
               [planet]="planet" 
               class="w-full h-full flex-1"
               [attr.aria-label]="'Tarjeta del planeta ' + planet.name">
-            </app-planet-card>
+              <app-planet-card-content [planet]="planet"></app-planet-card-content>
+            </article>
           </li>
         }
       </ul>

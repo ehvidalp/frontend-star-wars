@@ -17,7 +17,17 @@ export interface PlanetSummary {
   name: string;
   url: string;
 }
-export type Planet = PlanetDetail | PlanetSummary;
+
+// Nueva interfaz para el formato expandido que incluye todos los datos
+export interface PlanetExpanded {
+  properties: PlanetDetail;
+  description: string;
+  _id: string;
+  uid: string;
+  __v: number;
+}
+
+export type Planet = PlanetDetail | PlanetSummary | (PlanetDetail & { uid: string });
 export interface IPlanetsStore {
   planets: Planet[];
   selectedPlanet: Planet | null;
@@ -31,7 +41,7 @@ export interface PlanetListResponse {
   total_pages: number;
   previous: string | null;
   next: string | null;
-  results: PlanetSummary[];
+  results: PlanetExpanded[];
   apiVersion: string;
   timestamp: string;
 }

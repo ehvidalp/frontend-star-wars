@@ -1,17 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PlanetCard } from './planet-card';
-describe('PlanetCard', () => {
-  let component: PlanetCard;
-  let fixture: ComponentFixture<PlanetCard>;
+import { PlanetCardContent } from './planet-card-content';
+import { PlanetCardDirective } from './planet-card';
+
+describe('PlanetCardContent', () => {
+  let component: PlanetCardContent;
+  let fixture: ComponentFixture<PlanetCardContent>;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlanetCard]
+      imports: [PlanetCardContent, PlanetCardDirective]
     })
     .compileComponents();
-    fixture = TestBed.createComponent(PlanetCard);
+    
+    fixture = TestBed.createComponent(PlanetCardContent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

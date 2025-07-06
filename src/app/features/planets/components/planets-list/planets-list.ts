@@ -1,15 +1,17 @@
 import { Component, inject, OnInit, ChangeDetectionStrategy, computed } from '@angular/core';
 import { PlanetsStore } from '@features/planets/store/planets.store';
 import { LoadingSize } from '@shared/models/ui-state.model';
-import { PlanetCard } from '@features/planets/components/planet-card/planet-card';
+import { PlanetCardDirective } from '@features/planets/components/planet-card/planet-card';
+import { PlanetCardContent } from '@features/planets/components/planet-card/planet-card-content';
 import { InfinityScrollDirective } from '@shared/directives/infinity-scroll';
 import { LoadingState } from '@shared/components/loading-state/loading-state';
 import { ErrorState } from '@shared/components/error-state/error-state';
 import { EndState } from '@shared/components/end-state/end-state';
+
 @Component({
   selector: 'app-planets-list',
   standalone: true,
-  imports: [PlanetCard, InfinityScrollDirective, LoadingState, ErrorState, EndState],
+  imports: [PlanetCardDirective, PlanetCardContent, InfinityScrollDirective, LoadingState, ErrorState, EndState],
   templateUrl: './planets-list.html',
   styleUrl: './planets-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -44,9 +46,11 @@ export class PlanetsList implements OnInit {
     this.planetsStore.loadPlanets();
   }
   trackByPlanet(index: number, planet: any): string {
-    if (planet.uid) {
+    // Usar uid si está disponible (formato expandido)
+    if ('uid' in planet && planet.uid) {
       return planet.uid;
     }
+    // Fallback con el nombre y index
     return `${planet.name || 'unknown'}-${index}`;
   }
 }

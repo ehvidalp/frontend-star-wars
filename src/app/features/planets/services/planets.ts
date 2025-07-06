@@ -9,8 +9,34 @@ export class PlanetsApi {
   private readonly apiUrl = 'https://www.swapi.tech/api';
   private readonly httpClient = inject(HttpClient);
   getPlanets(currentApiUrl?: string | null): Observable<PlanetListResponse> {
-    const planetsUrl = currentApiUrl || `${this.apiUrl}/planets`;
+    let planetsUrl: string;
+    
+    if (currentApiUrl) {
+      // Verificar si ya incluye expanded=true para evitar duplicados
+      if (currentApiUrl.includes('expanded=true')) {
+        planetsUrl = currentApiUrl;
+      } else {
+        // Si ya viene con parámetros, agregar expanded=true
+        planetsUrl = currentApiUrl.includes('?') 
+          ? `${currentApiUrl}&expanded=true`
+          : `${currentApiUrl}?expanded=true`;
+      }
+    } else {
+      // URL base con expanded=true y limit específico para consistencia
+      planetsUrl = `${this.apiUrl}/planets?limit=10&expanded=true`;
+    }
+    
     return this.httpClient.get<PlanetListResponse>(planetsUrl).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getPlanetById(planetId: string): Observable<PlanetDetail> {
+    if (!planetId?.trim()) return throwError(() => new Error('ID del planeta es requerido'));
+    
+    const planetUrl = `${this.apiUrl}/planets/${planetId}`;
+    return this.httpClient.get<PlanetDetailResponse>(planetUrl).pipe(
+      map(response => response.result.properties),
       catchError(this.handleError)
     );
   }

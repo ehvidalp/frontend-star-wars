@@ -1,6 +1,6 @@
 import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { EMPTY_PLANET_STORE, IPlanetsStore, PlanetListResponse } from '@features/planets/models/planet.model';
+import { EMPTY_PLANET_STORE, IPlanetsStore, PlanetListResponse, Planet } from '@features/planets/models/planet.model';
 import { PlanetsApi } from '@features/planets/services/planets';
 import { catchError, EMPTY, tap } from 'rxjs';
 @Injectable({
@@ -42,7 +42,18 @@ export class PlanetsStore {
           }));
           return;
         }
-        const newPlanets = [...this.planets(), ...data.results];
+        const transformedPlanets = data.results.map(planetExpanded => ({
+          ...planetExpanded.properties,
+          uid: planetExpanded.uid,
+          _id: planetExpanded._id,
+          description: planetExpanded.description
+        }));
+        
+        // Evitar duplicados basándose en uid
+        const existingUids = new Set(this.planets().map(p => 'uid' in p ? p.uid : null));
+        const newUniquePlanets = transformedPlanets.filter(planet => !existingUids.has(planet.uid));
+        
+        const newPlanets = [...this.planets(), ...newUniquePlanets];
         this.planetsStore.update(store => ({
           ...store,
           planets: newPlanets,
@@ -61,5 +72,12 @@ export class PlanetsStore {
         return EMPTY;
       })
     ).subscribe();
+  }
+
+  addPlanet(planet: Planet): void {
+    this.planetsStore.update(store => ({
+      ...store,
+      planets: [...store.planets, planet]
+    }));
   }
 }
