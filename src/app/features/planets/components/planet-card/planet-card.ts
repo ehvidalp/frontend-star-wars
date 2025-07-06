@@ -46,18 +46,13 @@ export class PlanetCardDirective implements OnInit, OnDestroy {
     
     // Agregar clases CSS para el estilo de la card
     const cardClasses = [
-      'planet-card', 'relative', 'w-full', 'h-full', 'min-h-[20rem]', 'max-w-sm', 'mx-auto',
-      'bg-gradient-to-br', 'from-slate-900/60', 'via-blue-950/40', 'to-slate-800/50',
-      'backdrop-blur-sm', 'border', 'border-transparent', 'bg-clip-padding', 'rounded-lg',
+      'planet-card', 'relative', 'w-full', 'h-full', 'min-h-[24rem]', 'max-w-sm', 'mx-auto',
+      'bg-transparent', 'backdrop-blur-sm', 'border', 'border-cyan-400/20', 'rounded-lg',
       'overflow-hidden', 'cursor-pointer', 'transition-all', 'duration-500', 'ease-out',
-      'hover:-translate-y-2', 'hover:scale-105', 'hover:shadow-xl', 'hover:shadow-cyan-400/30',
-      'hover:bg-transparent', 'hover:backdrop-blur-none', 'focus-visible:outline-2',
-      'focus-visible:outline-cyan-400/60', 'focus-visible:outline-offset-2',
-      'will-change-transform', 'group',
-      'before:content-[\'\']', 'before:absolute', 'before:inset-0', 'before:p-[1px]',
-      'before:bg-gradient-to-r', 'before:from-cyan-400/50', 'before:via-blue-500/60',
-      'before:to-purple-600/50', 'before:rounded-lg', 'before:-z-10', 'before:transition-all',
-      'before:duration-700', 'before:opacity-40', 'hover:before:opacity-70'
+      'hover:-translate-y-2', 'hover:scale-105', 'hover:shadow-xl', 'hover:shadow-cyan-400/20',
+      'hover:bg-slate-900/20', 'hover:border-cyan-400/40', 'hover:backdrop-blur-md',
+      'focus-visible:outline-2', 'focus-visible:outline-cyan-400/60', 'focus-visible:outline-offset-2',
+      'will-change-transform', 'group'
     ];
     
     cardClasses.forEach(cls => {

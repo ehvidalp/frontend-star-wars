@@ -12,6 +12,7 @@ export interface PlanetDetail {
   population: string;
   url: string;
 }
+
 export interface PlanetSummary {
   uid: string;
   name: string;
@@ -28,6 +29,34 @@ export interface PlanetExpanded {
 }
 
 export type Planet = PlanetDetail | PlanetSummary | (PlanetDetail & { uid: string });
+
+// Interfaces para UI/UX del planet details
+export interface PlanetStatistic {
+  readonly label: string;
+  readonly value: string;
+  readonly unit?: string;
+  readonly isVisible: boolean;
+}
+
+export interface PlanetDataSection {
+  readonly title: string;
+  readonly fields: PlanetStatistic[];
+  readonly isVisible: boolean;
+}
+
+export interface PlanetViewModel {
+  readonly name: string;
+  readonly uid: string;
+  readonly quickStats: PlanetStatistic[];
+  readonly environmentalData: PlanetDataSection;
+  readonly orbitalData: PlanetDataSection;
+  readonly systemInfo: PlanetDataSection;
+  readonly transitions: {
+    readonly card: string;
+    readonly sphere: string;
+    readonly title: string;
+  };
+}
 export interface IPlanetsStore {
   planets: Planet[];
   selectedPlanet: Planet | null;

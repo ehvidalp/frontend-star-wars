@@ -2,73 +2,71 @@ import { Component, input, inject, computed, OnInit, signal, ChangeDetectionStra
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PlanetsStore } from '@features/planets/store/planets.store';
 import { PlanetsApi } from '@features/planets/services/planets';
-import { Planet, PlanetSummary } from '@features/planets/models/planet.model';
+import { Planet, PlanetViewModel } from '@features/planets/models/planet.model';
+import { PlanetDataFormatterService } from '@features/planets/services/planet-data-formatter.service';
 import { PlanetSphere } from '@features/planets/components/planet-sphere/planet-sphere';
+import { DataTable } from '@shared/components/data-table/data-table';
+import { PlanetDataService } from '@shared/services/planet-data.service';
 
 @Component({
   selector: 'app-planet-details',
-  imports: [PlanetSphere],
+  standalone: true,
+  imports: [PlanetSphere, DataTable],
   templateUrl: './planet-details.html',
   styleUrl: './planet-details.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlanetDetails implements OnInit {
   planetId = input.required<string>();
-  private planetsStore = inject(PlanetsStore);
-  private planetsApi = inject(PlanetsApi);
-  private destroyRef = inject(DestroyRef);
   
-  // Signal para manejar el estado del planeta específico
-  private _specificPlanet = signal<Planet | null>(null);
+  private readonly planetsStore = inject(PlanetsStore);
+  private readonly planetsApi = inject(PlanetsApi);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly planetDataFormatter = inject(PlanetDataFormatterService);
+  private readonly planetDataService = inject(PlanetDataService);
   
-  // Computed que combina el planeta del store y el cargado específicamente
-  planet = computed(() => {
+  private readonly _specificPlanet = signal<Planet | null>(null);
+  
+  readonly planet = computed(() => {
     const planets = this.planetsStore.planets();
     const foundPlanet = planets.find(p => 
       ('uid' in p && p.uid === this.planetId())
     );
     
-    // Si no encontramos el planeta en el store, devolver el cargado específicamente
     return foundPlanet || this._specificPlanet();
   });
 
-  planetUid = computed(() => {
+  readonly planetViewModel = computed<PlanetViewModel | null>(() => {
     const planet = this.planet();
-    return planet && 'uid' in planet ? planet.uid : 'N/A';
+    return planet ? this.planetDataFormatter.createPlanetViewModel(planet) : null;
   });
 
-  cardTransitionName = computed(() => {
+  readonly dataSections = computed(() => {
     const planet = this.planet();
-    return planet && 'uid' in planet ? `planet-card-${planet.uid}` : '';
+    return planet ? this.planetDataService.formatForDetail(planet) : [];
   });
 
-  sphereTransitionName = computed(() => {
-    const planet = this.planet();
-    return planet && 'uid' in planet ? `planet-sphere-${planet.uid}` : '';
-  });
-
-  titleTransitionName = computed(() => {
-    const planet = this.planet();
-    return planet && 'uid' in planet ? `planet-title-${planet.uid}` : '';
-  });
+  readonly isLoading = computed(() => !this.planet());
 
   ngOnInit(): void {
+    this.initializePlanetData();
+  }
+
+  private initializePlanetData(): void {
     // Cargar planetas si el store está vacío
     if (this.planetsStore.planets().length === 0) {
       this.planetsStore.loadPlanets();
     }
     
-    // Verificar si necesitamos cargar el planeta específico
-    this.checkAndLoadSpecificPlanet();
+    this.loadSpecificPlanetIfNeeded();
   }
 
-  private checkAndLoadSpecificPlanet(): void {
+  private loadSpecificPlanetIfNeeded(): void {
     const planets = this.planetsStore.planets();
     const foundPlanet = planets.find(p => 
       ('uid' in p && p.uid === this.planetId())
     );
     
-    // Si no encontramos el planeta en el store, cargarlo por ID
     if (!foundPlanet) {
       this.loadPlanetById();
     }
@@ -79,11 +77,8 @@ export class PlanetDetails implements OnInit {
       takeUntilDestroyed(this.destroyRef)
     ).subscribe({
       next: (planetDetail) => {
-        // Crear el planeta con uid y guardarlo en el signal
         const planetWithUid = { ...planetDetail, uid: this.planetId() };
         this._specificPlanet.set(planetWithUid);
-        
-        // Opcionalmente, también agregarlo al store para futuras referencias
         this.planetsStore.addPlanet(planetWithUid);
       },
       error: (error) => {

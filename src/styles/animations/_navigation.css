@@ -1,9 +1,14 @@
+/* Navigation Animations - Smooth and optimized */
 .nav-enter {
-  animation: navSmoothEnter 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  animation: navSmoothEnter 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
 .nav-smooth-enter {
-  animation: navSmoothEnter 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  animation: navSmoothEnter 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.nav-smooth-exit {
+  animation: navSmoothExit 0.4s cubic-bezier(0.55, 0, 0.45, 1) forwards;
 }
 
 .nav-optimized {
@@ -11,53 +16,69 @@
   backface-visibility: hidden;
   transform: translateZ(0);
 }
+
 .nav-logo-glow {
-  animation: logoGlow 2s ease-in-out infinite alternate;
+  animation: logoGlowSubtle 3s ease-in-out infinite alternate;
 }
+
 .nav-menu-item-hover {
-  animation: menuItemActivate 0.3s ease-out forwards;
+  animation: menuItemActivate 0.2s ease-out forwards;
 }
+
 .scroll-fade-in {
-  animation: scrollFadeIn 0.6s ease-out forwards;
+  animation: scrollFadeIn 0.4s ease-out forwards;
 }
+
 .scroll-slide-up {
-  animation: scrollSlideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation: scrollSlideUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
+
 .section-reveal {
-  animation: sectionReveal 1s ease-out forwards;
+  animation: sectionReveal 0.8s ease-out forwards;
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(20px);
 }
+
 .section-reveal.animate {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Mobile navigation improvements */
 @keyframes mobile-menu-slide-down {
   0% {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
   100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 .mobile-nav-enter {
-  animation: mobile-menu-slide-down 0.3s ease-out forwards;
+  animation: mobile-menu-slide-down 0.25s ease-out forwards;
 }
-@keyframes nav-enter {
+
+.mobile-nav-exit {
+  animation: mobile-menu-slide-up 0.2s ease-in forwards;
+}
+
+@keyframes mobile-menu-slide-up {
   0% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  100% {
     opacity: 1;
     transform: translateY(0);
   }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 }
-@keyframes navFadeSlideIn {
+
+/* Smooth navigation keyframes */
+@keyframes navSmoothEnter {
   0% {
-    transform: translateY(-20px);
+    transform: translateY(-6px);
     opacity: 0;
   }
   100% {
@@ -66,31 +87,18 @@
   }
 }
 
-@keyframes navSmoothEnter {
+@keyframes navSmoothExit {
   0% {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-  100% {
     transform: translateY(0);
     opacity: 1;
   }
-}
-@keyframes navSlideIn {
-  0% {
-    transform: translateY(-100%);
+  100% {
+    transform: translateY(-6px);
     opacity: 0;
   }
-  60% {
-    transform: translateY(-10%);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
 }
-@keyframes logoGlow {
+
+@keyframes logoGlowSubtle {
   from {
     text-shadow: 
       0 0 10px rgb(34 211 238 / 0.6),
@@ -99,9 +107,9 @@
   }
   to {
     text-shadow: 
-      0 0 20px rgb(34 211 238 / 0.8),
-      0 0 30px rgb(34 211 238 / 0.6),
-      0 0 40px rgb(34 211 238 / 0.4);
+      0 0 15px rgb(34 211 238 / 0.8),
+      0 0 25px rgb(34 211 238 / 0.5),
+      0 0 35px rgb(34 211 238 / 0.3);
   }
 }
 @keyframes menuItemActivate {

@@ -34,7 +34,27 @@ export class MainLayout implements OnDestroy {
       return 'bg-black/90 backdrop-blur-md border-b border-cyan-400/20';
     }
     
-    return 'bg-transparent backdrop-blur-sm border-b border-cyan-400/10';
+    // Sin background, blur, bordes o sombras en otras rutas - explícitamente quitar todo
+    return 'bg-transparent border-none shadow-none';
+  });
+
+  readonly navbarShadowClasses = computed(() => {
+    const currentUrl = this._currentRoute();
+    const isHomePage = currentUrl === '/' || currentUrl === '';
+    
+    if (isHomePage) {
+      return 'shadow-lg shadow-cyan-400/10';
+    }
+    
+    // Sin sombra en otras rutas
+    return '';
+  });
+
+  readonly mobileNavClasses = computed(() => {
+    const currentUrl = this._currentRoute();
+    const isHomePage = currentUrl === '/' || currentUrl === '';
+    
+    return isHomePage ? 'home-page' : 'other-page';
   });
   readonly isMobileMenuOpen = signal(false);
   constructor() {
@@ -60,9 +80,7 @@ export class MainLayout implements OnDestroy {
       this.navigationService.setActiveSection(item.id);
       this.navigationService.addClickAnimation(item.id);
       await this.router.navigate(['/']);
-      setTimeout(() => {
-        this.navigationService.scrollToSection(item.targetId);
-      }, 50);
+      this.navigationService.scrollToSection(item.targetId);
     } catch (error) {
       console.error('Navigation failed:', error);
     }

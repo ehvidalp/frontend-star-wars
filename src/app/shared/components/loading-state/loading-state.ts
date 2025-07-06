@@ -25,11 +25,12 @@ export class LoadingState {
       large: 'h-12 w-12'
     };
     const variantClasses = {
-      primary: 'border-yellow-400',
+      primary: 'border-cyan-400',
       secondary: 'border-blue-400'
     };
     return `animate-spin rounded-full border-b-2 ${sizeClasses[this.size()]} ${variantClasses[this.variant()]}`;
   });
+  
   readonly textClasses = computed(() => {
     const sizeClasses = {
       small: 'text-sm',
@@ -37,7 +38,7 @@ export class LoadingState {
       large: 'text-lg'
     };
     const variantClasses = {
-      primary: 'text-yellow-400',
+      primary: 'text-cyan-400',
       secondary: 'text-blue-400'
     };
     return `font-orbitron ${sizeClasses[this.size()]} ${variantClasses[this.variant()]}`;
