@@ -19,6 +19,7 @@ import { LoadingState, ErrorState, EndState } from '../../../../shared/component
 
 @Component({
   selector: 'app-planets-list',
+  standalone: true,
   imports: [PlanetCard, InfinityScrollDirective, LoadingState, ErrorState, EndState],
   templateUrl: './planets-list.html',
   styleUrl: './planets-list.css',
