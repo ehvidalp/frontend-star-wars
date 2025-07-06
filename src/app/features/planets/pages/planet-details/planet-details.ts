@@ -53,7 +53,6 @@ export class PlanetDetails implements OnInit {
   }
 
   private initializePlanetData(): void {
-    // Load planets if the store is empty
     if (this.planetsStore.planets().length === 0) {
       this.planetsStore.loadPlanets();
     }

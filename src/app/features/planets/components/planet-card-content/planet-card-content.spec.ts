@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlanetCardContent } from './planet-card-content';
-import { PlanetCardDirective } from './planet-card';
 
 describe('PlanetCardContent', () => {
   let component: PlanetCardContent;
@@ -8,7 +7,7 @@ describe('PlanetCardContent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlanetCardContent, PlanetCardDirective]
+      imports: [PlanetCardContent]
     })
     .compileComponents();
     

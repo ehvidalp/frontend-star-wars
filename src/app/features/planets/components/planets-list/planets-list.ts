@@ -1,8 +1,8 @@
 import { Component, inject, OnInit, ChangeDetectionStrategy, computed } from '@angular/core';
 import { PlanetsStore } from '@features/planets/store/planets.store';
 import { LoadingSize } from '@shared/models/ui-state.model';
-import { PlanetCardDirective } from '@features/planets/components/planet-card/planet-card';
-import { PlanetCardContent } from '@features/planets/components/planet-card/planet-card-content';
+import { PlanetCardDirective } from '@features/planets/directives/planet-card-directive';
+import { PlanetCardContent } from '@features/planets/components/planet-card-content/planet-card-content';
 import { InfinityScrollDirective } from '@shared/directives/infinity-scroll';
 import { LoadingState } from '@shared/components/loading-state/loading-state';
 import { ErrorState } from '@shared/components/error-state/error-state';
@@ -46,11 +46,9 @@ export class PlanetsList implements OnInit {
     this.planetsStore.loadPlanets();
   }
   trackByPlanet(index: number, planet: any): string {
-    // Usar uid si está disponible (formato expandido)
     if ('uid' in planet && planet.uid) {
       return planet.uid;
     }
-    // Fallback con el nombre y index
     return `${planet.name || 'unknown'}-${index}`;
   }
 }

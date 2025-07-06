@@ -30,7 +30,7 @@ export class PlanetCardContent {
   readonly showExpandedData = computed(() => {
     const planet = this.planet();
     if (this.isPlanetSummary()) {
-      return null; // No expanded data for summary cards
+      return null;
     }
     
     const sections = this.planetDataService.formatForCard(planet);

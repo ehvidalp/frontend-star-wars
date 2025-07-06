@@ -49,7 +49,6 @@ export class PlanetsStore {
           description: planetExpanded.description
         }));
         
-        // Evitar duplicados basándose en uid
         const existingUids = new Set(this.planets().map(p => 'uid' in p ? p.uid : null));
         const newUniquePlanets = transformedPlanets.filter(planet => !existingUids.has(planet.uid));
         

@@ -8,7 +8,7 @@ export class ScrollPositionService {
   private isBrowser = isPlatformBrowser(this.platformId);
   private scrollPositions = new Map<string, { position: number; timestamp: number }>();
   private maxCacheSize = 20;
-  private ttl = 10 * 60 * 1000; // 10 minutos
+  private ttl = 10 * 60 * 1000;
   private _isEnabled = signal(true);
   private _debugMode = signal(false);
   readonly isEnabled = this._isEnabled.asReadonly();
@@ -54,7 +54,7 @@ export class ScrollPositionService {
   private attemptScrollRestore(position: number, route: string, attempt = 1): void {
     if (!this.isBrowser) return;
     const maxAttempts = 5;
-    const delay = attempt * 100; // Incrementar delay con cada intento
+    const delay = attempt * 100;
     setTimeout(() => {
       try {
         window.scrollTo({

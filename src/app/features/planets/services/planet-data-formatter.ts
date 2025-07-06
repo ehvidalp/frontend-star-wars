@@ -1,18 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Planet, PlanetViewModel, PlanetStatistic, PlanetDataSection } from '@features/planets/models/planet.model';
 
-/**
- * Service for formatting planet data and creating view models
- * Follows the project's service architecture pattern
- */
 @Injectable({
   providedIn: 'root'
 })
 export class PlanetDataFormatterService {
 
-  /**
-   * Creates a formatted view model from planet data
-   */
   createPlanetViewModel(planet: Planet): PlanetViewModel {
     const planetData = planet as any;
     const hasUid = planet && 'uid' in planet;

@@ -93,18 +93,15 @@ export class PlanetSphere {
   planetType = computed(() => {
     const planetData = this.planet();
     
-    // Verify we have valid data
     if (!planetData || !planetData.name) {
       return 'terrestrial';
     }
     
-    // For planets with expanded data
     if ('climate' in planetData && 'terrain' in planetData) {
       const climate = (planetData.climate || '').toLowerCase();
       const terrain = (planetData.terrain || '').toLowerCase();
       const combinedText = `${climate} ${terrain}`;
       
-      // Buscar coincidencias usando el mapa de clasificadores
       for (const classifier of this.planetTypeClassifiers) {
         if (classifier.matchers.some(matcher => combinedText.includes(matcher))) {
           return classifier.type;

@@ -19,7 +19,6 @@ export interface PlanetSummary {
   url: string;
 }
 
-// Nueva interfaz para el formato expandido que incluye todos los datos
 export interface PlanetExpanded {
   properties: PlanetDetail;
   description: string;
@@ -30,7 +29,6 @@ export interface PlanetExpanded {
 
 export type Planet = PlanetDetail | PlanetSummary | (PlanetDetail & { uid: string });
 
-// Interfaces para UI/UX del planet details
 export interface PlanetStatistic {
   readonly label: string;
   readonly value: string;

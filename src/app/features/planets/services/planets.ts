@@ -12,17 +12,14 @@ export class PlanetsApi {
     let planetsUrl: string;
     
     if (currentApiUrl) {
-      // Verificar si ya incluye expanded=true para evitar duplicados
       if (currentApiUrl.includes('expanded=true')) {
         planetsUrl = currentApiUrl;
       } else {
-        // Si ya viene con parámetros, agregar expanded=true
         planetsUrl = currentApiUrl.includes('?') 
           ? `${currentApiUrl}&expanded=true`
           : `${currentApiUrl}?expanded=true`;
       }
     } else {
-      // URL base con expanded=true y limit específico para consistencia
       planetsUrl = `${this.apiUrl}/planets?limit=10&expanded=true`;
     }
     

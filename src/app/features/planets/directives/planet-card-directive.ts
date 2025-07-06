@@ -44,7 +44,6 @@ export class PlanetCardDirective implements OnInit, OnDestroy {
   private setupElement(): void {
     const element = this.elementRef.nativeElement;
     
-    // Add CSS classes for the card
     const cardClasses = [
       'planet-card', 'relative', 'w-full', 'h-full', 'min-h-[24rem]', 'max-w-sm', 'mx-auto',
       'bg-transparent', 'backdrop-blur-sm', 'border', 'border-cyan-400/20', 'rounded-lg',
@@ -59,12 +58,10 @@ export class PlanetCardDirective implements OnInit, OnDestroy {
       this.renderer.addClass(element, cls);
     });
 
-    // Hacer el elemento focusable si no lo es
     if (!element.hasAttribute('tabindex')) {
       this.renderer.setAttribute(element, 'tabindex', '0');
     }
 
-    // Establecer rol de button si no es un button
     if (element.tagName.toLowerCase() !== 'button') {
       this.renderer.setAttribute(element, 'role', 'button');
     }
@@ -73,11 +70,9 @@ export class PlanetCardDirective implements OnInit, OnDestroy {
   private setupEventListeners(): void {
     const element = this.elementRef.nativeElement;
     
-    // Listener para click
     this.clickListener = () => this.onCardClick();
     this.renderer.listen(element, 'click', this.clickListener);
     
-    // Listener para teclado (Enter y Space)
     this.keydownListener = (event: KeyboardEvent) => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
@@ -88,7 +83,6 @@ export class PlanetCardDirective implements OnInit, OnDestroy {
   }
 
   private cleanupEventListeners(): void {
-    // Los listeners se limpian automáticamente con Renderer2
     this.clickListener = undefined;
     this.keydownListener = undefined;
   }
@@ -98,12 +92,10 @@ export class PlanetCardDirective implements OnInit, OnDestroy {
     const planet = this.planet();
     const planetName = planet?.name || 'unknown';
     
-    // Actualizar atributos de accesibilidad
     this.renderer.setAttribute(element, 'aria-label', `View details for planet ${planetName}`);
     this.renderer.setAttribute(element, 'aria-describedby', `planet-info-${planetName}`);
     this.renderer.setAttribute(element, 'data-planet-name', planetName);
     
-    // Actualizar view transition name
     const transitionName = this.cardTransitionName();
     if (transitionName) {
       this.renderer.setStyle(element, 'view-transition-name', transitionName);

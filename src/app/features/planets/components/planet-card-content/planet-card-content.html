@@ -1,19 +1,15 @@
 <div class="planet-card-content">
-<!-- Corner decorations -->
 <div class="absolute top-3 left-3 w-2 h-2 border-l border-t border-cyan-400/40 transition-all duration-500 group-hover:border-cyan-400/80 group-hover:w-3 group-hover:h-3 corner-decoration" aria-hidden="true"></div>
 <div class="absolute top-3 right-3 w-2 h-2 border-r border-t border-cyan-400/40 transition-all duration-500 group-hover:border-cyan-400/80 group-hover:w-3 group-hover:h-3 corner-decoration" aria-hidden="true"></div>
 <div class="absolute bottom-3 left-3 w-2 h-2 border-l border-b border-cyan-400/40 transition-all duration-500 group-hover:border-cyan-400/80 group-hover:w-3 group-hover:h-3 corner-decoration" aria-hidden="true"></div>
 <div class="absolute bottom-3 right-3 w-2 h-2 border-r border-b border-cyan-400/40 transition-all duration-500 group-hover:border-cyan-400/80 group-hover:w-3 group-hover:h-3 corner-decoration" aria-hidden="true"></div>
 
-<!-- Background effects -->
 <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" aria-hidden="true">
   <div class="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent"></div>
   <div class="absolute left-1/2 top-0 h-full w-px bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent"></div>
 </div>
 
-<!-- Main content - Default state (only planet and title centered) -->
 <main class="relative z-20 flex flex-col h-full p-6 planet-card-default-state">
-  <!-- Planet sphere and title centered vertically and horizontally -->
   <section class="flex-1 flex flex-col items-center justify-center">
     <figure class="mb-6" [attr.aria-label]="'Visual representation of ' + (planet().name || 'unknown planet')">
       <app-planet-sphere 
@@ -34,9 +30,7 @@
   </section>
 </main>
 
-<!-- Hover state (planet centered horizontally + data tables below) -->
 <main class="absolute inset-0 z-30 flex flex-col h-full p-6 planet-card-hover-state opacity-0 pointer-events-none">
-  <!-- Planet sphere centered horizontally at top -->
   <header class="text-center mb-4 flex-shrink-0">
     <figure class="mb-3 flex justify-center" [attr.aria-label]="'Visual representation of ' + (planet().name || 'unknown planet')">
       <app-planet-sphere 
@@ -54,7 +48,6 @@
     </hgroup>
   </header>
 
-  <!-- Data sections below the centered planet -->
   <section class="space-y-2 flex-1 overflow-y-auto" aria-label="Planet data">
     @if (showExpandedData(); as sections) {
       @for (section of sections; track section.title) {
@@ -64,7 +57,6 @@
         </app-data-table>
       }
     } @else {
-      <!-- Placeholder for cards without expanded data -->
       <div class="flex items-center justify-center opacity-60 h-full" role="status" aria-label="Loading planet data">
         <div class="text-center space-y-2">
           <div class="h-1.5 w-16 bg-gradient-to-r from-cyan-400/20 via-cyan-400/40 to-cyan-400/20 rounded animate-pulse" role="presentation"></div>
@@ -76,7 +68,6 @@
   </section>
 </main>
 
-<!-- Screen reader content -->
 <span class="sr-only">
   Press Enter or Space to view detailed information about {{ planet().name || 'this planet' }}
 </span>
