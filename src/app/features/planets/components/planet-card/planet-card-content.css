@@ -1,0 +1,131 @@
+/* Planet Card Content Styles */
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Default and hover states */
+.planet-card-default-state {
+  position: relative;
+  transition: opacity 0.4s ease-in-out, transform 0.3s ease-in-out;
+  z-index: 10;
+  opacity: 1;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.planet-card-hover-state {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.4s ease-in-out, transform 0.3s ease-in-out;
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hover state activation - multiple targeting strategies for better compatibility */
+
+/* Strategy 1: Using :host-context with group class */
+:host-context(.group:hover) .planet-card-default-state {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-5px);
+}
+
+:host-context(.group:hover) .planet-card-hover-state {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Strategy 2: Using :host-context with directive selector */
+:host-context([appPlanetCard]:hover) .planet-card-default-state {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-5px);
+}
+
+:host-context([appPlanetCard]:hover) .planet-card-hover-state {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Strategy 3: Using global selectors for broader compatibility */
+:host-context(article:hover) .planet-card-default-state {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-5px);
+}
+
+:host-context(article:hover) .planet-card-hover-state {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Strategy 4: Fallback for browsers that don't support :host-context */
+.planet-card-content:hover .planet-card-default-state {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-5px);
+}
+
+.planet-card-content:hover .planet-card-hover-state {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Ensure smooth transitions for nested components */
+.planet-card-default-state *,
+.planet-card-hover-state * {
+  transition: inherit;
+}
+
+/* Corner decoration animations */
+.corner-decoration {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:host-context(.group:hover) .corner-decoration {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+/* Background effects */
+.planet-card-hover-state .bg-gradient-to-r,
+.planet-card-hover-state .bg-gradient-to-b {
+  animation: gradientPulse 2s ease-in-out infinite;
+}
+
+@keyframes gradientPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.6; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .planet-card-hover-state {
+    padding: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .planet-card-default-state,
+  .planet-card-hover-state,
+  .corner-decoration {
+    transition: none !important;
+    animation: none !important;
+  }
+}

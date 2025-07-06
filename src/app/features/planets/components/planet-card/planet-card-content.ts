@@ -7,7 +7,7 @@ import { PlanetDataService } from '@shared/services/planet-data';
 @Component({
   selector: 'app-planet-card-content',
   templateUrl: './planet-card-content.html',
-  styleUrl: './planet-card.css',
+  styleUrl: './planet-card-content.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [PlanetSphere, DataTable]

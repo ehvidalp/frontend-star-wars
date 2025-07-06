@@ -8,3 +8,55 @@
 @import "./styles/animations/_navigation.css";
 @import "./styles/components/_planet.css";
 @import "./styles/utilities/_starfield.css";
+
+/* Global Planet Card Hover Effects */
+/* Default state: show only planet centered */
+article[appPlanetCard] app-planet-card-content .planet-card-default-state {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+article[appPlanetCard] app-planet-card-content .planet-card-hover-state {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
+/* Hover state: show planet centered horizontally + data tables */
+article[appPlanetCard]:hover app-planet-card-content .planet-card-default-state {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(-5px) !important;
+}
+
+article[appPlanetCard]:hover app-planet-card-content .planet-card-hover-state {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateY(0) !important;
+}
+
+/* Alternative targeting for group class */
+.group app-planet-card-content .planet-card-default-state {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.group app-planet-card-content .planet-card-hover-state {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
+.group:hover app-planet-card-content .planet-card-default-state {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(-5px) !important;
+}
+
+.group:hover app-planet-card-content .planet-card-hover-state {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateY(0) !important;
+}
