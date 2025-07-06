@@ -1,8 +1,9 @@
 import { Injectable, signal, computed, inject, DestroyRef, afterNextRender } from '@angular/core';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { timer } from 'rxjs';
+import { timer, debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { NavigationSection, NavigationTarget, NavigationItem } from '@core/models/navigation.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,16 +11,21 @@ export class SmartNavigationService {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   
+  // Signals for reactive state management
   private readonly _activeSection = signal<NavigationSection>(NavigationSection.START);
   private readonly _isWelcomeVisible = signal<boolean>(true);
   private readonly _navigationVisible = signal<boolean>(false);
-  private readonly _pendingNavUpdate = signal<boolean>(false);
+  
+  // Subject for debounced navigation updates
+  private readonly navigationUpdateSubject = new Subject<void>();
 
   constructor() {
     afterNextRender(() => {
-      this.addNavigationAnimations();
+      this.initializeNavigationAnimations();
+      this.setupNavigationUpdates();
     });
   }
+
   private readonly _navigationItems = signal<NavigationItem[]>([
     {
       id: NavigationSection.START,
@@ -34,6 +40,8 @@ export class SmartNavigationService {
       targetId: NavigationTarget.PLANETS_LIST
     }
   ]);
+
+  // Computed properties for reactive UI updates
   readonly navigationItems = computed(() => this._navigationItems());
   readonly activeSection = computed(() => this._activeSection());
   readonly shouldShowNavigation = computed(() => {
@@ -47,60 +55,72 @@ export class SmartNavigationService {
     
     return true;
   });
-  
+
   setWelcomeVisibility(isVisible: boolean): void {
-    this._isWelcomeVisible.set(isVisible);
+    if (this._isWelcomeVisible() === isVisible) {
+      return; // Avoid unnecessary updates
+    }
     
-    this._pendingNavUpdate.set(false);
+    this._isWelcomeVisible.set(isVisible);
     
     if (isVisible) {
       this._navigationVisible.set(false);
     } else {
-      this._pendingNavUpdate.set(true);
-      
-      timer(100)
+      // Use debounced timer for smoother transitions
+      timer(150)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
-          if (this._pendingNavUpdate()) {
-            this._navigationVisible.set(true);
-            this._pendingNavUpdate.set(false);
-          }
+          this._navigationVisible.set(true);
+          this.navigationUpdateSubject.next();
         });
     }
-    
-    this.scheduleNavigationUpdate();
   }
-  
-  private scheduleNavigationUpdate(): void {
-    if (typeof requestAnimationFrame !== 'undefined') {
-      requestAnimationFrame(() => {
-        const nav = document.querySelector('header');
-        if (nav) {
-          nav.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease-out';
-          nav.style.willChange = 'transform, opacity';
-        }
-      });
-    }
+
+  private setupNavigationUpdates(): void {
+    // Debounced navigation updates for better performance
+    this.navigationUpdateSubject.pipe(
+      debounceTime(50),
+      distinctUntilChanged(),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(() => {
+      this.updateNavigationStyles();
+    });
   }
+
+  private updateNavigationStyles(): void {
+    requestAnimationFrame(() => {
+      const nav = document.querySelector('header');
+      if (nav) {
+        nav.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease-out';
+        nav.style.willChange = 'transform, opacity';
+      }
+    });
+  }
+
   initialize(): void {
+    // Initialize navigation state
+    this._activeSection.set(NavigationSection.START);
   }
+
   setActiveSection(section: NavigationSection): void {
     this._activeSection.set(section);
   }
+
   async scrollToSection(targetId: string): Promise<void> {
     const element = document.getElementById(targetId);
     if (!element) {
       console.warn(`Section ${targetId} not found`);
       return;
     }
-    
-    element.classList.add('scroll-fade-in');
+
+    // Add smooth scroll animation
     element.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
       inline: 'nearest'
     });
-    
+
+    // Add visual feedback with debounced timer
     timer(100)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
@@ -108,12 +128,13 @@ export class SmartNavigationService {
         element.focus({ preventScroll: true });
       });
   }
+
   async addClickAnimation(itemId: string): Promise<void> {
     const navItem = document.querySelector(`[data-nav-id="${itemId}"]`);
     if (!navItem) return;
-    
+
     navItem.classList.add('nav-menu-item-hover');
-    
+
     return new Promise(resolve => {
       timer(300)
         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -123,27 +144,30 @@ export class SmartNavigationService {
         });
     });
   }
+
   findItemByTarget(targetId: string): NavigationItem | undefined {
     return this._navigationItems().find(item => item.targetId === targetId);
   }
-  destroy(): void {
-    this._pendingNavUpdate.set(false);
-  }
-  private addNavigationAnimations(): void {
+
+  private initializeNavigationAnimations(): void {
     const nav = document.querySelector('header');
     const logo = document.querySelector('.nav-logo');
-    
+
     if (nav) {
+      // Set initial state
       nav.style.transform = 'translateY(-20px)';
       nav.style.opacity = '0';
       nav.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease-out';
-      
+
+      // Animate in with proper timing
       requestAnimationFrame(() => {
-        nav.style.transform = 'translateY(0)';
-        nav.style.opacity = '1';
+        requestAnimationFrame(() => {
+          nav.style.transform = 'translateY(0)';
+          nav.style.opacity = '1';
+        });
       });
     }
-    
+
     if (logo) {
       logo.classList.add('nav-logo-glow');
     }

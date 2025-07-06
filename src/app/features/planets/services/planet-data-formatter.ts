@@ -19,7 +19,7 @@ export class PlanetDataFormatterService {
     const uid = hasUid ? planet.uid : '';
     
     return {
-      name: planetData.name || 'Planeta Desconocido',
+      name: planetData.name || 'Unknown Planet',
       uid: uid || 'N/A',
       transitions: {
         card: hasUid ? `planet-card-${uid}` : '',
@@ -36,17 +36,17 @@ export class PlanetDataFormatterService {
   private createQuickStats(planetData: any): PlanetStatistic[] {
     const stats = [
       {
-        label: 'Población',
+        label: 'Population',
         value: this.formatPopulation(planetData.population),
         isVisible: this.hasValidProperty(planetData, 'population')
       },
       {
-        label: 'Diámetro',
+        label: 'Diameter',
         value: this.formatDiameter(planetData.diameter),
         isVisible: this.hasValidProperty(planetData, 'diameter')
       },
       {
-        label: 'Gravedad',
+        label: 'Gravity',
         value: this.formatGravity(planetData.gravity),
         isVisible: this.hasValidProperty(planetData, 'gravity')
       }
@@ -58,24 +58,24 @@ export class PlanetDataFormatterService {
   private createEnvironmentalData(planetData: any): PlanetDataSection {
     const fields = [
       {
-        label: 'Clima',
+        label: 'Climate',
         value: this.formatValue(planetData.climate),
         isVisible: this.hasValidProperty(planetData, 'climate')
       },
       {
-        label: 'Terreno',
+        label: 'Terrain',
         value: this.formatValue(planetData.terrain),
         isVisible: this.hasValidProperty(planetData, 'terrain')
       },
       {
-        label: 'Agua Superficial',
+        label: 'Surface Water',
         value: this.formatSurfaceWater(planetData.surface_water),
         isVisible: this.hasValidProperty(planetData, 'surface_water')
       }
     ].filter(field => field.isVisible);
 
     return {
-      title: 'Datos Ambientales',
+      title: 'Environmental Data',
       isVisible: fields.length > 0,
       fields
     };
@@ -84,19 +84,19 @@ export class PlanetDataFormatterService {
   private createOrbitalData(planetData: any): PlanetDataSection {
     const fields = [
       {
-        label: 'Período de Rotación',
-        value: this.formatPeriod(planetData.rotation_period, 'día'),
+        label: 'Rotation Period',
+        value: this.formatPeriod(planetData.rotation_period, 'day'),
         isVisible: this.hasValidProperty(planetData, 'rotation_period')
       },
       {
-        label: 'Período Orbital',
-        value: this.formatPeriod(planetData.orbital_period, 'año'),
+        label: 'Orbital Period',
+        value: this.formatPeriod(planetData.orbital_period, 'year'),
         isVisible: this.hasValidProperty(planetData, 'orbital_period')
       }
     ].filter(field => field.isVisible);
 
     return {
-      title: 'Datos Orbitales',
+      title: 'Orbital Data',
       isVisible: fields.length > 0,
       fields
     };
@@ -105,39 +105,39 @@ export class PlanetDataFormatterService {
   private createSystemInfo(planetData: any): PlanetDataSection {
     const fields = [
       {
-        label: 'Fecha de Registro',
+        label: 'Registration Date',
         value: this.formatDate(planetData.created),
         isVisible: this.hasValidProperty(planetData, 'created')
       },
       {
-        label: 'Última Actualización',
+        label: 'Last Updated',
         value: this.formatDate(planetData.edited),
         isVisible: this.hasValidProperty(planetData, 'edited')
       }
     ].filter(field => field.isVisible);
 
     return {
-      title: 'Información del Sistema',
+      title: 'System Information',
       isVisible: fields.length > 0,
       fields
     };
   }
 
   private formatPopulation(population: string): string {
-    if (!population || this.isUnknownValue(population)) return 'Desconocido';
+    if (!population || this.isUnknownValue(population)) return 'Unknown';
     
     const num = parseInt(population.replace(/,/g, ''));
     if (isNaN(num)) return population;
     
-    if (num >= 1000000000) return `${(num / 1000000000).toFixed(1)} mil millones`;
-    if (num >= 1000000) return `${(num / 1000000).toFixed(1)} millones`;
+    if (num >= 1000000000) return `${(num / 1000000000).toFixed(1)} billion`;
+    if (num >= 1000000) return `${(num / 1000000).toFixed(1)} million`;
     if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
     
     return num.toLocaleString();
   }
 
   private formatDiameter(diameter: string): string {
-    if (!diameter || this.isUnknownValue(diameter)) return 'Desconocido';
+    if (!diameter || this.isUnknownValue(diameter)) return 'Unknown';
     
     const num = parseInt(diameter.replace(/,/g, ''));
     if (isNaN(num)) return diameter;
@@ -146,22 +146,22 @@ export class PlanetDataFormatterService {
   }
 
   private formatGravity(gravity: string): string {
-    if (!gravity || this.isUnknownValue(gravity)) return 'Desconocido';
+    if (!gravity || this.isUnknownValue(gravity)) return 'Unknown';
     
     if (gravity.includes('standard')) return gravity;
     
     const num = parseFloat(gravity);
-    if (!isNaN(num)) return `${num} G estándar`;
+    if (!isNaN(num)) return `${num} standard G`;
     
     return gravity;
   }
 
-  private formatPeriod(period: string, unit: 'día' | 'año'): string {
-    if (!period || this.isUnknownValue(period)) return 'Desconocido';
+  private formatPeriod(period: string, unit: 'day' | 'year'): string {
+    if (!period || this.isUnknownValue(period)) return 'Unknown';
     
     const num = parseFloat(period);
     if (!isNaN(num)) {
-      const unitText = num === 1 ? `${unit} estándar` : `${unit}s estándares`;
+      const unitText = num === 1 ? `standard ${unit}` : `standard ${unit}s`;
       return `${num} ${unitText}`;
     }
     
@@ -169,7 +169,7 @@ export class PlanetDataFormatterService {
   }
 
   private formatSurfaceWater(surfaceWater: string): string {
-    if (!surfaceWater || this.isUnknownValue(surfaceWater)) return 'Desconocido';
+    if (!surfaceWater || this.isUnknownValue(surfaceWater)) return 'Unknown';
     
     const num = parseFloat(surfaceWater);
     if (!isNaN(num)) return `${num}%`;
@@ -178,11 +178,11 @@ export class PlanetDataFormatterService {
   }
 
   private formatDate(dateString: string): string {
-    if (!dateString || this.isUnknownValue(dateString)) return 'Desconocido';
+    if (!dateString || this.isUnknownValue(dateString)) return 'Unknown';
     
     try {
       const date = new Date(dateString);
-      return date.toLocaleDateString('es-ES', {
+      return date.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
@@ -193,7 +193,7 @@ export class PlanetDataFormatterService {
   }
 
   private formatValue(value: string): string {
-    if (!value || this.isUnknownValue(value)) return 'Desconocido';
+    if (!value || this.isUnknownValue(value)) return 'Unknown';
     return value.charAt(0).toUpperCase() + value.slice(1);
   }
 

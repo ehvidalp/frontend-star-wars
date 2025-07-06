@@ -1,3 +1,4 @@
+/* Mobile navigation transitions */
 .mobile-nav-dropdown {
   position: absolute;
   top: 100%;
@@ -5,9 +6,9 @@
   right: 0;
   z-index: 40;
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-8px);
   pointer-events: none;
-  transition: all 0.3s ease-out;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mobile-nav-dropdown.home-page {
@@ -28,6 +29,25 @@
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+}
+
+/* Navbar transition improvements */
+.nav-header-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-header-smooth.transparent {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.nav-header-smooth.opaque {
+  background: rgba(0, 0, 0, 0.9) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(34, 211, 238, 0.2) !important;
+  box-shadow: 0 4px 6px -1px rgba(34, 211, 238, 0.1) !important;
 }
 
 @media (min-width: 768px) {

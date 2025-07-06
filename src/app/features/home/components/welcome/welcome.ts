@@ -1,5 +1,5 @@
 import { Component, inject, viewChild, ElementRef, afterNextRender, OnDestroy, ChangeDetectionStrategy, signal, computed, DestroyRef } from '@angular/core';
-import { SmartNavigationService } from '@core/services/smart-navigation.service';
+import { SmartNavigationService } from '@core/services/smart-navigation';
 import { timer } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -30,7 +30,7 @@ export class Welcome implements OnDestroy {
   readonly animationPhase = signal<'entrance' | 'loaded' | 'static'>('entrance');
   
   readonly starwars = {
-    title: 'DISCOVER THE LEGENDARY WORLDS THAT CHANGED GALACTIC HISTORY',
+    title: 'DISCOVER THE LEGENDARY WORLDS THAT CHANGED GALATIC HISTORY',
     subtitle: 'Journey through the cosmos and explore iconic planets',
     loadingText: 'LOADING GALACTIC DATABASE...',
     exploreText: 'EXPLORE WORLDS'

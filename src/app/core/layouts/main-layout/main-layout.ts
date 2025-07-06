@@ -2,7 +2,7 @@ import { Component, inject, afterNextRender, OnDestroy, signal, computed, Change
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { NavigationItem } from '@core/models/navigation.model';
-import { SmartNavigationService } from '@core/services/smart-navigation.service';
+import { SmartNavigationService } from '@core/services/smart-navigation';
 import { NavigationMenuComponent } from '@core/components/navigation-menu/navigation-menu';
 import { filter } from 'rxjs/operators';
 @Component({
@@ -34,8 +34,8 @@ export class MainLayout implements OnDestroy {
       return 'bg-black/90 backdrop-blur-md border-b border-cyan-400/20';
     }
     
-    // Sin background, blur, bordes o sombras en otras rutas - explícitamente quitar todo
-    return 'bg-transparent border-none shadow-none';
+    // Clean transparent background for other routes
+    return 'bg-transparent';
   });
 
   readonly navbarShadowClasses = computed(() => {
@@ -46,8 +46,8 @@ export class MainLayout implements OnDestroy {
       return 'shadow-lg shadow-cyan-400/10';
     }
     
-    // Sin sombra en otras rutas
-    return '';
+    // No shadow for other routes
+    return 'shadow-none';
   });
 
   readonly mobileNavClasses = computed(() => {
@@ -89,6 +89,6 @@ export class MainLayout implements OnDestroy {
     this.location.back();
   }
   ngOnDestroy(): void {
-    this.navigationService.destroy();
+    // No need to call destroy on service anymore - using takeUntilDestroyed
   }
 }

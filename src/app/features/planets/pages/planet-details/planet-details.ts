@@ -3,10 +3,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PlanetsStore } from '@features/planets/store/planets.store';
 import { PlanetsApi } from '@features/planets/services/planets';
 import { Planet, PlanetViewModel } from '@features/planets/models/planet.model';
-import { PlanetDataFormatterService } from '@features/planets/services/planet-data-formatter.service';
+import { PlanetDataFormatterService } from '@features/planets/services/planet-data-formatter';
 import { PlanetSphere } from '@features/planets/components/planet-sphere/planet-sphere';
 import { DataTable } from '@shared/components/data-table/data-table';
-import { PlanetDataService } from '@shared/services/planet-data.service';
+import { PlanetDataService } from '@shared/services/planet-data';
 
 @Component({
   selector: 'app-planet-details',
@@ -53,7 +53,7 @@ export class PlanetDetails implements OnInit {
   }
 
   private initializePlanetData(): void {
-    // Cargar planetas si el store está vacío
+    // Load planets if the store is empty
     if (this.planetsStore.planets().length === 0) {
       this.planetsStore.loadPlanets();
     }

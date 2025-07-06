@@ -1,0 +1,97 @@
+/* Planet Card Animations */
+.planet-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.planet-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px -10px rgba(34, 211, 238, 0.25);
+}
+
+.planet-card-enter {
+  animation: planetCardEnter 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.planet-card-exit {
+  animation: planetCardExit 0.4s cubic-bezier(0.55, 0, 0.45, 1) forwards;
+}
+
+@keyframes planetCardEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes planetCardExit {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.9);
+  }
+}
+
+/* Staggered animation for card lists */
+.planet-card-list .planet-card {
+  animation: planetCardStagger 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+.planet-card-list .planet-card:nth-child(1) { animation-delay: 0.1s; }
+.planet-card-list .planet-card:nth-child(2) { animation-delay: 0.2s; }
+.planet-card-list .planet-card:nth-child(3) { animation-delay: 0.3s; }
+.planet-card-list .planet-card:nth-child(4) { animation-delay: 0.4s; }
+.planet-card-list .planet-card:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes planetCardStagger {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth corner decorations */
+.planet-card .corner-decoration {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.planet-card:hover .corner-decoration {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .planet-card:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .planet-card,
+  .planet-card-enter,
+  .planet-card-exit,
+  .planet-card-list .planet-card,
+  .corner-decoration {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .planet-card-list .planet-card {
+    opacity: 1;
+  }
+}

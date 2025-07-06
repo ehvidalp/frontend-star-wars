@@ -9,7 +9,7 @@ import { LoadingSize, LoadingVariant } from '@shared/models/ui-state.model';
 export class LoadingState {
   size = input<LoadingSize>('medium');
   variant = input<LoadingVariant>('primary');
-  ariaLabel = input<string>('Cargando');
+  ariaLabel = input<string>('Loading');
   readonly containerClasses = computed(() => {
     const sizeClasses = {
       small: 'py-4 sm:py-6',

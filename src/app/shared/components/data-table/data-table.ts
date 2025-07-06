@@ -14,23 +14,8 @@ export interface DataSection {
 
 @Component({
   selector: 'app-data-table',
-  template: `
-    <div [class]="containerClasses()">
-      @if (section().title) {
-        <h3 [class]="titleClasses()">
-          {{ section().title }}
-        </h3>
-      }
-      <div [class]="fieldsContainerClasses()">
-        @for (field of section().fields; track field.key || field.label) {
-          <div [class]="fieldClasses()">
-            <span [class]="labelClasses()">{{ field.label }}</span>
-            <span [class]="valueClasses()">{{ field.value }}</span>
-          </div>
-        }
-      </div>
-    </div>
-  `,
+  templateUrl: './data-table.html',
+  styleUrl: './data-table.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true
 })

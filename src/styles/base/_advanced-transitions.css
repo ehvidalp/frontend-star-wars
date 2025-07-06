@@ -1,0 +1,248 @@
+/*
+ * Advanced View Transitions & Performance Optimizations
+ * Implementing cutting-edge Angular v20 and modern web best practices
+ */
+
+/* Root-level optimizations */
+:root {
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-duration-fast: 250ms;
+  --transition-duration-normal: 350ms;
+  --transition-duration-slow: 500ms;
+  --transition-delay-stagger: 50ms;
+}
+
+/* Enhanced View Transitions with containment */
+@view-transition {
+  navigation: auto;
+}
+
+/* Performance containment for view transitions */
+::view-transition-group(*) {
+  contain: layout style paint;
+}
+
+/* Optimized root transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--transition-duration-normal);
+  animation-timing-function: var(--transition-timing);
+  animation-fill-mode: both;
+}
+
+/* Advanced planet card transitions with morphing */
+::view-transition-old(planet-card-*),
+::view-transition-new(planet-card-*) {
+  animation-duration: var(--transition-duration-slow);
+  animation-timing-function: var(--transition-timing);
+  transform-origin: center center;
+  animation-fill-mode: both;
+}
+
+/* Planet sphere seamless transitions */
+::view-transition-old(planet-sphere-*),
+::view-transition-new(planet-sphere-*) {
+  animation-duration: 600ms;
+  animation-timing-function: var(--transition-timing);
+  transform-origin: center center;
+  animation-fill-mode: both;
+}
+
+/* Refined title transitions */
+::view-transition-old(planet-title-*),
+::view-transition-new(planet-title-*) {
+  animation-duration: var(--transition-duration-normal);
+  animation-timing-function: var(--transition-timing);
+  animation-fill-mode: both;
+}
+
+/* Navigation transitions with proper containment */
+::view-transition-old(main-nav),
+::view-transition-new(main-nav) {
+  animation-duration: var(--transition-duration-fast);
+  animation-timing-function: var(--transition-timing);
+  animation-fill-mode: both;
+  contain: layout style paint;
+}
+
+/* Custom transition keyframes with better easing */
+@keyframes fadeOutGraceful {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.96) translateZ(0);
+  }
+}
+
+@keyframes fadeInGraceful {
+  0% {
+    opacity: 0;
+    transform: scale(0.96) translateZ(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+  }
+}
+
+/* Morphing transitions for seamless navigation */
+::view-transition-old(planet-card-*) {
+  animation-name: morphOut;
+}
+
+::view-transition-new(planet-card-*) {
+  animation-name: morphIn;
+}
+
+@keyframes morphOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.94) translateZ(0);
+    filter: blur(2px);
+  }
+}
+
+@keyframes morphIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.06) translateZ(0);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+    filter: blur(0px);
+  }
+}
+
+/* Enhanced navigation transitions */
+::view-transition-old(main-nav) {
+  animation-name: navSlideOut;
+}
+
+::view-transition-new(main-nav) {
+  animation-name: navSlideIn;
+}
+
+@keyframes navSlideOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px) translateZ(0);
+  }
+}
+
+@keyframes navSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px) translateZ(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+  }
+}
+
+/* Performance optimizations for all view transitions */
+.view-transition-element {
+  contain: layout style paint;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Enhanced accessibility and performance */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01s !important;
+    animation-delay: 0s !important;
+  }
+  
+  @view-transition {
+    navigation: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: var(--transition-duration-fast) !important;
+  }
+}
+
+/* Optimizations for mobile devices */
+@media (max-width: 768px) {
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: var(--transition-duration-fast) !important;
+  }
+}
+
+/* Progressive enhancement for modern browsers */
+@supports (animation-timeline: view()) {
+  .scroll-driven-animation {
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+}
+
+/* Container queries for responsive transitions */
+@container (min-width: 768px) {
+  ::view-transition-old(planet-card-*),
+  ::view-transition-new(planet-card-*) {
+    animation-duration: var(--transition-duration-slow);
+  }
+}
+
+/* Optimized fallback for browsers without view transitions */
+@supports not (view-transition-name: none) {
+  .fallback-transition {
+    transition: all var(--transition-duration-normal) var(--transition-timing);
+  }
+  
+  .fallback-transition:hover {
+    transform: translateY(-4px) scale(1.02);
+  }
+}
+
+/* Layer-based optimizations for better performance */
+@layer transitions {
+  .transition-layer {
+    contain: layout style paint;
+    transform: translateZ(0);
+  }
+}
+
+/* Enhanced stagger animations */
+.stagger-container > * {
+  animation-delay: calc(var(--transition-delay-stagger) * var(--stagger-index, 0));
+}
+
+/* Custom property for dynamic stagger indexing */
+.stagger-item {
+  --stagger-index: 0;
+}
+
+.stagger-item:nth-child(1) { --stagger-index: 1; }
+.stagger-item:nth-child(2) { --stagger-index: 2; }
+.stagger-item:nth-child(3) { --stagger-index: 3; }
+.stagger-item:nth-child(4) { --stagger-index: 4; }
+.stagger-item:nth-child(5) { --stagger-index: 5; }
+.stagger-item:nth-child(6) { --stagger-index: 6; }
+.stagger-item:nth-child(7) { --stagger-index: 7; }
+.stagger-item:nth-child(8) { --stagger-index: 8; }
+.stagger-item:nth-child(9) { --stagger-index: 9; }
+.stagger-item:nth-child(10) { --stagger-index: 10; }

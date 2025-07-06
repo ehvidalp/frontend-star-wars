@@ -93,12 +93,12 @@ export class PlanetSphere {
   planetType = computed(() => {
     const planetData = this.planet();
     
-    // Verificar que tengamos datos válidos
+    // Verify we have valid data
     if (!planetData || !planetData.name) {
       return 'terrestrial';
     }
     
-    // Para planetas con datos expandidos
+    // For planets with expanded data
     if ('climate' in planetData && 'terrain' in planetData) {
       const climate = (planetData.climate || '').toLowerCase();
       const terrain = (planetData.terrain || '').toLowerCase();

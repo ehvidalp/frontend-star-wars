@@ -31,7 +31,7 @@ src/app/
 │   ├── layouts/            # Main application layouts
 │   │   └── main-layout/    # Base layout with navigation
 │   └── services/           # Singleton services and global utilities
-│       └── navigation-state.service.ts
+│       └── navigation-state.ts
 ├── features/               # Business modules (lazy-loaded)
 │   ├── home/              # Home page feature
 │   │   ├── pages/         # Pages (Smart Components)

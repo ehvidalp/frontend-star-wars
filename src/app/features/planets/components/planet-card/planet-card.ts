@@ -44,7 +44,7 @@ export class PlanetCardDirective implements OnInit, OnDestroy {
   private setupElement(): void {
     const element = this.elementRef.nativeElement;
     
-    // Agregar clases CSS para el estilo de la card
+    // Add CSS classes for the card
     const cardClasses = [
       'planet-card', 'relative', 'w-full', 'h-full', 'min-h-[24rem]', 'max-w-sm', 'mx-auto',
       'bg-transparent', 'backdrop-blur-sm', 'border', 'border-cyan-400/20', 'rounded-lg',
@@ -52,7 +52,7 @@ export class PlanetCardDirective implements OnInit, OnDestroy {
       'hover:-translate-y-2', 'hover:scale-105', 'hover:shadow-xl', 'hover:shadow-cyan-400/20',
       'hover:bg-slate-900/20', 'hover:border-cyan-400/40', 'hover:backdrop-blur-md',
       'focus-visible:outline-2', 'focus-visible:outline-cyan-400/60', 'focus-visible:outline-offset-2',
-      'will-change-transform', 'group'
+      'will-change-transform', 'group', 'view-transition-element', 'transition-layer', 'stagger-item'
     ];
     
     cardClasses.forEach(cls => {

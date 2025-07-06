@@ -12,7 +12,7 @@ export class PlanetDataService {
     
     if (this.hasEnvironmentalData(planet)) {
       sections.push({
-        title: 'Ambiente',
+        title: 'Environment',
         fields: this.getEnvironmentalFields(planet),
         variant: 'card'
       });
@@ -20,7 +20,7 @@ export class PlanetDataService {
     
     if (this.hasPhysicalData(planet)) {
       sections.push({
-        title: 'Físico',
+        title: 'Physical',
         fields: this.getPhysicalFields(planet),
         variant: 'card'
       });
@@ -35,7 +35,7 @@ export class PlanetDataService {
     const quickStats = this.getQuickStats(planet);
     if (quickStats.length > 0) {
       sections.push({
-        title: 'Estadísticas Rápidas',
+        title: 'Quick Stats',
         fields: quickStats,
         variant: 'detail'
       });
@@ -44,7 +44,7 @@ export class PlanetDataService {
     const environmentalData = this.getEnvironmentalFields(planet);
     if (environmentalData.length > 0) {
       sections.push({
-        title: 'Datos Ambientales',
+        title: 'Environmental Data',
         fields: environmentalData,
         variant: 'detail'
       });
@@ -53,7 +53,7 @@ export class PlanetDataService {
     const orbitalData = this.getOrbitalFields(planet);
     if (orbitalData.length > 0) {
       sections.push({
-        title: 'Datos Orbitales',
+        title: 'Orbital Data',
         fields: orbitalData,
         variant: 'detail'
       });
@@ -62,7 +62,7 @@ export class PlanetDataService {
     const systemData = this.getSystemFields(planet);
     if (systemData.length > 0) {
       sections.push({
-        title: 'Información del Sistema',
+        title: 'System Information',
         fields: systemData,
         variant: 'detail'
       });
@@ -95,7 +95,7 @@ export class PlanetDataService {
     if (this.isPlanetDetail(planet)) {
       if (planet.population) {
         fields.push({
-          label: 'Población',
+          label: 'Population',
           value: this.formatPopulation(planet.population),
           key: 'population'
         });
@@ -103,7 +103,7 @@ export class PlanetDataService {
       
       if (planet.diameter) {
         fields.push({
-          label: 'Diámetro',
+          label: 'Diameter',
           value: this.formatDiameter(planet.diameter),
           key: 'diameter'
         });
@@ -111,7 +111,7 @@ export class PlanetDataService {
       
       if (planet.gravity) {
         fields.push({
-          label: 'Gravedad',
+          label: 'Gravity',
           value: this.formatGravity(planet.gravity),
           key: 'gravity'
         });
@@ -127,7 +127,7 @@ export class PlanetDataService {
     if (this.isPlanetDetail(planet)) {
       if (planet.climate) {
         fields.push({
-          label: 'Clima',
+          label: 'Climate',
           value: this.formatValue(planet.climate),
           key: 'climate'
         });
@@ -135,7 +135,7 @@ export class PlanetDataService {
       
       if (planet.terrain) {
         fields.push({
-          label: 'Terreno',
+          label: 'Terrain',
           value: this.formatValue(planet.terrain),
           key: 'terrain'
         });
@@ -143,7 +143,7 @@ export class PlanetDataService {
       
       if (planet.surface_water) {
         fields.push({
-          label: 'Agua Superficial',
+          label: 'Surface Water',
           value: this.formatSurfaceWater(planet.surface_water),
           key: 'surface_water'
         });
@@ -159,7 +159,7 @@ export class PlanetDataService {
     if (this.isPlanetDetail(planet)) {
       if (planet.orbital_period) {
         fields.push({
-          label: 'Período Orbital',
+          label: 'Orbital Period',
           value: this.formatOrbitalPeriod(planet.orbital_period),
           key: 'orbital_period'
         });
@@ -167,7 +167,7 @@ export class PlanetDataService {
       
       if (planet.rotation_period) {
         fields.push({
-          label: 'Período de Rotación',
+          label: 'Rotation Period',
           value: this.formatRotationPeriod(planet.rotation_period),
           key: 'rotation_period'
         });
@@ -175,7 +175,7 @@ export class PlanetDataService {
       
       if (planet.gravity) {
         fields.push({
-          label: 'Gravedad',
+          label: 'Gravity',
           value: this.formatGravity(planet.gravity),
           key: 'gravity'
         });
@@ -191,7 +191,7 @@ export class PlanetDataService {
     if (this.isPlanetDetail(planet)) {
       if (planet.population) {
         fields.push({
-          label: 'Población',
+          label: 'Population',
           value: this.formatPopulation(planet.population),
           key: 'population'
         });
@@ -199,7 +199,7 @@ export class PlanetDataService {
       
       if (planet.diameter) {
         fields.push({
-          label: 'Diámetro',
+          label: 'Diameter',
           value: this.formatDiameter(planet.diameter),
           key: 'diameter'
         });
@@ -215,7 +215,7 @@ export class PlanetDataService {
     if (this.isPlanetDetail(planet)) {
       if (planet.created) {
         fields.push({
-          label: 'Creado',
+          label: 'Created',
           value: this.formatDate(planet.created),
           key: 'created'
         });
@@ -223,7 +223,7 @@ export class PlanetDataService {
       
       if (planet.edited) {
         fields.push({
-          label: 'Editado',
+          label: 'Edited',
           value: this.formatDate(planet.edited),
           key: 'edited'
         });
@@ -262,17 +262,17 @@ export class PlanetDataService {
   private formatOrbitalPeriod(period: string): string {
     const num = parseInt(period);
     if (isNaN(num)) return period;
-    return `${num} días`;
+    return `${num} days`;
   }
   
   private formatRotationPeriod(period: string): string {
     const num = parseInt(period);
     if (isNaN(num)) return period;
-    return `${num} horas`;
+    return `${num} hours`;
   }
   
   private formatDate(date: string): string {
-    return new Date(date).toLocaleDateString('es-ES', {
+    return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
