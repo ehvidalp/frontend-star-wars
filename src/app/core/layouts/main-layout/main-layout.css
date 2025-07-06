@@ -1,1 +1,35 @@
-/* Main layout specific styles */
+/* Main layout specific styles - Minimal CSS, uses Tailwind */
+
+/* Mobile Navigation Dropdown - Custom component not in Tailwind */
+.mobile-nav-dropdown {
+  /* Base state - hidden */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(34, 211, 238, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.1);
+  
+  /* Hidden by default */
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease-out;
+}
+
+/* Mobile nav open state - uses animation from /styles/animations/_navigation.css */
+.mobile-nav-dropdown.mobile-nav-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Hide mobile nav on desktop */
+@media (min-width: 768px) {
+  .mobile-nav-dropdown {
+    display: none;
+  }
+}

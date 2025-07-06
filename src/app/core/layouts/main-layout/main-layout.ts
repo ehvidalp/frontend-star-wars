@@ -1,11 +1,11 @@
-import { Component, inject, afterNextRender, OnDestroy } from '@angular/core';
+import { Component, inject, afterNextRender, OnDestroy, signal } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
 import { NavigationItem } from '../../models/navigation.model';
 import { SmartNavigationService } from '../../services/smart-navigation.service';
 
 /**
  * Main Layout Component
- * Simple, focused, and pragmatic
+ * Clean, responsive navigation following project architecture
  */
 @Component({
   selector: 'app-main-layout',
@@ -21,6 +21,9 @@ export class MainLayout implements OnDestroy {
   // Expose navigation data to template
   readonly navigationItems = this.navigationService.navigationItems;
   readonly activeSection = this.navigationService.activeSection;
+  
+  // Mobile menu state
+  readonly isMobileMenuOpen = signal(false);
 
   constructor() {
     afterNextRender(() => {
@@ -29,10 +32,27 @@ export class MainLayout implements OnDestroy {
   }
 
   /**
+   * Toggle mobile menu
+   */
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen.update(isOpen => !isOpen);
+  }
+
+  /**
+   * Close mobile menu
+   */
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen.set(false);
+  }
+
+  /**
    * Handle navigation click
    */
   async onNavigate(item: NavigationItem): Promise<void> {
     try {
+      // Close mobile menu if open
+      this.closeMobileMenu();
+      
       // Update active state immediately for UI responsiveness
       this.navigationService.setActiveSection(item.id);
       
