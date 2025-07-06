@@ -1,40 +1,67 @@
-@for (item of navigationItems(); track item.id) {
-  <li [class]="variant() === 'mobile' ? 'block' : 'inline-block'">
-    <button type="button" 
-            [class]="itemStyles()[item.id].button"
-            [attr.aria-label]="item.ariaLabel"
-            [attr.aria-current]="itemStyles()[item.id].isActive ? 'page' : null"
-            [attr.data-nav-id]="item.id"
-            (click)="onNavigate(item)"
-            (keydown.enter)="onNavigate(item)"
-            (keydown.space)="onNavigate(item)">
-      
-      @if (variant() === 'desktop') {
-        <!-- Hover glow effect -->
-        <div class="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg blur-sm" aria-hidden="true"></div>
-        
-        <!-- Active glow effect -->
-        <div class="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/5 to-cyan-400/0 rounded-lg blur-sm transition-opacity duration-300"
-             [class.opacity-100]="itemStyles()[item.id].isActive"
-             [class.opacity-0]="!itemStyles()[item.id].isActive"
-             aria-hidden="true"></div>
-        
-        <!-- Corner effects -->
-        <div class="absolute top-1 left-1 w-2 h-2 border-l border-t border-cyan-400/30 transition-opacity duration-300 opacity-0 group-hover:opacity-60"
-             [class.opacity-60]="itemStyles()[item.id].isActive" aria-hidden="true"></div>
-        <div class="absolute top-1 right-1 w-2 h-2 border-r border-t border-cyan-400/30 transition-opacity duration-300 opacity-0 group-hover:opacity-60"
-             [class.opacity-60]="itemStyles()[item.id].isActive" aria-hidden="true"></div>
-        <div class="absolute bottom-1 left-1 w-2 h-2 border-l border-b border-cyan-400/30 transition-opacity duration-300 opacity-0 group-hover:opacity-60"
-             [class.opacity-60]="itemStyles()[item.id].isActive" aria-hidden="true"></div>
-        <div class="absolute bottom-1 right-1 w-2 h-2 border-r border-b border-cyan-400/30 transition-opacity duration-300 opacity-0 group-hover:opacity-60"
-             [class.opacity-60]="itemStyles()[item.id].isActive" aria-hidden="true"></div>
-      }
-      
-      <!-- Button text -->
-      <span [class]="itemStyles()[item.id].text">{{ item.label }}</span>
-      
-      <!-- Accent line -->
-      <div [class]="itemStyles()[item.id].accent" aria-hidden="true"></div>
-    </button>
-  </li>
-}
+<nav [attr.aria-label]="'Navigation menu ' + variant()" role="navigation">
+  <ul [class]="containerClasses()">
+    @for (item of enrichedNavigationItems(); track item.id) {
+      <li [class]="listItemClass()">
+        <button type="button" 
+                [class]="item.buttonClasses"
+                [attr.aria-label]="item.ariaLabel"
+                [attr.aria-current]="item.isActive ? 'page' : null"
+                [attr.data-nav-id]="item.id"
+                (click)="onNavigate(item)"
+                (keydown)="onKeyboardNavigate($event, item)">
+          
+          @if (isDesktop()) {
+            <!-- Hover glow effect -->
+            <div class="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg blur-sm" 
+                 aria-hidden="true"></div>
+            
+            <!-- Active glow effect -->
+            <div [class]="'absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/5 to-cyan-400/0 rounded-lg blur-sm transition-opacity duration-300 ' + (item.isActive ? 'opacity-100' : 'opacity-0')"
+                 aria-hidden="true"></div>
+            
+            <!-- Corner effects -->
+            <div class="absolute top-1 left-1 w-2 h-2 border-l border-t border-cyan-400/30 transition-opacity duration-300"
+                 [class.opacity-60]="item.isActive"
+                 [class.opacity-0]="!item.isActive"
+                 [class.group-hover:opacity-60]="!item.isActive"
+                 aria-hidden="true"></div>
+            <div class="absolute top-1 right-1 w-2 h-2 border-r border-t border-cyan-400/30 transition-opacity duration-300"
+                 [class.opacity-60]="item.isActive"
+                 [class.opacity-0]="!item.isActive"
+                 [class.group-hover:opacity-60]="!item.isActive"
+                 aria-hidden="true"></div>
+            <div class="absolute bottom-1 left-1 w-2 h-2 border-l border-b border-cyan-400/30 transition-opacity duration-300"
+                 [class.opacity-60]="item.isActive"
+                 [class.opacity-0]="!item.isActive"
+                 [class.group-hover:opacity-60]="!item.isActive"
+                 aria-hidden="true"></div>
+            <div class="absolute bottom-1 right-1 w-2 h-2 border-r border-b border-cyan-400/30 transition-opacity duration-300"
+                 [class.opacity-60]="item.isActive"
+                 [class.opacity-0]="!item.isActive"
+                 [class.group-hover:opacity-60]="!item.isActive"
+                 aria-hidden="true"></div>
+          }
+          
+          <!-- Button text -->
+          <span [class]="item.textClasses">{{ item.label }}</span>
+          
+          <!-- Accent line -->
+          <div [class]="item.accentClasses" aria-hidden="true"></div>
+          
+          <!-- Soporte opcional para iconos -->
+          @if (item.icon) {
+            <i [class]="item.icon + ' ml-2'" 
+               aria-hidden="true"
+               role="img"
+               [attr.aria-label]="'Icon for ' + item.label"></i>
+          }
+        </button>
+      </li>
+    }
+    @empty {
+      <li class="text-cyan-400/60 italic" role="status">
+        No hay elementos de navegación disponibles
+      </li>
+    }
+  </ul>
+</nav>
