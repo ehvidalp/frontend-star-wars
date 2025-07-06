@@ -1,5 +1,6 @@
 import { Component, inject, afterNextRender, OnDestroy, signal, computed } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { Location } from '@angular/common';
 import { NavigationItem } from '../../models/navigation.model';
 import { SmartNavigationService } from '../../services/smart-navigation.service';
 import { NavigationMenuComponent } from '../../components/navigation-menu/navigation-menu';
@@ -19,6 +20,7 @@ import { filter } from 'rxjs/operators';
 })
 export class MainLayout implements OnDestroy {
   private readonly router = inject(Router);
+  private readonly location = inject(Location);
   private readonly navigationService = inject(SmartNavigationService);
 
   // Current route signal for better reactivity
@@ -97,11 +99,11 @@ export class MainLayout implements OnDestroy {
   }
 
   /**
-   * Go back to home page
+   * Go back to previous page using browser back (preserves scroll)
    */
   goBack(): void {
-    // Always go back to home page
-    this.router.navigate(['/']);
+    // Use browser back for better scroll preservation
+    this.location.back();
   }
 
   ngOnDestroy(): void {

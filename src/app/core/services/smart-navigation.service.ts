@@ -1,12 +1,11 @@
-import { Injectable, signal, computed, inject, effect } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { NavigationSection, NavigationTarget, NavigationItem } from '../models/navigation.model';
-import { filter } from 'rxjs/operators';
 
 /**
  * Smart Navigation Service
- * Handles navigation state, animations, and section detection
- * Optimized for simplicity while maintaining clean architecture
+ * Simple signal-based navigation state management
+ * Following Angular 20 best practices
  */
 @Injectable({
   providedIn: 'root'
@@ -16,6 +15,7 @@ export class SmartNavigationService {
   
   // Core navigation data
   private readonly _activeSection = signal<NavigationSection>(NavigationSection.START);
+  private readonly _isWelcomeVisible = signal<boolean>(true); // Signal para el estado del welcome component
   
   private readonly _navigationItems = signal<NavigationItem[]>([
     {
@@ -36,47 +36,31 @@ export class SmartNavigationService {
   readonly navigationItems = computed(() => this._navigationItems());
   readonly activeSection = computed(() => this._activeSection());
 
-  // Navigation visibility: hide ONLY when welcome section is visible on home page
+  // Simple navigation visibility logic - Angular 20 best practices
   readonly shouldShowNavigation = computed(() => {
     const currentUrl = this.router.url;
     
-    // If we're NOT on home page, always show navbar (with back button)
-    if (currentUrl !== '/' && currentUrl !== '') {
-      return true;
+    // Simple rule: Hide navbar only on home page when welcome is visible
+    if (currentUrl === '/' || currentUrl === '') {
+      return !this._isWelcomeVisible(); // Show navbar when welcome is NOT visible
     }
     
-    // If we're on home page, check which section is visible
-    const currentSection = this._activeSection();
-    
-    // HIDE navbar only when welcome section is visible on home page
-    // SHOW navbar when planets section is visible on home page
-    return currentSection === NavigationSection.PLANETS;
+    // Always show navbar on other pages (/planets, /planets/:id)
+    return true;
   });
 
-  private observer?: IntersectionObserver;
-
-  constructor() {
-    // Listen to route changes to reinitialize observer when needed
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      // If we're back to home page, reinitialize the observer
-      if (event.urlAfterRedirects === '/') {
-        setTimeout(() => {
-          this.reinitializeObserver();
-        }, 200); // Increased timeout to ensure DOM is ready
-      } else {
-        // When leaving home page, set active section to START
-        this._activeSection.set(NavigationSection.START);
-      }
-    });
+  /**
+   * Set welcome component visibility
+   * Called by the welcome component when it appears/disappears
+   */
+  setWelcomeVisibility(isVisible: boolean): void {
+    this._isWelcomeVisible.set(isVisible);
   }
 
   /**
    * Initialize navigation system
    */
   initialize(): void {
-    this.setupIntersectionObserver();
     this.addNavigationAnimations();
   }
 
@@ -139,108 +123,10 @@ export class SmartNavigationService {
   }
 
   /**
-   * Cleanup observer
+   * Cleanup - no longer needed since we removed IntersectionObserver
    */
   destroy(): void {
-    this.observer?.disconnect();
-  }
-
-  /**
-   * Reinitialize observer (useful when returning to home page)
-   */
-  private reinitializeObserver(): void {
-    // Check if we're in browser environment
-    if (typeof IntersectionObserver === 'undefined') {
-      return;
-    }
-    
-    // Disconnect existing observer
-    this.observer?.disconnect();
-    
-    // Reset to START section when reinitializing
-    this._activeSection.set(NavigationSection.START);
-    
-    // Wait a bit more to ensure DOM is ready
-    setTimeout(() => {
-      this.setupIntersectionObserver();
-      
-      // Check initial visibility after setup
-      this.checkInitialVisibility();
-    }, 100);
-  }
-
-  /**
-   * Check which section is initially visible
-   */
-  private checkInitialVisibility(): void {
-    const welcomeElement = document.getElementById(NavigationTarget.WELCOME);
-    const planetsElement = document.getElementById(NavigationTarget.PLANETS_LIST);
-    
-    if (welcomeElement && this.isElementInViewport(welcomeElement)) {
-      this._activeSection.set(NavigationSection.START);
-    } else if (planetsElement && this.isElementInViewport(planetsElement)) {
-      this._activeSection.set(NavigationSection.PLANETS);
-    }
-  }
-
-  /**
-   * Check if element is in viewport
-   */
-  private isElementInViewport(element: Element): boolean {
-    const rect = element.getBoundingClientRect();
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-    const windowWidth = window.innerWidth || document.documentElement.clientWidth;
-    
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= windowHeight &&
-      rect.right <= windowWidth
-    );
-  }
-
-  /**
-   * Setup intersection observer for section detection
-   */
-  private setupIntersectionObserver(): void {
-    // Check if we're in browser environment
-    if (typeof IntersectionObserver === 'undefined') {
-      return;
-    }
-
-    this.observer = new IntersectionObserver(
-      (entries) => this.handleIntersection(entries),
-      {
-        root: null,
-        rootMargin: '-50% 0px -50% 0px',
-        threshold: 0
-      }
-    );
-
-    // Observe target sections
-    this._navigationItems().forEach(item => {
-      const element = document.getElementById(item.targetId);
-      if (element) {
-        this.observer!.observe(element);
-      }
-    });
-  }
-
-  /**
-   * Handle intersection changes
-   */
-  private handleIntersection(entries: IntersectionObserverEntry[]): void {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const item = this.findItemByTarget(entry.target.id);
-        if (item) {
-          this.setActiveSection(item.id);
-        }
-        entry.target.classList.add('section-active');
-      } else {
-        entry.target.classList.remove('section-active');
-      }
-    });
+    // No cleanup needed
   }
 
   /**

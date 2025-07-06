@@ -139,10 +139,10 @@
   }
 }
 
-/* Smooth scroll behavior */
-html {
+/* Smooth scroll behavior - disabled to not interfere with Angular scroll restoration */
+/* html {
   scroll-behavior: smooth;
-}
+} */
 
 /* Focus management for accessibility */
 .skip-link {

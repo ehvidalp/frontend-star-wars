@@ -1,11 +1,11 @@
 <!-- Application Shell with Star Wars Navigation -->
-<div class="relative min-h-screen bg-black overflow-hidden">
+<div class="relative min-h-screen bg-black">
 
 <!-- Skip Link for Accessibility -->
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
 <!-- Starfield Background -->
-<div class="absolute top-1/2 left-1/2 h-px w-px rounded-full bg-white space-background-animated space-background" aria-hidden="true"></div>
+<div class="fixed top-1/2 left-1/2 h-px w-px rounded-full bg-white space-background-animated space-background" aria-hidden="true"></div>
 
 <!-- Star Wars Navigation Header - Only show when navigation is needed -->
 @if (shouldShowNavigation()) {
@@ -20,7 +20,7 @@
               type="button"
               class="inline-flex items-center space-x-2 px-4 py-2 rounded-lg
                      bg-gradient-to-r from-cyan-500/10 to-blue-500/10 
-                     border border-cyan-400/30 text-cyan-400 
+                     border border-cyan-400/30 text-cyan-400 font-medium
                      hover:from-cyan-500/20 hover:to-blue-500/20
                      hover:border-cyan-400/50 hover:text-cyan-300
                      focus:outline-none focus:ring-2 focus:ring-cyan-400/50
@@ -31,7 +31,7 @@
                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
               </svg>
-              <span class="font-medium">Back</span>
+              <span>Back</span>
             </button>
           </div>
         }

@@ -7,7 +7,7 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./features/home/home.routes'),
+                loadComponent: () => import('./features/home/pages/home/home').then(m => m.Home),
             },
             {
                 path: 'planets',
