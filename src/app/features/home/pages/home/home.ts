@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
-import { PlanetsList } from "../../../planets/components/planets-list/planets-list";
-import { Welcome } from '../../components/welcome/welcome';
-
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { PlanetsList } from "@features/planets/components/planets-list/planets-list";
+import { Welcome } from '@features/home/components/welcome/welcome';
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [PlanetsList, Welcome],
   templateUrl: './home.html',
-  styleUrl: './home.css'
+  styleUrl: './home.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Home {
-
 }

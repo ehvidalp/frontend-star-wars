@@ -1,25 +1,9 @@
-/**
- * Main Styles Entry Point
- * Star Wars Frontend Application
- */
-
-/* === TAILWIND BASE === */
 @import "tailwindcss";
-
-/* === BASE STYLES === */
 @import "./base/_variables.css";
 @import "./base/_view-transitions.css";
-
-/* === ANIMATIONS === */
 @import "./animations/_keyframes.css";
 @import "./animations/_utilities.css";
-
-/* === COMPONENTS === */
 @import "./components/_buttons.css";
 @import "./components/_planet.css";
 @import "./components/_navigation.css";
-
-/* === UTILITIES === */
 @import "./utilities/_starfield.css";
-
-/* Note: Accessibility styles are handled in /base/_accessibility.css */

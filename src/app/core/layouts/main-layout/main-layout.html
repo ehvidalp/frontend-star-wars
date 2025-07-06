@@ -1,19 +1,10 @@
-<!-- Application Shell with Star Wars Navigation -->
 <div class="relative min-h-screen bg-black">
-
-<!-- Skip Link for Accessibility -->
 <a href="#main-content" class="skip-link">Skip to main content</a>
-
-<!-- Starfield Background -->
 <div class="fixed top-1/2 left-1/2 h-px w-px rounded-full bg-white space-background-animated space-background" aria-hidden="true"></div>
-
-<!-- Star Wars Navigation Header - Only show when navigation is needed -->
 @if (shouldShowNavigation()) {
   <header class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-cyan-400/20 shadow-lg shadow-cyan-400/10">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 sm:h-20">
-        
-        <!-- Back Button - Show when NOT on home page -->
         @if (shouldShowBackButton()) {
           <div class="flex items-center space-x-4">
             <button 
@@ -35,18 +26,13 @@
             </button>
           </div>
         }
-        
-        <!-- Navigation Menu - Show when on home page -->
         @if (!shouldShowBackButton()) {
-          <!-- PLANETS Title - Show when on home page -->
           <div class="flex items-center space-x-4">
             <h1 class="font-orbitron text-2xl sm:text-3xl lg:text-4xl font-bold text-cyan-400 uppercase tracking-widest relative drop-shadow-2xl nav-logo-glow"
                 style="text-shadow: 0 0 10px rgb(34 211 238 / 0.8), 0 0 20px rgb(34 211 238 / 0.4), 0 0 30px rgb(34 211 238 / 0.4), 0 2px 4px rgb(0 0 0 / 0.5); filter: brightness(1.2);">
               PLANETS
             </h1>
           </div>
-          
-          <!-- Desktop Navigation -->
           <nav class="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
             <ul class="flex items-center space-x-8">
               <app-navigation-menu 
@@ -57,8 +43,6 @@
               </app-navigation-menu>
             </ul>
           </nav>
-          
-          <!-- Mobile Menu Button -->
           <button type="button"
                   class="md:hidden p-2 rounded-lg text-cyan-400 hover:text-cyan-300 
                          hover:bg-cyan-400/10 transition-colors duration-300
@@ -77,11 +61,8 @@
             </svg>
           </button>
         }
-        
       </div>
     </div>
-    
-    <!-- Mobile Navigation Menu (only show when on home page) -->
     @if (!shouldShowBackButton()) {
       <div class="mobile-nav-dropdown"
            [class.mobile-nav-open]="isMobileMenuOpen()">
@@ -97,16 +78,11 @@
         </nav>
       </div>
     }
-    
-    <!-- Header scan line -->
     <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent
                 animate-pulse opacity-60" aria-hidden="true"></div>
   </header>
 }
-
-<!-- Main Content Area -->
 <main id="main-content" class="relative z-10" [class.pt-16]="shouldShowNavigation()" [class.sm:pt-20]="shouldShowNavigation()">
   <router-outlet></router-outlet>
 </main>
-
 </div>

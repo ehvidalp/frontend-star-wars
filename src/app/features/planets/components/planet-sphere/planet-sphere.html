@@ -4,13 +4,8 @@
   role="img"
   [attr.aria-label]="'Visual representation of ' + planet().name"
   [style.view-transition-name]="sphereTransitionName()">
-  
   <div 
     class="w-full h-full rounded-full relative shadow-lg shadow-cyan-400/20 transition-all duration-500 ease-in-out hover:scale-105"
     [class]="planetClasses()">
-    
-    <!-- El anillo orbital 3D se crea con ::after en CSS -->
-    
   </div>
-  
 </figure>

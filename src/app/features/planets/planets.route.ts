@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-
 const PLANETS_ROUTES: Routes = [
   {
     path: '',
@@ -13,5 +12,4 @@ const PLANETS_ROUTES: Routes = [
     }
   },
 ];
-
 export default PLANETS_ROUTES;

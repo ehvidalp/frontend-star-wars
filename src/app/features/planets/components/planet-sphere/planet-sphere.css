@@ -1,9 +1,0 @@
-/**
- * Planet Sphere Component Styles
- * Specialized styles that cannot be handled by Tailwind utilities
- */
-
-/* 
- * Note: Accessibility styles (reduced motion) are handled globally in 
- * /src/styles/base/_accessibility.css - no need to duplicate them here
- */

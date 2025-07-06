@@ -1,5 +1,4 @@
 import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
-
 @Component({
   selector: 'app-error-state',
   templateUrl: './error-state.html',
@@ -12,9 +11,7 @@ export class ErrorState {
   showRetryButton = input<boolean>(true);
   retryText = input<string>('Reintentar');
   retryLabel = input<string>('Reintentar operación');
-  
   retry = output<void>();
-
   onRetry(): void {
     this.retry.emit();
   }

@@ -1,5 +1,4 @@
 import { Component, input, ChangeDetectionStrategy } from '@angular/core';
-
 @Component({
   selector: 'app-end-state',
   templateUrl: './end-state.html',

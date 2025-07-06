@@ -1,8 +1,6 @@
-/**
  * Starfield Background Utilities
  * Complex starfield background effects using CSS
  */
-
 @layer utilities {
   .space-background {
     box-shadow: 24vw 9vh 1px 0px #fff, 12vw -24vh 0px 1px #fff, -45vw -22vh 0px 0px #fff,
@@ -35,20 +33,16 @@
       -42vw 32vh 1px 1px #fff, 34vw 15vh 1px 1px #fff, 29vw -37vh 1px 1px #fff,
       28vw 2vh 0px 0px #fff;
   }
-  
   .space-background-dense {
     box-shadow: 
-      /* Layer 1 - Main stars */
       24vw 9vh 1px 0px #fff, 12vw -24vh 0px 1px #fff, -45vw -22vh 0px 0px #fff,
       -37vw -40vh 0px 1px #fff, 29vw 19vh 0px 1px #fff, 4vw -8vh 0px 1px #fff,
       -5vw 21vh 1px 1px #fff, -27vw 26vh 1px 1px #fff, -47vw -3vh 1px 1px #fff,
       -28vw -30vh 0px 1px #fff, -43vw -27vh 0px 1px #fff, 4vw 22vh 1px 1px #fff,
-      /* Layer 2 - Smaller stars */
       10vw 5vh 0px 0px rgba(255,255,255,0.8), 35vw -10vh 0px 0px rgba(255,255,255,0.6),
       -20vw 30vh 0px 0px rgba(255,255,255,0.7), -40vw -15vh 0px 0px rgba(255,255,255,0.5),
       25vw 40vh 0px 0px rgba(255,255,255,0.9), -30vw 20vh 0px 0px rgba(255,255,255,0.4);
   }
-  
   .space-background-animated {
     animation: zoom 17s alternate infinite ease-in-out;
   }

@@ -1,18 +1,15 @@
 import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { EMPTY_PLANET_STORE, IPlanetsStore, PlanetListResponse } from '../models/planet.model';
-import { Planets } from '../services/planets';
+import { EMPTY_PLANET_STORE, IPlanetsStore, PlanetListResponse } from '@features/planets/models/planet.model';
+import { Planets } from '@features/planets/services/planets';
 import { catchError, EMPTY, tap } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
 export class PlanetsStore {
   private planetService = inject(Planets);
   private destroyRef = inject(DestroyRef);
-
   private planetsStore = signal<IPlanetsStore>(EMPTY_PLANET_STORE)
-
   readonly planets = computed(() => this.planetsStore().planets);
   readonly selectedPlanet = computed(() => this.planetsStore().selectedPlanet);
   readonly nextPageUrl = computed(() => this.planetsStore().nextPageUrl);
@@ -21,32 +18,18 @@ export class PlanetsStore {
   readonly error = computed(() => this.planetsStore().error);
   readonly hasError = computed(() => !!this.planetsStore().error);
   readonly hasPlanets = computed(() => this.planetsStore().planets.length > 0);
-
-
   loadPlanets(url?: string | null): void {
-    console.log('Loading planets...', url);
-    
-    // Permitir carga inicial O cuando hay URL específica (para paginación)
     const isInitialLoad = this.planets().length === 0;
     const hasNextPageToLoad = !!url && !!this.planetsStore().nextPageUrl;
     const shouldLoad = isInitialLoad || hasNextPageToLoad || (url && !this.planetsStore().isLoading);
-
     if (!shouldLoad) {
-      console.log('Should not load. Current state:', {
-        planetsCount: this.planets().length,
-        isLoading: this.planetsStore().isLoading,
-        url,
-        nextPageUrl: this.planetsStore().nextPageUrl
-      });
       return;
     }
-
     this.planetsStore.update(store => ({
       ...store,
       isLoading: true,
       error: null
     }));
-
     const apiUrl = url || this.planetsStore().nextPageUrl || null;
     this.planetService.getPlanets(apiUrl).pipe(
       takeUntilDestroyed(this.destroyRef),
@@ -79,5 +62,4 @@ export class PlanetsStore {
       })
     ).subscribe();
   }
-
 }

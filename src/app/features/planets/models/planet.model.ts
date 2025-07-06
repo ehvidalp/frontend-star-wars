@@ -1,4 +1,3 @@
-
 export interface PlanetDetail {
   created: string;
   edited: string;
@@ -13,15 +12,12 @@ export interface PlanetDetail {
   population: string;
   url: string;
 }
-
 export interface PlanetSummary {
   uid: string;
   name: string;
   url: string;
 }
-
 export type Planet = PlanetDetail | PlanetSummary;
-
 export interface IPlanetsStore {
   planets: Planet[];
   selectedPlanet: Planet | null;
@@ -29,7 +25,6 @@ export interface IPlanetsStore {
   isLoading: boolean;
   error: string | null;
 }
-
 export interface PlanetListResponse {
   message: string;
   total_records: number;
@@ -40,7 +35,6 @@ export interface PlanetListResponse {
   apiVersion: string;
   timestamp: string;
 }
-
 export interface PlanetDetailResponse {
   message: string;
   result: {
@@ -53,7 +47,6 @@ export interface PlanetDetailResponse {
   apiVersion: string;
   timestamp: string;
 }
-
 export const EMPTY_PLANET_STORE: IPlanetsStore = {
   planets: [],
   selectedPlanet: null,

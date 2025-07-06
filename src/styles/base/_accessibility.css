@@ -1,9 +1,6 @@
-/**
  * Accessibility Styles
  * Global accessibility enhancements and media queries
  */
-
-/* === REDUCED MOTION === */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -14,44 +11,31 @@
     scroll-behavior: auto !important;
   }
 }
-
-/* === HIGH CONTRAST === */
 @media (prefers-contrast: high) {
-  /* Status elements */
   [role="status"] {
     border: 1px solid currentColor;
     padding: 1rem;
     border-radius: 0.5rem;
   }
-  
-  /* Loading states */
   [aria-busy="true"] {
     border: 2px solid currentColor;
     background: rgba(255, 255, 255, 0.1);
   }
-  
-  /* Focus indicators */
   :focus-visible {
     outline: 3px solid currentColor !important;
     outline-offset: 2px !important;
   }
 }
-
-/* === DARK MODE PREFERENCES === */
 @media (prefers-color-scheme: dark) {
-  /* Additional dark mode specific accessibility enhancements */
   :root {
     --text-contrast-ratio: 1.2;
   }
 }
-
-/* === PRINT STYLES === */
 @media print {
   * {
     animation: none !important;
     transition: none !important;
   }
-  
   .no-print {
     display: none !important;
   }

@@ -1,35 +1,27 @@
-/**
  * Navigation Utilities
  * Clases utilitarias para componentes de navegación
  */
-
-/* Focus Styles para Botones de Navegación - CSS directo */
 @layer utilities {
   .nav-focus-primary {
     outline: 2px solid transparent;
     outline-offset: 2px;
   }
-
   .nav-focus-primary:focus-visible {
     outline: 2px solid var(--nav-primary-focus);
     outline-offset: 2px;
   }
-
   .nav-focus-back {
     outline: 2px solid transparent;
     outline-offset: 2px;
   }
-
   .nav-focus-back:focus-visible {
     outline: 2px solid var(--nav-back-focus);
     outline-offset: 2px;
   }
-
   .nav-focus-secondary {
     outline: 2px solid transparent;
     outline-offset: 2px;
   }
-
   .nav-focus-secondary:focus-visible {
     outline: 2px solid var(--nav-secondary-focus);
     outline-offset: 2px;

@@ -1,10 +1,7 @@
-
 <main 
   class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" 
   role="main" 
   aria-label="Lista de planetas de Star Wars">
-  
-  <!-- Status announcement for screen readers -->
   <aside id="planets-status" class="sr-only" aria-live="polite" aria-atomic="true">
     @if (planetsStore.isLoading() && !planetsStore.hasPlanets()) {
       Cargando planetas...
@@ -14,8 +11,6 @@
       {{ planetsStore.planets().length }} planetas cargados
     }
   </aside>
-
-  <!-- Error State -->
   @if (showError()) {
     <app-error-state 
       [message]="planetsStore.error() || 'Error desconocido'"
@@ -23,15 +18,12 @@
       (retry)="retryLoading()">
     </app-error-state>
   }
-
-  <!-- Planets Grid -->
   @if (showPlanets()) {
     <section aria-labelledby="planets-heading">
       <h2 id="planets-heading" class="sr-only">Planetas disponibles</h2>
       <ul 
         class="grid gap-4 sm:gap-6 relative lg:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 auto-rows-fr place-items-center items-stretch" 
         role="list">
-        
         @for (planet of planetsStore.planets(); track trackByPlanet($index, planet)) {
           <li class="w-full max-w-sm flex flex-col" role="listitem">
             <app-planet-card 
@@ -41,12 +33,9 @@
             </app-planet-card>
           </li>
         }
-        
       </ul>
     </section>
   }
-
-  <!-- Infinity Scroll Trigger -->
   @if (showInfinityScroll()) {
     <div 
       appInfinityScroll
@@ -57,8 +46,6 @@
       aria-hidden="true">
     </div>
   }
-
-  <!-- Loading States -->
   @switch (loadingState()) {
     @case ('initial') {
       <app-loading-state 
@@ -75,13 +62,10 @@
       </app-loading-state>
     }
   }
-
-  <!-- End of List -->
   @if (showEndState()) {
     <app-end-state 
       message="Has llegado al final de la galaxia."
       ariaLabel="Fin de la lista de planetas">
     </app-end-state>
   }
-  
 </main>
