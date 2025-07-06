@@ -1,8 +1,13 @@
 import { Component, input, inject, computed, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { PlanetsStore } from '../../store/planets.store';
 import { Planet, PlanetSummary } from '../../models/planet.model';
 import { PlanetSphere } from '../../components/planet-sphere/planet-sphere';
+
+/**
+ * Planet Details Component
+ * Shows detailed information about a specific planet
+ * Navigation is handled by the main layout
+ */
 
 @Component({
   selector: 'app-planet-details',
@@ -14,7 +19,6 @@ export class PlanetDetails implements OnInit {
   planetId = input.required<string>();
   
   private planetsStore = inject(PlanetsStore);
-  private router = inject(Router);
 
   // Computed para obtener el planeta por ID
   planet = computed(() => {
@@ -51,12 +55,5 @@ export class PlanetDetails implements OnInit {
     if (this.planetsStore.planets().length === 0) {
       this.planetsStore.loadPlanets();
     }
-  }
-
-  /**
-   * Navega de vuelta a la lista de planetas
-   */
-  goBack(): void {
-    this.router.navigate(['/']);
   }
 }

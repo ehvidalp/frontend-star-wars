@@ -1,12 +1,14 @@
-import { Component, inject, afterNextRender, OnDestroy, signal } from '@angular/core';
-import { RouterOutlet, Router } from '@angular/router';
+import { Component, inject, afterNextRender, OnDestroy, signal, computed } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { NavigationItem } from '../../models/navigation.model';
 import { SmartNavigationService } from '../../services/smart-navigation.service';
 import { NavigationMenuComponent } from '../../components/navigation-menu/navigation-menu';
+import { filter } from 'rxjs/operators';
 
 /**
  * Main Layout Component
- * Clean, responsive navigation following project architecture
+ * Simple navigation with conditional visibility based on visible sections
+ * Shows only a "Back" button when not on home page
  */
 @Component({
   selector: 'app-main-layout',
@@ -19,21 +21,43 @@ export class MainLayout implements OnDestroy {
   private readonly router = inject(Router);
   private readonly navigationService = inject(SmartNavigationService);
 
-  // Expose navigation data to template
+  // Current route signal for better reactivity
+  private readonly _currentRoute = signal<string>('/');
+
+  // Expose navigation data to template (only for home page)
   readonly navigationItems = this.navigationService.navigationItems;
   readonly activeSection = this.navigationService.activeSection;
   
-  // Mobile menu state
+  // Navigation visibility from SmartNavigationService
+  readonly shouldShowNavigation = this.navigationService.shouldShowNavigation;
+  
+  // Simple logic: show back button when NOT on home page
+  readonly shouldShowBackButton = computed(() => {
+    const currentUrl = this._currentRoute();
+    return currentUrl !== '/' && currentUrl !== '';
+  });
+  
+  // Mobile menu state (only used on home page)
   readonly isMobileMenuOpen = signal(false);
 
   constructor() {
+    // Track route changes for better reactivity
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this._currentRoute.set(event.urlAfterRedirects);
+    });
+
+    // Initialize current route
+    this._currentRoute.set(this.router.url);
+
     afterNextRender(() => {
       this.navigationService.initialize();
     });
   }
 
   /**
-   * Toggle mobile menu
+   * Toggle mobile menu (only for home page)
    */
   toggleMobileMenu(): void {
     this.isMobileMenuOpen.update(isOpen => !isOpen);
@@ -47,7 +71,7 @@ export class MainLayout implements OnDestroy {
   }
 
   /**
-   * Handle navigation click
+   * Handle navigation click (only for home page)
    */
   async onNavigate(item: NavigationItem): Promise<void> {
     try {
@@ -70,6 +94,14 @@ export class MainLayout implements OnDestroy {
     } catch (error) {
       console.error('Navigation failed:', error);
     }
+  }
+
+  /**
+   * Go back to home page
+   */
+  goBack(): void {
+    // Always go back to home page
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy(): void {

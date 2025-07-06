@@ -2,20 +2,6 @@ import { Component, input, output, computed, ChangeDetectionStrategy } from '@an
 import { CommonModule } from '@angular/common';
 import { NavigationItem } from '../../models/navigation.model';
 
-/**
- * Navigation Menu Component - VERSIÓN DEFINITIVA
- * 
- * ✅ CERO function calls en template (máxima performance)
- * ✅ Enriched Data Pattern (Angular 20 best practice)
- * ✅ Computed properties con memoización automática
- * ✅ OnPush change detection strategy
- * 
- * ENFOQUE: Pre-compute all styles in computed property,
- * template only does direct property access O(1)
- * 
- * TRADE-OFF: Complexity vs Performance - Optimized for scale
- */
-
 interface EnrichedNavigationItem extends NavigationItem {
   // Estilos pre-calculados para evitar function calls en template
   buttonClasses: string;
@@ -23,6 +9,18 @@ interface EnrichedNavigationItem extends NavigationItem {
   accentClasses: string;
   isActive: boolean;
 }
+
+/**
+ * Navigation Menu Component - VERSIÓN SIMPLIFICADA
+ * 
+ * ✅ CERO function calls en template (máxima performance)
+ * ✅ Computed properties con memoización automática
+ * ✅ OnPush change detection strategy
+ * ✅ Simplified navigation without complex state management
+ * 
+ * ENFOQUE: Pre-compute all styles in computed property,
+ * template only does direct property access O(1)
+ */
 @Component({
   selector: 'app-navigation-menu',
   standalone: true,
@@ -73,50 +71,51 @@ export class NavigationMenuComponent {
   });
 
   readonly baseAccentClasses = computed(() => {
-    const base = 'absolute h-0.5 bottom-0 bg-gradient-to-r from-cyan-400 to-blue-400 transition-all duration-300 ease-out shadow-[0_0_6px_rgba(34,211,238,0.8)]';
-    const position = this.isDesktop() 
-      ? ' left-1/2 transform -translate-x-1/2'
-      : ' left-0';
-    return `${base}${position}`;
+    const base = 'absolute transition-all duration-300';
+    const variant = this.isMobile()
+      ? 'left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 to-blue-400 rounded-r-full shadow-[0_0_8px_rgba(34,211,238,0.6)]'
+      : 'bottom-0 left-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full shadow-[0_0_8px_rgba(34,211,238,0.6)]';
+    return `${base} ${variant}`;
   });
 
-  // ✅ SOLUCIÓN DEFINITIVA: Array de items enriquecidos
-  // Solo property access en template, CERO function calls
-  readonly enrichedNavigationItems = computed((): EnrichedNavigationItem[] => {
+  // ✅ ENRICHED DATA PATTERN - Angular 20 best practice
+  // Pre-compute all styles and states, template only accesses properties
+  readonly enrichedNavigationItems = computed<EnrichedNavigationItem[]>(() => {
     const items = this.navigationItems();
-    const activeSection = this.activeSection();
-    const baseButton = this.baseButtonClasses();
-    const baseText = this.baseTextClasses();
-    const baseAccent = this.baseAccentClasses();
+    const active = this.activeSection();
+    const baseButtonClasses = this.baseButtonClasses();
+    const baseTextClasses = this.baseTextClasses();
+    const baseAccentClasses = this.baseAccentClasses();
     
     return items.map(item => {
-      const isActive = activeSection === item.id;
+      const isActive = item.id === active;
       
       return {
         ...item,
-        buttonClasses: isActive 
-          ? `${baseButton}${this.isMobile() ? ' text-cyan-300 bg-cyan-400/10' : ' text-cyan-300'}`
-          : baseButton,
-        textClasses: isActive && this.isDesktop()
-          ? `${baseText} drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]`
-          : baseText,
-        accentClasses: isActive
-          ? `${baseAccent}${this.isMobile() ? ' w-full' : ' w-3/4'}`
-          : `${baseAccent} w-0 group-hover:w-full group-focus:w-full`,
-        isActive
+        isActive,
+        buttonClasses: `${baseButtonClasses} ${
+          isActive ? 'text-cyan-300' : 'text-cyan-400/80'
+        }`,
+        textClasses: `${baseTextClasses} ${
+          isActive ? 'text-cyan-300' : 'text-cyan-400/80'
+        }`,
+        accentClasses: `${baseAccentClasses} ${
+          isActive
+            ? this.isMobile() 
+              ? 'opacity-100 scale-y-100' 
+              : 'w-full opacity-100 scale-x-100'
+            : this.isMobile()
+              ? 'opacity-0 scale-y-0'
+              : 'w-0 opacity-0 scale-x-0'
+        }`
       };
     });
   });
 
-  // Event handlers
+  /**
+   * Handle navigation click
+   */
   onNavigate(item: NavigationItem): void {
     this.navigate.emit(item);
-  }
-
-  onKeyboardNavigate(event: KeyboardEvent, item: NavigationItem): void {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      this.onNavigate(item);
-    }
   }
 }
