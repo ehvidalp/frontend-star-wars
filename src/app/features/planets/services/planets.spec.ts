@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { Planets } from './planets';
-describe('Planets', () => {
-  let service: Planets;
+import { PlanetsApi } from './planets';
+describe('PlanetsApi', () => {
+  let service: PlanetsApi;
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Planets);
+    service = TestBed.inject(PlanetsApi);
   });
   it('should be created', () => {
     expect(service).toBeTruthy();

@@ -5,7 +5,7 @@ import { Planet, PlanetDetail, PlanetDetailResponse, PlanetListResponse } from '
 @Injectable({
   providedIn: 'root'
 })
-export class Planets {
+export class PlanetsApi {
   private readonly apiUrl = 'https://www.swapi.tech/api';
   private readonly httpClient = inject(HttpClient);
   getPlanets(currentApiUrl?: string | null): Observable<PlanetListResponse> {

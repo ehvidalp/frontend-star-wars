@@ -2,7 +2,6 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { filter, map, startWith } from 'rxjs/operators';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,21 +16,21 @@ export class NavigationStateService {
     map(event => (event as NavigationEnd).urlAfterRedirects),
     startWith(this.router.url)
   );
-  private readonly currentRoute = toSignal(this.routeEvents$, { initialValue: '' });
+
   readonly isHomePage = computed(() => {
-    const route = this.currentRoute();
+    const route = this._currentRoute();
     return route === '/' || route === '';
   });
   readonly isPlanetsListPage = computed(() => {
-    const route = this.currentRoute();
+    const route = this._currentRoute();
     return route === '/planets';
   });
   readonly isPlanetDetailPage = computed(() => {
-    const route = this.currentRoute();
+    const route = this._currentRoute();
     return route.startsWith('/planets/') && route.split('/').length === 3;
   });
   readonly shouldShowNavigation = computed(() => {
-    const route = this.currentRoute();
+    const route = this._currentRoute();
     return route === '/planets' || route.startsWith('/planets/');
   });
   readonly shouldShowBackButton = computed(() => {
@@ -52,7 +51,6 @@ export class NavigationStateService {
     this.routeEvents$.subscribe(url => {
       this.updateNavigationState(url);
     });
-    this.updateNavigationState(this.router.url);
   }
   private updateNavigationState(url: string): void {
     const currentRoute = this._currentRoute();

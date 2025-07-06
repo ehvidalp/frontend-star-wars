@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, ChangeDetectionStrategy, computed } from '@angular/core';
-import { Planets } from '@features/planets/services/planets';
 import { PlanetsStore } from '@features/planets/store/planets.store';
 import { LoadingSize } from '@shared/models';
 import { PlanetCard } from '@features/planets/components/planet-card/planet-card';

@@ -1,13 +1,13 @@
 import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EMPTY_PLANET_STORE, IPlanetsStore, PlanetListResponse } from '@features/planets/models/planet.model';
-import { Planets } from '@features/planets/services/planets';
+import { PlanetsApi } from '@features/planets/services/planets';
 import { catchError, EMPTY, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class PlanetsStore {
-  private planetService = inject(Planets);
+  private planetService = inject(PlanetsApi);
   private destroyRef = inject(DestroyRef);
   private planetsStore = signal<IPlanetsStore>(EMPTY_PLANET_STORE)
   readonly planets = computed(() => this.planetsStore().planets);
