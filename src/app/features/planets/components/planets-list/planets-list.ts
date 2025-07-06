@@ -1,9 +1,11 @@
 import { Component, inject, OnInit, ChangeDetectionStrategy, computed } from '@angular/core';
 import { PlanetsStore } from '@features/planets/store/planets.store';
-import { LoadingSize } from '@shared/models';
+import { LoadingSize } from '@shared/models/ui-state.model';
 import { PlanetCard } from '@features/planets/components/planet-card/planet-card';
 import { InfinityScrollDirective } from '@shared/directives/infinity-scroll';
-import { LoadingState, ErrorState, EndState } from '@shared/components';
+import { LoadingState } from '@shared/components/loading-state/loading-state';
+import { ErrorState } from '@shared/components/error-state/error-state';
+import { EndState } from '@shared/components/end-state/end-state';
 @Component({
   selector: 'app-planets-list',
   standalone: true,

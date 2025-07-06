@@ -43,7 +43,7 @@
 }
 @layer utilities {
   .font-star-wars {
-    font-family: 'StarWars', sans-serif;
+    font-family: 'StarWars', 'Orbitron', sans-serif;
   }
   .font-orbitron {
     font-family: 'Orbitron', monospace;

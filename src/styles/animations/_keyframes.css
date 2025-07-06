@@ -131,3 +131,155 @@
     transform: translateX(100%) scaleX(0);
   }
 }
+
+/* Star Wars Welcome Title Animations */
+@keyframes star-wars-entrance {
+  0% {
+    opacity: 0;
+    transform: perspective(800px) rotateX(15deg) translateZ(-1000px);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(800px) rotateX(15deg) translateZ(0px);
+  }
+}
+
+@keyframes title-glow {
+  0% {
+    text-shadow: 
+      0 0 10px #22d3ee,
+      0 0 20px #22d3ee,
+      0 0 30px #22d3ee,
+      2px 2px 0px #0891b2,
+      4px 4px 0px #0e7490;
+  }
+  100% {
+    text-shadow: 
+      0 0 15px #22d3ee,
+      0 0 25px #22d3ee,
+      0 0 35px #22d3ee,
+      0 0 45px #22d3ee,
+      2px 2px 0px #0891b2,
+      4px 4px 0px #0e7490;
+  }
+}
+
+@keyframes title-perspective-glow {
+  0% {
+    text-shadow: 
+      0 0 10px #22d3ee,
+      0 0 20px #22d3ee,
+      0 0 30px #22d3ee,
+      2px 2px 0px #0891b2,
+      4px 4px 0px #0e7490;
+    transform: perspective(800px) rotateX(15deg);
+  }
+  100% {
+    text-shadow: 
+      0 0 15px #22d3ee,
+      0 0 25px #22d3ee,
+      0 0 35px #22d3ee,
+      0 0 45px #22d3ee,
+      2px 2px 0px #0891b2,
+      4px 4px 0px #0e7490;
+    transform: perspective(800px) rotateX(15deg);
+  }
+}
+
+@keyframes subtitle-entrance {
+  0% {
+    opacity: 0;
+    transform: perspective(800px) rotateX(10deg) translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(800px) rotateX(10deg) translateY(0px);
+  }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { 
+    opacity: 0.3; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.2); 
+  }
+}
+
+@keyframes depth-scroll {
+  0% { 
+    transform: translateX(-100%) scaleX(0.5);
+    opacity: 0;
+  }
+  50% { 
+    opacity: 0.1;
+    transform: translateX(0%) scaleX(1);
+  }
+  100% { 
+    transform: translateX(100%) scaleX(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes loading-pulse {
+  0%, 100% { 
+    opacity: 0.3; 
+  }
+  50% { 
+    opacity: 1; 
+  }
+}
+
+@keyframes hide-loading {
+  to { 
+    opacity: 0; 
+    visibility: hidden; 
+  }
+}
+
+@keyframes star-wars-button-entrance {
+  0% {
+    opacity: 0;
+    transform: perspective(800px) rotateX(5deg) translateY(30px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(800px) rotateX(5deg) translateY(0) scale(1);
+  }
+}
+
+@keyframes button-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(34, 211, 238, 0.6);
+  }
+}
+
+@keyframes star-wars-complete-sequence {
+  0%, 90% {
+    text-shadow: 
+      0 0 10px #22d3ee,
+      0 0 20px #22d3ee,
+      0 0 30px #22d3ee,
+      2px 2px 0px #0891b2,
+      4px 4px 0px #0e7490;
+    transform: perspective(800px) rotateX(15deg);
+  }
+  100% {
+    text-shadow: 
+      0 0 15px #22d3ee,
+      0 0 25px #22d3ee,
+      0 0 35px #22d3ee,
+      0 0 45px #22d3ee,
+      2px 2px 0px #0891b2,
+      4px 4px 0px #0e7490;
+    transform: perspective(800px) rotateX(15deg);
+  }
+}

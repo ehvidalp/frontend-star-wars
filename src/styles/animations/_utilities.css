@@ -3,6 +3,10 @@
  * Tailwind-compatible animation classes using our centralized keyframes
  */
 @layer utilities {
+  .animate-star-wars-complete {
+    animation: star-wars-entrance 4s ease-out forwards, 
+               star-wars-complete-sequence 8s ease-in-out 4s infinite alternate;
+  }
   .animate-zoom {
     animation: zoom 17s alternate infinite ease-in-out;
   }
@@ -59,5 +63,62 @@
   }
   .group:hover .group-hover\:animate-ring-rotate {
     animation: ring-rotate 12s linear infinite;
+  }
+
+  /* Star Wars Welcome Animations */
+  .animate-star-wars-entrance {
+    animation: star-wars-entrance 4s ease-out forwards;
+  }
+
+  .animate-title-glow {
+    animation: title-glow 4s ease-in-out infinite alternate;
+  }
+
+  .animate-title-perspective-glow {
+    animation: title-perspective-glow 4s ease-in-out infinite alternate;
+  }
+
+  .animate-subtitle-entrance {
+    animation: subtitle-entrance 2s ease-out 3s forwards;
+  }
+
+  .animate-star-twinkle {
+    animation: star-twinkle 3s infinite alternate;
+  }
+
+  .animate-depth-scroll {
+    animation: depth-scroll 8s linear infinite;
+  }
+
+  .animate-loading-pulse {
+    animation: loading-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-hide-loading {
+    animation: hide-loading 1s ease-out 5s forwards;
+  }
+
+  /* Star Wars entrance with glow combination */
+  .animate-star-wars-full {
+    animation: star-wars-entrance 4s ease-out forwards,
+      title-glow 4s ease-in-out 4s infinite alternate;
+  }
+
+  /* Star Wars Button Animations */
+  .animate-star-wars-button {
+    animation: star-wars-button-entrance 2s ease-out 4s forwards;
+  }
+
+  .animate-star-wars-button-entrance {
+    animation: star-wars-button-entrance 2s ease-out 4s forwards;
+  }
+
+  .animate-button-glow {
+    animation: button-glow-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-star-wars-complete {
+    animation: star-wars-entrance 4s ease-out forwards,
+      star-wars-complete-sequence 8s ease-in-out 4s infinite alternate;
   }
 }
