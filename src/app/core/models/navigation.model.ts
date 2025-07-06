@@ -22,6 +22,15 @@ export interface NavigationItem {
   shortcut?: string;
 }
 
+export interface NavigationButtonConfig {
+  id: string;
+  label: string;
+  ariaLabel: string;
+  icon?: string;
+  variant: 'primary' | 'back' | 'secondary';
+  isActive?: boolean;
+}
+
 export interface ScrollTarget {
   elementId: string;
   behavior: ScrollBehavior;

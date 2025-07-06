@@ -1,0 +1,99 @@
+/**
+ * Button Components
+ * Estilos globales para botones del sistema Star Wars
+ */
+
+/* === BUTTON BASE STYLES === */
+@layer components {
+  .btn-base {
+    @apply px-4 py-2 rounded-md font-medium transition-all duration-300;
+    transition-timing-function: var(--transition-timing);
+    min-height: 44px; /* Accessibility - minimum touch target */
+  }
+
+  /* Navigation Button Variants */
+  .btn-nav-primary {
+    @apply btn-base;
+    background-color: var(--nav-primary);
+    border: 1px solid var(--nav-primary);
+    color: white;
+  }
+
+  .btn-nav-primary:hover {
+    background-color: var(--nav-primary-focus);
+    box-shadow: 0 0 10px var(--nav-primary-shadow);
+  }
+
+  .btn-nav-back {
+    @apply btn-base;
+    background-color: var(--nav-back);
+    border: 1px solid var(--nav-back);
+    color: black;
+  }
+
+  .btn-nav-back:hover {
+    background-color: var(--nav-back-focus);
+    transform: translateX(-2px);
+  }
+
+  .btn-nav-secondary {
+    @apply btn-base;
+    background-color: var(--nav-secondary);
+    border: 1px solid var(--nav-secondary);
+    color: white;
+  }
+
+  .btn-nav-secondary:hover {
+    background-color: var(--nav-secondary-focus);
+  }
+
+  /* Star Wars themed buttons */
+  .btn-jedi {
+    @apply btn-base;
+    background: linear-gradient(45deg, var(--color-star-blue), var(--color-star-blue-glow));
+    border: 1px solid var(--color-star-blue-ring);
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+
+  .btn-jedi:hover {
+    box-shadow: 0 0 20px var(--color-star-blue-glow);
+    transform: translateY(-2px);
+  }
+
+  .btn-sith {
+    @apply btn-base;
+    background: linear-gradient(45deg, #dc2626, #7f1d1d);
+    border: 1px solid #dc2626;
+    color: white;
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+  }
+
+  .btn-sith:hover {
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+    transform: translateY(-2px);
+  }
+
+  /* Disabled state for all buttons */
+  .btn-base:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+}
+
+/* === BUTTON ICON STYLES === */
+@layer utilities {
+  .btn-icon {
+    @apply w-5 h-5 transition-transform duration-300;
+    transition-timing-function: var(--transition-timing);
+  }
+
+  .btn-icon-back {
+    @apply btn-icon;
+  }
+
+  .btn-icon-back:hover {
+    transform: translateX(-2px);
+  }
+}

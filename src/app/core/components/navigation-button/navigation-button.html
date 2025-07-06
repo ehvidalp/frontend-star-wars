@@ -1,0 +1,36 @@
+<button 
+  [class]="buttonClasses()"
+  [disabled]="disabled()"
+  [attr.aria-label]="config().ariaLabel"
+  [attr.data-nav-id]="config().id"
+  (click)="onButtonClick()">
+  
+  <!-- Icon (if provided) -->
+  @if (config().icon) {
+    <svg class="btn-icon" 
+         [class.btn-icon-back]="config().variant === 'back'"
+         fill="currentColor" 
+         viewBox="0 0 24 24">
+      @switch (config().icon) {
+        @case ('back') {
+          <path d="M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7z"/>
+        }
+        @case ('home') {
+          <path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/>
+        }
+        @case ('planets') {
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        }
+        @default {
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+        }
+      }
+    </svg>
+  }
+  
+  <!-- Button Label -->
+  <span class="ml-2">{{ config().label }}</span>
+  
+  <!-- Visual indicators for hover states -->
+  <div class="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-md"></div>
+</button>

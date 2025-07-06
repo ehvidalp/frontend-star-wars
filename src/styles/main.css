@@ -15,7 +15,9 @@
 @import "./animations/_utilities.css";
 
 /* === COMPONENTS === */
+@import "./components/_buttons.css";
 @import "./components/_planet.css";
+@import "./components/_navigation.css";
 
 /* === UTILITIES === */
 @import "./utilities/_starfield.css";

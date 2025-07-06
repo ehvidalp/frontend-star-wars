@@ -83,9 +83,9 @@
     
     <!-- Mobile Navigation Menu (only show when on home page) -->
     @if (!shouldShowBackButton()) {
-      <div class="mobile-nav-dropdown"
-           [class.mobile-nav-open]="isMobileMenuOpen()"
-           [class.mobile-nav-enter]="isMobileMenuOpen()">
+      <div class="dropdown-base dropdown-mobile-only"
+           [class.dropdown-hidden]="!isMobileMenuOpen()"
+           [class.dropdown-visible]="isMobileMenuOpen()">
         <nav class="container mx-auto px-4 py-4" role="navigation" aria-label="Mobile navigation">
           <ul class="space-y-2">
             <app-navigation-menu 
