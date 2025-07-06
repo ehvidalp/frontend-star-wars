@@ -1,0 +1,17 @@
+/**
+ * Navigation Menu Component Styles
+ * Using Tailwind v4 architecture - no custom CSS needed
+ * All styles are applied via Tailwind utilities in the template
+ * Host class is defined in component decorator
+ */
+
+/* 
+  This file is intentionally minimal/empty as the component 
+  follows Tailwind v4 architecture:
+  
+  - Host classes: In @Component.host
+  - Utility classes: In template HTML
+  - Animations: In /styles/animations/
+  - Responsive: Via Tailwind breakpoints
+  - Accessibility: Via Tailwind utilities and media queries
+*/

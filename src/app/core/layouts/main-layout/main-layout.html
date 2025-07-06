@@ -35,60 +35,16 @@
                     opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" aria-hidden="true"></div>
       </h1>
       
-      <!-- Desktop Navigation -->
+      <!-- Unified Navigation - Desktop -->
       <nav class="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
-        @for (item of navigationItems(); track item.id) {
-          <button type="button"
-                  class="group relative px-4 py-2 
-                         font-orbitron text-sm font-medium uppercase tracking-wide
-                         transition-all duration-300 ease-out
-                         focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-black
-                         hover:transform hover:scale-105
-                         active:scale-95"
-                  [class]="activeSection() === item.id ? 'text-cyan-300' : 'text-cyan-400/80 hover:text-cyan-300'"
-                  [attr.aria-label]="item.ariaLabel"
-                  [attr.aria-current]="activeSection() === item.id ? 'page' : null"
-                  [attr.data-nav-id]="item.id"
-                  (click)="onNavigate(item)"
-                  (keydown.enter)="onNavigate(item)"
-                  (keydown.space)="onNavigate(item)">
-            
-            <!-- Background glow on hover -->
-            <div class="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 
-                        opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg blur-sm" aria-hidden="true"></div>
-            
-            <!-- Active state background -->
-            <div class="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/5 to-cyan-400/0 
-                        rounded-lg blur-sm transition-opacity duration-300"
-                 [class]="activeSection() === item.id ? 'opacity-100' : 'opacity-0'" aria-hidden="true"></div>
-            
-            <!-- Text with glow effect -->
-            <span class="relative z-10 transition-all duration-300"
-                  [class]="activeSection() === item.id ? 'drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]' : 'drop-shadow-[0_0_6px_rgba(34,211,238,0.3)] group-hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)]'">
-              {{ item.label }}
-            </span>
-            
-            <!-- Animated border bottom -->
-            <div class="absolute bottom-0 left-1/2 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400 
-                        transform -translate-x-1/2 transition-all duration-300 ease-out
-                        shadow-[0_0_6px_rgba(34,211,238,0.8)]"
-                 [class]="activeSection() === item.id ? 'w-3/4' : 'w-0 group-hover:w-3/4 group-focus:w-3/4'" aria-hidden="true"></div>
-            
-            <!-- Corner accent lines -->
-            <div class="absolute top-1 left-1 w-2 h-2 border-l border-t border-cyan-400/30 
-                        transition-opacity duration-300"
-                 [class]="activeSection() === item.id ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'" aria-hidden="true"></div>
-            <div class="absolute top-1 right-1 w-2 h-2 border-r border-t border-cyan-400/30 
-                        transition-opacity duration-300"
-                 [class]="activeSection() === item.id ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'" aria-hidden="true"></div>
-            <div class="absolute bottom-1 left-1 w-2 h-2 border-l border-b border-cyan-400/30 
-                        transition-opacity duration-300"
-                 [class]="activeSection() === item.id ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'" aria-hidden="true"></div>
-            <div class="absolute bottom-1 right-1 w-2 h-2 border-r border-b border-cyan-400/30 
-                        transition-opacity duration-300"
-                 [class]="activeSection() === item.id ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'" aria-hidden="true"></div>
-          </button>
-        }
+        <ul class="flex items-center space-x-8">
+          <app-navigation-menu 
+            [navigationItems]="navigationItems()"
+            [activeSection]="activeSection()"
+            [variant]="'desktop'"
+            (navigate)="onNavigate($event)">
+          </app-navigation-menu>
+        </ul>
       </nav>
       
       <!-- Mobile Menu Button -->
@@ -116,36 +72,15 @@
   <!-- Mobile Navigation Menu -->
   <div class="mobile-nav-dropdown"
        [class.mobile-nav-open]="isMobileMenuOpen()"
-       [class.mobile-nav-enter]="isMobileMenuOpen()">>
+       [class.mobile-nav-enter]="isMobileMenuOpen()">
     <nav class="container mx-auto px-4 py-4" role="navigation" aria-label="Mobile navigation">
       <ul class="space-y-2">
-        @for (item of navigationItems(); track item.id) {
-          <li>
-            <button type="button"
-                    class="group relative w-full px-4 py-3 text-left
-                           font-orbitron text-base font-medium uppercase tracking-wide
-                           transition-all duration-300 ease-out
-                           focus:outline-none focus:ring-2 focus:ring-cyan-400/50
-                           border-b border-cyan-400/10 last:border-b-0
-                           rounded-lg hover:bg-cyan-400/5"
-                    [class]="activeSection() === item.id ? 'text-cyan-300 bg-cyan-400/10' : 'text-cyan-400/80 hover:text-cyan-300'"
-                    [attr.aria-label]="item.ariaLabel"
-                    [attr.aria-current]="activeSection() === item.id ? 'page' : null"
-                    [attr.data-nav-id]="item.id"
-                    (click)="onNavigate(item)"
-                    (keydown.enter)="onNavigate(item)"
-                    (keydown.space)="onNavigate(item)">
-              
-              <!-- Text -->
-              <span class="relative z-10 transition-all duration-300">{{ item.label }}</span>
-              
-              <!-- Animated border -->
-              <div class="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400 
-                          transition-all duration-300 ease-out shadow-[0_0_6px_rgba(34,211,238,0.8)]"
-                   [class]="activeSection() === item.id ? 'w-full' : 'w-0 group-hover:w-full group-focus:w-full'" aria-hidden="true"></div>
-            </button>
-          </li>
-        }
+        <app-navigation-menu 
+          [navigationItems]="navigationItems()"
+          [activeSection]="activeSection()"
+          [variant]="'mobile'"
+          (navigate)="onNavigate($event)">
+        </app-navigation-menu>
       </ul>
     </nav>
   </div>

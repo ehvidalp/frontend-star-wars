@@ -2,6 +2,7 @@ import { Component, inject, afterNextRender, OnDestroy, signal } from '@angular/
 import { RouterOutlet, Router } from '@angular/router';
 import { NavigationItem } from '../../models/navigation.model';
 import { SmartNavigationService } from '../../services/smart-navigation.service';
+import { NavigationMenuComponent } from '../../components/navigation-menu/navigation-menu';
 
 /**
  * Main Layout Component
@@ -10,7 +11,7 @@ import { SmartNavigationService } from '../../services/smart-navigation.service'
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NavigationMenuComponent],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css'
 })
