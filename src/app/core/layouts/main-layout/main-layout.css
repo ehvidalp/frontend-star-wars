@@ -1,11 +1,35 @@
-/* Main layout specific styles - Uses Tailwind utilities */
+/* Main layout specific styles - Minimal CSS, uses Tailwind */
 
-/* 
- * Navigation dropdown now uses utility classes from /src/styles/components/_navigation.css:
- * - .dropdown-base .dropdown-mobile-only .dropdown-hidden (default state)
- * - .dropdown-base .dropdown-mobile-only .dropdown-visible (open state)
- * 
- * No custom CSS needed - all handled by Tailwind utilities + CSS variables
- */
+/* Mobile Navigation Dropdown - Custom component not in Tailwind */
+.mobile-nav-dropdown {
+  /* Base state - hidden */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--nav-primary-border);
+  box-shadow: 0 10px 15px -3px var(--nav-primary-shadow);
+  
+  /* Hidden by default */
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s var(--transition-timing);
+}
 
-/* Component-specific styles (only if needed) */
+/* Mobile nav open state */
+.mobile-nav-dropdown.mobile-nav-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Hide mobile nav on desktop */
+@media (min-width: 768px) {
+  .mobile-nav-dropdown {
+    display: none;
+  }
+}
