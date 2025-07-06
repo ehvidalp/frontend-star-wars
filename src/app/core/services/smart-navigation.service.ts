@@ -41,33 +41,26 @@ export class SmartNavigationService {
     const isWelcomeVisible = this._isWelcomeVisible();
     const navigationVisible = this._navigationVisible();
     
-    // On home page, show navigation only when welcome is NOT visible AND navbar is set to visible
     if (currentUrl === '/' || currentUrl === '') {
       return !isWelcomeVisible && navigationVisible;
     }
     
-    // On other pages, always show navigation
     return true;
   });
   
   setWelcomeVisibility(isVisible: boolean): void {
-    // Always update the welcome visibility state
     this._isWelcomeVisible.set(isVisible);
     
-    // Cancel any pending navigation update
     this._pendingNavUpdate.set(false);
     
-    // Immediately hide navigation when welcome is visible
     if (isVisible) {
       this._navigationVisible.set(false);
     } else {
-      // Set pending update and use timer for delay
       this._pendingNavUpdate.set(true);
       
-      timer(150)
+      timer(100)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
-          // Only update if still pending (not cancelled)
           if (this._pendingNavUpdate()) {
             this._navigationVisible.set(true);
             this._pendingNavUpdate.set(false);
@@ -83,14 +76,13 @@ export class SmartNavigationService {
       requestAnimationFrame(() => {
         const nav = document.querySelector('header');
         if (nav) {
-          nav.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease';
+          nav.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease-out';
+          nav.style.willChange = 'transform, opacity';
         }
       });
     }
   }
   initialize(): void {
-    // Navigation animations are now handled in constructor
-    // This method can be used for other initialization if needed
   }
   setActiveSection(section: NavigationSection): void {
     this._activeSection.set(section);
@@ -109,8 +101,7 @@ export class SmartNavigationService {
       inline: 'nearest'
     });
     
-    // Use timer instead of setTimeout
-    timer(200)
+    timer(100)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         element.classList.add('section-reveal', 'animate');
@@ -136,13 +127,25 @@ export class SmartNavigationService {
     return this._navigationItems().find(item => item.targetId === targetId);
   }
   destroy(): void {
-    // Cancel any pending navigation update
     this._pendingNavUpdate.set(false);
   }
   private addNavigationAnimations(): void {
-    const nav = document.querySelector('header nav');
+    const nav = document.querySelector('header');
     const logo = document.querySelector('.nav-logo');
-    nav?.classList.add('nav-fade-enter');
-    logo?.classList.add('nav-logo-glow');
+    
+    if (nav) {
+      nav.style.transform = 'translateY(-20px)';
+      nav.style.opacity = '0';
+      nav.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease-out';
+      
+      requestAnimationFrame(() => {
+        nav.style.transform = 'translateY(0)';
+        nav.style.opacity = '1';
+      });
+    }
+    
+    if (logo) {
+      logo.classList.add('nav-logo-glow');
+    }
   }
 }

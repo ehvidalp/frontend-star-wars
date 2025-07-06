@@ -25,6 +25,17 @@ export class MainLayout implements OnDestroy {
     const currentUrl = this._currentRoute();
     return currentUrl !== '/' && currentUrl !== '';
   });
+  
+  readonly navbarBackgroundClasses = computed(() => {
+    const currentUrl = this._currentRoute();
+    const isHomePage = currentUrl === '/' || currentUrl === '';
+    
+    if (isHomePage) {
+      return 'bg-black/90 backdrop-blur-md border-b border-cyan-400/20';
+    }
+    
+    return 'bg-transparent backdrop-blur-sm border-b border-cyan-400/10';
+  });
   readonly isMobileMenuOpen = signal(false);
   constructor() {
     this.router.events.pipe(
@@ -51,7 +62,7 @@ export class MainLayout implements OnDestroy {
       await this.router.navigate(['/']);
       setTimeout(() => {
         this.navigationService.scrollToSection(item.targetId);
-      }, 100);
+      }, 50);
     } catch (error) {
       console.error('Navigation failed:', error);
     }

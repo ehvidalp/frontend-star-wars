@@ -1,88 +1,118 @@
-<div class="relative min-h-screen bg-black">
-<a href="#main-content" class="skip-link">Skip to main content</a>
-<div class="fixed top-1/2 left-1/2 h-px w-px rounded-full bg-white space-background-animated space-background" aria-hidden="true"></div>
-@if (shouldShowNavigation()) {
-  <header class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-cyan-400/20 shadow-lg shadow-cyan-400/10 transition-all duration-700 ease-out animate-[navFadeSlideIn_0.8s_cubic-bezier(0.23,1,0.32,1)_forwards]">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 sm:h-20">
-        @if (shouldShowBackButton()) {
-          <div class="flex items-center space-x-4">
-            <button 
-              type="button"
-              class="inline-flex items-center space-x-2 px-4 py-2 rounded-lg
-                     bg-gradient-to-r from-cyan-500/10 to-blue-500/10 
-                     border border-cyan-400/30 text-cyan-400 font-medium
-                     hover:from-cyan-500/20 hover:to-blue-500/20
-                     hover:border-cyan-400/50 hover:text-cyan-300
-                     focus:outline-none focus:ring-2 focus:ring-cyan-400/50
-                     transition-all duration-300 group"
-              aria-label="Go back to home"
-              (click)="goBack()">
-              <svg class="w-5 h-5 transition-transform duration-200 group-hover:-translate-x-1" 
-                   fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-              </svg>
-              <span>Back</span>
-            </button>
-          </div>
-        }
-        @if (!shouldShowBackButton()) {
-          <div class="flex items-center space-x-4">
-            <h1 class="font-orbitron text-2xl sm:text-3xl lg:text-4xl font-bold text-cyan-400 uppercase tracking-widest relative drop-shadow-2xl nav-logo-glow"
-                style="text-shadow: 0 0 10px rgb(34 211 238 / 0.8), 0 0 20px rgb(34 211 238 / 0.4), 0 0 30px rgb(34 211 238 / 0.4), 0 2px 4px rgb(0 0 0 / 0.5); filter: brightness(1.2);">
-              PLANETS
-            </h1>
-          </div>
-          <nav class="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
-            <ul class="flex items-center space-x-8">
+<article class="relative min-h-screen bg-black">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <!-- Decorative space background -->
+  <span class="fixed top-1/2 left-1/2 h-px w-px rounded-full bg-white space-background-animated space-background" aria-hidden="true" role="presentation"></span>
+  
+  @if (shouldShowNavigation()) {
+    <header [class]="'fixed top-0 left-0 right-0 z-50 shadow-lg shadow-cyan-400/10 transition-all duration-500 ease-out ' + navbarBackgroundClasses()" 
+            style="will-change: transform, opacity;"
+            role="banner">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 sm:h-20">
+          @if (shouldShowBackButton()) {
+            <div class="flex items-center space-x-4">
+              <button 
+                type="button"
+                class="inline-flex items-center space-x-2 px-4 py-2 rounded-lg
+                       bg-gradient-to-r from-cyan-500/10 to-blue-500/10 
+                       border border-cyan-400/30 text-cyan-400 font-medium
+                       hover:from-cyan-500/20 hover:to-blue-500/20
+                       hover:border-cyan-400/50 hover:text-cyan-300
+                       focus:outline-none focus:ring-2 focus:ring-cyan-400/50
+                       transition-all duration-300 group"
+                aria-label="Go back to home page"
+                (click)="goBack()">
+                <svg class="w-5 h-5 transition-transform duration-200 group-hover:-translate-x-1" 
+                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                <span>Back</span>
+              </button>
+            </div>
+          }
+          @if (!shouldShowBackButton()) {
+            <div class="flex items-center space-x-4">
+              <h1 class="font-orbitron text-2xl sm:text-3xl lg:text-4xl font-bold text-cyan-400 uppercase tracking-widest relative drop-shadow-2xl nav-logo-glow"
+                  style="text-shadow: 0 0 10px rgb(34 211 238 / 0.8), 0 0 20px rgb(34 211 238 / 0.4), 0 0 30px rgb(34 211 238 / 0.4), 0 2px 4px rgb(0 0 0 / 0.5); filter: brightness(1.2);">
+                <abbr title="Star Wars Planets Explorer" class="no-underline">PLANETS</abbr>
+              </h1>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8" 
+                 role="navigation" 
+                 aria-label="Primary navigation">
               <app-navigation-menu 
                 [navigationItems]="navigationItems()"
                 [activeSection]="activeSection()"
                 [variant]="'desktop'"
                 (navigate)="onNavigate($event)">
               </app-navigation-menu>
-            </ul>
-          </nav>
-          <button type="button"
-                  class="md:hidden p-2 rounded-lg text-cyan-400 hover:text-cyan-300 
-                         hover:bg-cyan-400/10 transition-colors duration-300
-                         focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
-                  [attr.aria-label]="isMobileMenuOpen() ? 'Close navigation menu' : 'Open navigation menu'"
-                  [attr.aria-expanded]="isMobileMenuOpen()"
-                  (click)="toggleMobileMenu()">
-            <svg class="w-6 h-6 transition-transform duration-300" 
-                 [class.rotate-45]="isMobileMenuOpen()"
-                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              @if (isMobileMenuOpen()) {
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              } @else {
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-              }
-            </svg>
-          </button>
-        }
+            </nav>
+            <div class="md:hidden">
+              <button type="button"
+                      class="p-2 rounded-lg text-cyan-400 hover:text-cyan-300 
+                             hover:bg-cyan-400/10 transition-colors duration-300
+                             focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
+                      [attr.aria-label]="isMobileMenuOpen() ? 'Close navigation menu' : 'Open navigation menu'"
+                      [attr.aria-expanded]="isMobileMenuOpen()"
+                      [attr.aria-controls]="'mobile-navigation'"
+                      aria-describedby="mobile-menu-description"
+                      [attr.aria-haspopup]="'menu'"
+                      (click)="toggleMobileMenu()">
+                <svg class="w-6 h-6 transition-transform duration-300" 
+                     [class.rotate-45]="isMobileMenuOpen()"
+                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     aria-hidden="true">
+                  @if (isMobileMenuOpen()) {
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  } @else {
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                  }
+                </svg>
+                <span class="sr-only">
+                  {{isMobileMenuOpen() ? 'Close' : 'Open'}} navigation menu
+                </span>
+              </button>
+              <div id="mobile-menu-description" class="sr-only">
+                Toggle mobile navigation menu to access site sections
+              </div>
+            </div>
+          }
+        </div>
       </div>
-    </div>
-    @if (!shouldShowBackButton()) {
-      <div class="mobile-nav-dropdown"
-           [class.mobile-nav-open]="isMobileMenuOpen()">
-        <nav class="container mx-auto px-4 py-4" role="navigation" aria-label="Mobile navigation">
-          <ul class="space-y-2">
+      
+      @if (!shouldShowBackButton()) {
+        <div class="mobile-nav-dropdown"
+             [class.mobile-nav-open]="isMobileMenuOpen()"
+             [attr.aria-hidden]="!isMobileMenuOpen()"
+             id="mobile-navigation">
+          <nav class="container mx-auto px-4 py-4" 
+               role="navigation" 
+               aria-label="Mobile navigation menu">
             <app-navigation-menu 
               [navigationItems]="navigationItems()"
               [activeSection]="activeSection()"
               [variant]="'mobile'"
               (navigate)="onNavigate($event)">
             </app-navigation-menu>
-          </ul>
-        </nav>
-      </div>
-    }
-    <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent
-                animate-pulse opacity-60" aria-hidden="true"></div>
-  </header>
-}
-<main id="main-content" class="relative z-10" [class.pt-16]="shouldShowNavigation()" [class.sm:pt-20]="shouldShowNavigation()">
-  <router-outlet></router-outlet>
-</main>
-</div>
+          </nav>
+        </div>
+      }
+      
+      <!-- Decorative bottom border -->
+      <hr class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent
+                 animate-pulse opacity-60 border-0" aria-hidden="true" role="presentation">
+    </header>
+  }
+  
+  <main id="main-content" 
+        class="relative z-10" 
+        [class.pt-16]="shouldShowNavigation()" 
+        [class.sm:pt-20]="shouldShowNavigation()"
+        role="main"
+        tabindex="-1"
+        [attr.aria-label]="'Main application content'">
+    <router-outlet></router-outlet>
+  </main>
+</article>
